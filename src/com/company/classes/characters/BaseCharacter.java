@@ -204,11 +204,21 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
         loseHealth(30);
     }
     }
-    public abstract void left();
-
-    public abstract void right();
-
-    public abstract void up();
-
-    public abstract void down();
+    public void left(){
+        int newPositionX = this.getX() > 40 ? this.getX() - 40: 0;
+        tryChangePosition(newPositionX, this.getY());
+        System.out.println(this.getX());
+    }
+    public void right(){
+        int newPositionX = this.getX()<320 ? this.getX()+40 : 320;
+        tryChangePosition(newPositionX, this.getY());
+    }
+    public void up(){
+        int newPositionY=this.getY() > 40 ? this.getY() - 40 : 0;
+        tryChangePosition(this.getX(), newPositionY);
+    }
+    public void down(){
+        int newPositionY=this.getY() < 320 ? this.getY() + 40 :320;
+        tryChangePosition(this.getX(), newPositionY);
+    }
 }
