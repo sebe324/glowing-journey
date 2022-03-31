@@ -16,15 +16,12 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
     private int hpRegen, manaRegen;
     private String name;
     protected String className;
-    private int id;
     private DamageType damageType;
     private DamageRange damageRange;
     private Image image, baseImage, attackLeftImage, attackRightImage;
     public BaseCharacter(int x, int y, String name){
         super(x,y,name);
-        this.id = ++Map.characterCount;
     }
-
     public BaseCharacter() {
     }
 
@@ -99,14 +96,6 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
 
     public void setManaRegen(int manaRegen) {
         this.manaRegen = manaRegen;
-    }
-
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
     }
 
     public Image getBaseImage() {
@@ -191,34 +180,37 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
         this.attackRightImage = new ImageIcon(attackRightImage).getImage();
         setBaseImage();
     }
-    public void tryChangePosition(int newPosX, int newPosY){
-    if(occupiedCells[newPosX][newPosY]==0){
-        occupiedCells[newPosX][newPosY]=this.id;
-        System.out.println(this.getX());
-        System.out.println(this.getY());
-        this.setY(newPosY);
-        this.setX(newPosX);
-        System.out.println(occupiedCells[newPosX][newPosY]);
-    }
-    else{
-        loseHealth(30);
-    }
+    public void tryChangePosition(int newPosX, int newPosY) {
+        if (newPosX < occupiedCells.length && newPosX >= 0 && newPosY < occupiedCells[0].length && newPosY >= 0) {
+            if (occupiedCells[newPosX][newPosY] == 0) {
+                occupiedCells[this.getX()][this.getY()] = 0;
+                occupiedCells[newPosX][newPosY] = this.getId();
+                System.out.println(this.getX());
+                System.out.println(this.getY());
+                this.setY(newPosY);
+                this.setX(newPosX);
+                System.out.println(occupiedCells[newPosX][newPosY]);
+
+            } else {
+                loseHealth(30);
+            }
+        }
     }
     public void left(){
-        int newPositionX = this.getX() > 40 ? this.getX() - 40: 0;
+        int newPositionX = this.getX() - 10;
         tryChangePosition(newPositionX, this.getY());
         System.out.println(this.getX());
     }
     public void right(){
-        int newPositionX = this.getX()<320 ? this.getX()+40 : 320;
+        int newPositionX = this.getX() + 10;
         tryChangePosition(newPositionX, this.getY());
     }
     public void up(){
-        int newPositionY=this.getY() > 40 ? this.getY() - 40 : 0;
+        int newPositionY=this.getY() - 10;
         tryChangePosition(this.getX(), newPositionY);
     }
     public void down(){
-        int newPositionY=this.getY() < 320 ? this.getY() + 40 :320;
+        int newPositionY=this.getY() + 10;
         tryChangePosition(this.getX(), newPositionY);
     }
 }

@@ -1,17 +1,24 @@
 package com.company.classes;
 
+import com.company.Map;
+
 import javax.swing.*;
 import java.awt.*;
+
+import static com.company.Map.occupiedCells;
 
 public abstract class Something {
     private int x;
     private int y;
     private String name;
     private Image image, baseImage;
+    private int id;
     public Something(int x, int y, String name) {
         this.x = x;
         this.y = y;
         this.name = name;
+        this.id = ++Map.characterCount;
+        occupiedCells[this.x][this.y]=this.id;
     }
 
     public Something() {
@@ -60,4 +67,19 @@ public abstract class Something {
     public void setBaseImage() {
         this.image=this.baseImage;
     }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+    public int getXWindow(){
+        return x*10;
+    }
+    public int getYWindow(){
+        return y*10;
+    }
 }
+

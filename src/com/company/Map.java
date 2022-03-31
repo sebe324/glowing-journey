@@ -5,7 +5,7 @@ import com.company.classes.characters.BaseCharacter;
 
 public class Map {
     public static int characterCount = 0;
-    public static int[][] occupiedCells = new int[321][321];
+    public static int[][] occupiedCells = new int[180][100];
     private Something[] things;
     private BaseCharacter player;
     public Map(BaseCharacter player, Something... input){
@@ -41,6 +41,6 @@ public class Map {
         else return false;
     }
     public void runWindow(){
-        MainWindow mw = new MainWindow(375,438, this);
+        MainWindow mw = new MainWindow(1800,1000, this);
     }
 }

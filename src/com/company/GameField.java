@@ -23,11 +23,11 @@ public class GameField extends JPanel {
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
         for(Something thing : things){
-            g.drawImage(thing.getImage(), thing.getX(), thing.getY(), this);
+            g.drawImage(thing.getImage(), thing.getXWindow(), thing.getYWindow(), this);
         }
-        g.drawImage(player.getImage(), player.getX(), player.getY(), this);
-        g.drawString(""+player.getHp(), player.getX(), player.getY()+12);
-        g.drawString(""+player.getName(), player.getX(), player.getY()+24);
+        g.drawImage(player.getImage(), player.getXWindow(), player.getYWindow(), this);
+        g.drawString(""+player.getHp(), player.getXWindow(), player.getYWindow()+12);
+        g.drawString(""+player.getName(), player.getXWindow(), player.getYWindow()+24);
     }
     public class FieldKeyListener extends KeyAdapter{
         @Override
