@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.classes.Something;
 import com.company.classes.characters.BaseCharacter;
+import com.company.classes.particles.Particle;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,7 +10,8 @@ import java.util.List;
 public class Map {
     public static int characterCount = 0;
     public static int[][] occupiedCells = new int[36][20];
-    public static List<Something> things = new ArrayList<Something>();
+    public static List<Something> things = new ArrayList<>();
+    public static List<Particle> particles = new ArrayList<>();
     private BaseCharacter player;
     public Map(BaseCharacter player, Something... input){
         //System.out.println(player.getHp());

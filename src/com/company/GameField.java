@@ -2,11 +2,14 @@ package com.company;
 
 import com.company.classes.Something;
 import com.company.classes.characters.BaseCharacter;
+import com.company.classes.particles.Particle;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import static com.company.Map.particles;
 import static com.company.Map.things;
 
 public class GameField extends JPanel {
@@ -22,6 +25,9 @@ public class GameField extends JPanel {
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
+        for(Particle particle : particles){
+            g.drawImage(particle.getImage(), particle.getXWindow(), particle.getYWindow(), this);
+        }
         for(int i=1; i<things.size(); i++){
             Something thing=things.get(i);
             g.drawImage(thing.getImage(), thing.getXWindow(), thing.getYWindow(), this);

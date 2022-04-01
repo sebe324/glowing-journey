@@ -2,12 +2,12 @@ package com.company.classes;
 
 import com.company.Map;
 import com.company.classes.characters.BaseCharacter;
+import com.company.classes.particles.Particle;
 
 import javax.swing.*;
 import java.awt.*;
 
-import static com.company.Map.occupiedCells;
-import static com.company.Map.things;
+import static com.company.Map.*;
 
 public abstract class Something {
     private int x;
@@ -39,6 +39,7 @@ public abstract class Something {
             for(int i=this.id+1; i<things.size(); i++){
                 things.get(i).id-=1;
             }
+            particles.add(new Particle(this.x, this.y, "images/particles/destroyed"+this.name+".png"));
             things.remove(this.id);
             System.out.println(things.size());
         }
