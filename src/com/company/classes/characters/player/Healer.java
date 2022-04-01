@@ -15,6 +15,6 @@ public class Healer extends BaseCharacter {
         this.setMana(200);
         this.setDamageRange(CLOSE_RANGE);
         this.setDamageType(MAGIC);
-        this.uploadImage("HealerStand.png", "HealerAttackLeft.png", "HealerAttackRight.png");
+        this.uploadImage("images/healer/healer.png", "images/healer/healerLeftAttack.png", "images/healer/healerRightAttack.png");
     }
 }

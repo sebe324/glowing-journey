@@ -12,9 +12,8 @@ import static com.company.Map.occupiedCells;
 
 public abstract class BaseCharacter extends Something implements BaseCharacterInterface{
 
-    private int maxHp, hp, mana, maxMana, level, attackDmg;
+    private int mana, maxMana, level, attackDmg;
     private int hpRegen, manaRegen;
-    private String name;
     protected String className;
     private DamageType damageType;
     private DamageRange damageRange;
@@ -25,33 +24,12 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
     public BaseCharacter() {
     }
 
-    public int getMaxHp() {
-        return maxHp;
-    }
-
-    public void setMaxHp(int maxHp) {
-        this.maxHp = maxHp;
-    }
-
-    public int getHp() {
-        return hp;
-    }
-
-    public void setHp(int hp) {
-        if(hp>this.maxHp){
-            this.hp = this.maxHp;
-        }
-        else
-            this.hp=hp;
-
-    }
-
     public int getMana() {
         return mana;
     }
 
     public void setMana(int mana) {
-        if(this.mana>this.maxHp){
+        if(this.mana>this.getMaxMana()){
             this.mana=maxMana;
         }
         else
@@ -147,10 +125,6 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
     }
 
     @Override
-    public void loseHealth(int amount){
-        setHp(getHp()-amount);
-    }
-    @Override
     public void regenerateHp(int amount){
         setHp(getHp()+amount);
     }
@@ -163,8 +137,8 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
         setMana(getMana()+amount);
     }
     @Override
-    public void attack(BaseCharacter attacked){
-        attacked.loseHealth(this.attackDmg);
+    public void attack(Something attacked){
+        attacked.loseHp(this.attackDmg);
     }
     @Override
     public void levelUp(){
@@ -192,25 +166,25 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
                 System.out.println(occupiedCells[newPosX][newPosY]);
 
             } else {
-                loseHealth(30);
+                loseHp(30);
             }
         }
     }
     public void left(){
-        int newPositionX = this.getX() - 10;
+        int newPositionX = this.getX() - 1;
         tryChangePosition(newPositionX, this.getY());
         System.out.println(this.getX());
     }
     public void right(){
-        int newPositionX = this.getX() + 10;
+        int newPositionX = this.getX() + 1;
         tryChangePosition(newPositionX, this.getY());
     }
     public void up(){
-        int newPositionY=this.getY() - 10;
+        int newPositionY=this.getY() - 1;
         tryChangePosition(this.getX(), newPositionY);
     }
     public void down(){
-        int newPositionY=this.getY() + 10;
+        int newPositionY=this.getY() + 1;
         tryChangePosition(this.getX(), newPositionY);
     }
 }

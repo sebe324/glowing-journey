@@ -5,7 +5,7 @@ import com.company.classes.characters.BaseCharacter;
 
 public class Map {
     public static int characterCount = 0;
-    public static int[][] occupiedCells = new int[180][100];
+    public static int[][] occupiedCells = new int[36][20];
     private Something[] things;
     private BaseCharacter player;
     public Map(BaseCharacter player, Something... input){

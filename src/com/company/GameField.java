@@ -24,10 +24,12 @@ public class GameField extends JPanel {
         super.paintComponent(g);
         for(Something thing : things){
             g.drawImage(thing.getImage(), thing.getXWindow(), thing.getYWindow(), this);
+            g.drawString(""+thing.getClass(), thing.getXWindow(), thing.getYWindow());
+            g.drawString(""+thing.getHp(), thing.getXWindow(), thing.getYWindow()-12);
         }
         g.drawImage(player.getImage(), player.getXWindow(), player.getYWindow(), this);
-        g.drawString(""+player.getHp(), player.getXWindow(), player.getYWindow()+12);
-        g.drawString(""+player.getName(), player.getXWindow(), player.getYWindow()+24);
+        g.drawString(""+player.getHp(), player.getXWindow(), player.getYWindow());
+        g.drawString(""+player.getName(), player.getXWindow(), player.getYWindow()-12);
     }
     public class FieldKeyListener extends KeyAdapter{
         @Override
@@ -47,6 +49,34 @@ public class GameField extends JPanel {
                 case KeyEvent.VK_D:
                 player.right();
                 break;
+                case KeyEvent.VK_Q:
+                    player.setAttackLeftImage();
+
+                    //timer
+                    new java.util.Timer().schedule(
+                            new java.util.TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setBaseImage();
+                                    repaint();
+                                }
+                            }, 200
+                    );
+                    break;
+                case KeyEvent.VK_E:
+                    player.setAttackRightImage();
+
+                    //timer
+                    new java.util.Timer().schedule(
+                            new java.util.TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setBaseImage();
+                                    repaint();
+                                }
+                            }, 200
+                    );
+                    break;
             }
             validate();
             repaint();
