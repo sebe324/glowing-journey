@@ -38,10 +38,12 @@ public abstract class Something {
             occupiedCells[this.x][this.y]=0;
             for(int i=this.id+1; i<things.size(); i++){
                 things.get(i).id-=1;
+                occupiedCells[things.get(i).getX()][things.get(i).getY()]-=1;
+                System.out.println("i"+i+"id"+things.get(i).id);
             }
             particles.add(new Particle(this.x, this.y, "images/particles/destroyed"+this.name+".png"));
             things.remove(this.id);
-            System.out.println(things.size());
+            System.out.println("things size" + things.size());
         }
         else
             this.hp=hp;

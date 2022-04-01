@@ -10,7 +10,7 @@ public class Main {
 
     public static void main(String[] args) {
 	Map map = new Map(
-      new Wizard(10,0,"radagast"),
+      new Healer(10,0,"radagast"),
             new Wall(10, 10, "wall"),
             new Wall(11,10,"wall")
             );
