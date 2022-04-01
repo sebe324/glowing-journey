@@ -6,6 +6,7 @@ import com.company.classes.particles.Particle;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ArrayList;
 
 import static com.company.Map.*;
 
@@ -35,18 +36,32 @@ public abstract class Something {
             this.hp = this.maxHp;
         }
         else if(hp<=0){
+            for(int i=0; i<things.size(); i++){
+                System.out.println("i"+i+"id"+things.get(i).id+"name"+things.get(i).name);
+            }
             occupiedCells[this.x][this.y]=0;
-            for(int i=this.id+1; i<things.size(); i++){
+            particles.add(new Particle(this.x, this.y, "images/particles/destroyed"+this.name+".png"));
+            int tmp=this.id;
+            System.out.println("deleted : " + things.get(this.id));
+            things.remove(this.id);
+            ArrayList<BaseCharacter> toRemove = new ArrayList<>();
+            for(BaseCharacter player : players){
+                if(this.equals(player)) toRemove.add(player);
+            }
+            players.removeAll(toRemove);
+            for(int i=tmp; i<things.size(); i++){
                 things.get(i).id-=1;
                 occupiedCells[things.get(i).getX()][things.get(i).getY()]-=1;
-                System.out.println("i"+i+"id"+things.get(i).id);
+                System.out.println("i"+i+"id"+things.get(i).id+"name"+things.get(i).name);
             }
-            particles.add(new Particle(this.x, this.y, "images/particles/destroyed"+this.name+".png"));
-            things.remove(this.id);
             System.out.println("things size" + things.size());
+            for(int i=0; i<things.size(); i++){
+                System.out.println("i"+i+"id"+things.get(i).id+"name"+things.get(i).name);
+            }
         }
         else
             this.hp=hp;
+
     }
 
     public int getMaxHp() {

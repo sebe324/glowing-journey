@@ -12,26 +12,20 @@ public class Map {
     public static int[][] occupiedCells = new int[36][20];
     public static List<Something> things = new ArrayList<>();
     public static List<Particle> particles = new ArrayList<>();
-    private BaseCharacter player;
-    public Map(BaseCharacter player, Something... input){
+    public static List<BaseCharacter> players;
+    public Map(ArrayList<BaseCharacter> players, Something... input){
         //System.out.println(player.getHp());
-        things.add(player);
-       for(int i = 1; i <input.length+1; i++){
+        for(BaseCharacter player : players) {
+            things.add(player);
+        }
+       for(int i = players.size(); i <input.length+1; i++){
             things.add(input[i-1]);
         }
-        this.player=player;
+        this.players=players;
     }
 
-    public Something getThing(int index){return things.get(index);}
-    public BaseCharacter getPlayer() {
-        return player;
-    }
-
-    public void setPlayer(BaseCharacter player) {
-        this.player = player;
-    }
     public boolean isPlayer(){
-        if(this.player!=null){
+        if(this.players!=null){
             return true;
         }
         else{
