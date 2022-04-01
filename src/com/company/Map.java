@@ -3,24 +3,24 @@ package com.company;
 import com.company.classes.Something;
 import com.company.classes.characters.BaseCharacter;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class Map {
     public static int characterCount = 0;
     public static int[][] occupiedCells = new int[36][20];
-    private Something[] things;
+    public static List<Something> things = new ArrayList<Something>();
     private BaseCharacter player;
     public Map(BaseCharacter player, Something... input){
-        things = new Something[input.length];
         //System.out.println(player.getHp());
-        for(int i = 0; i< things.length; i++){
-            things[i]=input[i];
+        things.add(player);
+       for(int i = 1; i <input.length+1; i++){
+            things.add(input[i-1]);
         }
         this.player=player;
     }
 
-    public Something[] getThings() {
-        return things;
-    }
-
+    public Something getThing(int index){return things.get(index);}
     public BaseCharacter getPlayer() {
         return player;
     }
@@ -37,7 +37,7 @@ public class Map {
         }
     }
     public boolean notEmpty(){
-        if(getThings().length>0 && isPlayer()) return true;
+        if(things.size()>0 && isPlayer()) return true;
         else return false;
     }
     public void runWindow(){

@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 
 import static com.company.Map.occupiedCells;
+import static com.company.Map.things;
+import static com.company.enums.DamageRange.CLOSE_RANGE;
+import static com.company.enums.DamageRange.LONG_RANGE;
 
 public abstract class BaseCharacter extends Something implements BaseCharacterInterface{
 
@@ -137,8 +140,38 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
         setMana(getMana()+amount);
     }
     @Override
-    public void attack(Something attacked){
-        attacked.loseHp(this.attackDmg);
+    public void attack(String direction){
+        if(damageRange==CLOSE_RANGE) {
+            int x=0;
+            if(direction=="right") x=-1;
+            else if(direction=="left") x=1;
+            for(int i=0; i<3; i++) {
+                if (occupiedCells[getX() - x][getY()+i] != 0) {
+                    things.get(occupiedCells[getX() - x][getY()+i]).loseHp(attackDmg);
+                }
+            }
+        } else if(damageRange==LONG_RANGE){
+            if(direction=="right"){
+            for(int i=0; i<5; i++) {
+                if (occupiedCells[getX() + i][getY()] != 0) {
+                    things.get(occupiedCells[getX() + i][getY()]).loseHp(attackDmg);
+                }
+                else if(occupiedCells[getX() + i][getY()+1]!=0){
+                    things.get(occupiedCells[getX() + i][getY()+1]).loseHp(attackDmg);
+                }
+            }
+            }
+            else if(direction=="left"){
+                for(int i=0; i<5; i++) {
+                    if (occupiedCells[getX() - i][getY()] != 0) {
+                        things.get(occupiedCells[getX() - i][getY()]).loseHp(attackDmg);
+                    }
+                    else if(occupiedCells[getX() - i][getY()+1]!=0){
+                        things.get(occupiedCells[getX() - i][getY()+1]).loseHp(attackDmg);
+                    }
+                }
+            }
+        }
     }
     @Override
     public void levelUp(){

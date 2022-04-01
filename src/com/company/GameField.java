@@ -7,13 +7,13 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
+import static com.company.Map.things;
+
 public class GameField extends JPanel {
     private Map map;
-    private Something[] things;
     private BaseCharacter player;
     public GameField(Map map){
         this.map = map;
-        this.things= map.getThings();
         this.player=map.getPlayer();
         System.out.println(player.getName());
         setFocusable(true);
@@ -22,7 +22,8 @@ public class GameField extends JPanel {
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-        for(Something thing : things){
+        for(int i=1; i<things.size(); i++){
+            Something thing=things.get(i);
             g.drawImage(thing.getImage(), thing.getXWindow(), thing.getYWindow(), this);
             g.drawString(""+thing.getClass(), thing.getXWindow(), thing.getYWindow());
             g.drawString(""+thing.getHp(), thing.getXWindow(), thing.getYWindow()-12);
@@ -51,6 +52,7 @@ public class GameField extends JPanel {
                 break;
                 case KeyEvent.VK_Q:
                     player.setAttackLeftImage();
+                    player.attack("left");
 
                     //timer
                     new java.util.Timer().schedule(
@@ -64,6 +66,7 @@ public class GameField extends JPanel {
                     );
                     break;
                 case KeyEvent.VK_E:
+                    player.attack("right");
                     player.setAttackRightImage();
 
                     //timer

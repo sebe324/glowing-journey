@@ -14,7 +14,7 @@ public class Wizard extends BaseCharacter{
         this.setMana(400);
         this.setDamageRange(LONG_RANGE);
         this.setDamageType(MAGIC);
-        this.uploadImage("images/wizard/wizard.png", "images/wizard/wizardAttackLeft.png", "images/wizard/wizardAttackRight.png");
+        this.uploadImage("images/wizard/wizard.png", "images/wizard/wizardLeftAttack.png", "images/wizard/wizardRightAttack.png");
     }
     public Wizard(){}
     public void abilityOne(int manaCost){

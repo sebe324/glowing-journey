@@ -1,15 +1,18 @@
 package com.company.classes;
 
 import com.company.Map;
+import com.company.classes.characters.BaseCharacter;
 
 import javax.swing.*;
 import java.awt.*;
 
 import static com.company.Map.occupiedCells;
+import static com.company.Map.things;
 
 public abstract class Something {
     private int x;
     private int y;
+    private int maxHp, hp;
     private String name;
     private Image image, baseImage;
     private int id;
@@ -17,11 +20,38 @@ public abstract class Something {
         this.x = x;
         this.y = y;
         this.name = name;
-        this.id = ++Map.characterCount;
+        this.id = Map.characterCount++;
         occupiedCells[this.x][this.y]=this.id;
     }
 
     public Something() {
+    }
+    public int getHp() {
+        return hp;
+    }
+
+    public void setHp(int hp) {
+        if(hp>this.maxHp){
+            this.hp = this.maxHp;
+        }
+        else if(hp<=0){
+            occupiedCells[this.x][this.y]=0;
+            for(int i=this.id+1; i<things.size(); i++){
+                things.get(i).id-=1;
+            }
+            things.remove(this.id);
+            System.out.println(things.size());
+        }
+        else
+            this.hp=hp;
+    }
+
+    public int getMaxHp() {
+        return maxHp;
+    }
+
+    public void setMaxHp(int maxHp) {
+        this.maxHp = maxHp;
     }
 
     public int getX() {
@@ -72,14 +102,14 @@ public abstract class Something {
         return id;
     }
 
-    public void setId(int id) {
-        this.id = id;
-    }
     public int getXWindow(){
-        return x*10;
+        return x*50;
     }
     public int getYWindow(){
-        return y*10;
+        return y*50;
+    }
+    public void loseHp(int amount){
+        setHp(getHp()-amount);
     }
 }
 
