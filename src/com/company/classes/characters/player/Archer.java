@@ -13,6 +13,7 @@ public class Archer extends BaseCharacter {
         this.setHp(1000);
         this.setMaxMana(200);
         this.setMana(200);
+        this.setHpRegen(5);
         this.setDamageRange(CLOSE_RANGE);
         this.setDamageType(PHYSICAL);
         this.uploadImage("ArcherStand.png", "ArcherAttackLeft.png", "ArcherAttackRight.png");

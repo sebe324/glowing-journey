@@ -13,8 +13,10 @@ public class Map {
     public static List<Something> things = new ArrayList<>();
     public static List<Particle> particles = new ArrayList<>();
     public static List<BaseCharacter> players;
+    public static MainWindow mw;
     public Map(ArrayList<BaseCharacter> players, Something... input){
         //System.out.println(player.getHp());
+
         for(BaseCharacter player : players) {
             things.add(player);
         }
@@ -37,6 +39,6 @@ public class Map {
         else return false;
     }
     public void runWindow(){
-        MainWindow mw = new MainWindow(1800,1000, this);
+        mw = new MainWindow(1800,1000, this);
     }
 }

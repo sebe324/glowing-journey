@@ -13,6 +13,7 @@ public class Healer extends BaseCharacter {
         this.setHp(1000);
         this.setMaxMana(200);
         this.setMana(200);
+        this.setHpRegen(5);
         this.setDamageRange(CLOSE_RANGE);
         this.setDamageType(MAGIC);
         this.uploadImage("images/healer/healer.png", "images/healer/healerLeftAttack.png", "images/healer/healerRightAttack.png");

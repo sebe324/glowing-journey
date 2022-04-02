@@ -8,9 +8,9 @@ import com.company.classes.structures.Wall;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.company.Map.things;
+import static com.company.Map.*;
 
-public class Main {
+public class Main extends Thread{
 
     public static void main(String[] args) {
 	Map map = new Map(
@@ -23,12 +23,27 @@ public class Main {
     System.out.println(things.get(0));
     if(map.notEmpty()){
         map.runWindow();
-        things.get(0).setHp(100);
-
+        Main thread = new Main();
+        players.get(0).setHp(100);
+        thread.start();
     }
+
     else{
         System.out.println("game over");
     }
 
+    }
+    public void run() {
+        while (true) {
+            try{
+                for(BaseCharacter player : players){
+                    player.setHp(player.getHp()+player.getHpRegen());
+                }
+                mw.getGame().repaint();
+                Thread.sleep(1000);
+            }catch(InterruptedException ex){
+                //do stuff
+            }
+        }
     }
 }

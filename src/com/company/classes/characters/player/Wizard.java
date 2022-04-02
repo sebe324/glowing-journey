@@ -12,6 +12,7 @@ public class Wizard extends BaseCharacter{
         this.setHp(750);
         this.setMaxMana(400);
         this.setMana(400);
+        this.setHpRegen(5);
         this.setDamageRange(LONG_RANGE);
         this.setDamageType(MAGIC);
         this.uploadImage("images/wizard/wizard.png", "images/wizard/wizardLeftAttack.png", "images/wizard/wizardRightAttack.png");
