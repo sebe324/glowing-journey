@@ -5,9 +5,9 @@ import static com.company.enums.DamageRange.CLOSE_RANGE;
 import static com.company.enums.DamageType.PHYSICAL;
 
 
-public class Warrior extends BaseCharacter {
-    public Warrior(int x, int y, String name) {
-        super(x,y,name);
+public class Warrior extends BasePlayer {
+    public Warrior(int x, int y, String name, int upKey, int downKey, int leftKey, int rightKey, int leftAttackKey, int rightAttackKey) {
+        super(x,y,name, upKey, downKey, leftKey, rightKey, leftAttackKey, rightAttackKey);
         this.setAttackDmg(100);
         this.setMaxHp(1000);
         this.setHp(1000);

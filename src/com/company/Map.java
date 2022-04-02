@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.classes.Something;
 import com.company.classes.characters.BaseCharacter;
+import com.company.classes.characters.player.BasePlayer;
 import com.company.classes.particles.Particle;
 
 import java.util.ArrayList;
@@ -12,12 +13,12 @@ public class Map {
     public static int[][] occupiedCells = new int[36][20];
     public static List<Something> things = new ArrayList<>();
     public static List<Particle> particles = new ArrayList<>();
-    public static List<BaseCharacter> players;
+    public static List<BasePlayer> players;
     public static MainWindow mw;
-    public Map(ArrayList<BaseCharacter> players, Something... input){
+    public Map(ArrayList<BasePlayer> players, Something... input){
         //System.out.println(player.getHp());
 
-        for(BaseCharacter player : players) {
+        for(BasePlayer player : players) {
             things.add(player);
         }
        for(int i = 0; i <input.length; i++){

@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.classes.Something;
 import com.company.classes.characters.BaseCharacter;
+import com.company.classes.characters.player.BasePlayer;
 import com.company.classes.particles.Particle;
 
 import javax.swing.*;
@@ -9,6 +10,8 @@ import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import static com.company.Map.*;
 
@@ -37,27 +40,18 @@ public class GameField extends JPanel {
             super.keyPressed(e);
             int key = e.getKeyCode();
             for(int i=0; i < players.size(); i++) {
-                BaseCharacter player=players.get(i);
-                switch (key) {
-                    case KeyEvent.VK_W:
-                        player.up();
-                        break;
-                    case KeyEvent.VK_S:
-                        player.down();
-                        break;
-                    case KeyEvent.VK_A:
-                        player.left();
-                        break;
-                    case KeyEvent.VK_D:
-                        player.right();
-                        break;
-                    case KeyEvent.VK_Q:
+                BasePlayer player=players.get(i);
+                    if(key==player.getUpKey())  player.up();
+                    else if(key==player.getDownKey()) player.down();
+                    else if(key==player.getLeftKey()) player.left();
+                    else if (key==player.getRightKey()) player.right();
+                    else if (key==player.getLeftAttackKey()) {
                         player.setAttackLeftImage();
                         player.attack("left");
 
                         //timer
-                        new java.util.Timer().schedule(
-                                new java.util.TimerTask() {
+                        new Timer().schedule(
+                                new TimerTask() {
                                     @Override
                                     public void run() {
                                         player.setBaseImage();
@@ -65,14 +59,14 @@ public class GameField extends JPanel {
                                     }
                                 }, 200
                         );
-                        break;
-                    case KeyEvent.VK_E:
+                    }
+                    else if(key==player.getRightAttackKey()) {
                         player.attack("right");
                         player.setAttackRightImage();
 
                         //timer
-                        new java.util.Timer().schedule(
-                                new java.util.TimerTask() {
+                        new Timer().schedule(
+                                new TimerTask() {
                                     @Override
                                     public void run() {
                                         player.setBaseImage();
@@ -80,8 +74,8 @@ public class GameField extends JPanel {
                                     }
                                 }, 200
                         );
-                        break;
-                }
+                    }
+
             }
             validate();
             repaint();
