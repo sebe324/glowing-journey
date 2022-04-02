@@ -14,9 +14,10 @@ public class Main {
 
     public static void main(String[] args) {
 	Map map = new Map(
-      new ArrayList<BaseCharacter>(List.of(new Healer(0,10,"radagast"))),
-            new Wall(10, 10, "wall"),
-            new Wall(11,10,"wall")
+      new ArrayList<BaseCharacter>(List.of(new Healer(0,10,"radagast"), new Wizard(0,1,"vilgefortz"))),
+            new Wall(11,10,"wall"),
+            new Wall(11,3,"wall"),
+            new Wall(11,9,"wall")
             );
     System.out.println("length"+things.size());
     System.out.println(things.get(0));

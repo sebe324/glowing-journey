@@ -18,8 +18,8 @@ public class Map {
         for(BaseCharacter player : players) {
             things.add(player);
         }
-       for(int i = players.size(); i <input.length+1; i++){
-            things.add(input[i-1]);
+       for(int i = 0; i <input.length; i++){
+            things.add(input[i]);
         }
         this.players=players;
     }

@@ -152,7 +152,7 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
             }
         } else if(damageRange==LONG_RANGE){
             if(direction=="right"){
-            for(int i=0; i<5; i++) {
+            for(int i=1; i<5; i++) {
                 if (occupiedCells[getX() + i][getY()] != 0) {
                     things.get(occupiedCells[getX() + i][getY()]).loseHp(attackDmg);
                 }
@@ -162,7 +162,7 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
             }
             }
             else if(direction=="left"){
-                for(int i=0; i<5; i++) {
+                for(int i=1; i<5; i++) {
                     if (occupiedCells[getX() - i][getY()] != 0) {
                         things.get(occupiedCells[getX() - i][getY()]).loseHp(attackDmg);
                     }
