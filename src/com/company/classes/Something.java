@@ -21,8 +21,11 @@ public abstract class Something {
         this.x = x;
         this.y = y;
         this.name = name;
-        this.id = Map.characterCount++;
+        this.id = ++Map.characterCount;
         occupiedCells[this.x][this.y]=this.id;
+        System.out.println("X "+this.x);
+        System.out.println("Y "+this.y);
+        System.out.println("Psycha siedzi" +  occupiedCells[this.x][this.y]);
     }
 
     public Something() {
@@ -30,20 +33,16 @@ public abstract class Something {
     public int getHp() {
         return hp;
     }
-
     public void setHp(int hp) {
         if(hp>this.maxHp){
             this.hp = this.maxHp;
         }
         else if(hp<=0){
-            for(int i=0; i<things.size(); i++){
-                System.out.println("i"+i+"id"+things.get(i).id+"name"+things.get(i).name);
-            }
             occupiedCells[this.x][this.y]=0;
             particles.add(new Particle(this.x, this.y, "images/particles/destroyed"+this.name+".png"));
-            int tmp=this.id;
-            System.out.println("deleted : " + things.get(this.id));
-            things.remove(this.id);
+            int tmp= getIdThings();
+            System.out.println("deleted : " + things.get(getIdThings()));
+            things.remove(getIdThings());
             ArrayList<BaseCharacter> toRemove = new ArrayList<>();
             for(BaseCharacter player : players){
                 if(this.equals(player)) toRemove.add(player);
@@ -115,9 +114,11 @@ public abstract class Something {
     public void setBaseImage() {
         this.image=this.baseImage;
     }
-
-    public int getId() {
+    public int getId(){
         return id;
+    }
+    public int getIdThings() {
+        return id-1;
     }
 
     public int getXWindow(){

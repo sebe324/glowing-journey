@@ -1,6 +1,5 @@
 package com.company.classes.characters;
 
-import com.company.Map;
 import com.company.classes.Something;
 import com.company.enums.DamageRange;
 import com.company.enums.DamageType;
@@ -142,32 +141,38 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
     @Override
     public void attack(String direction){
         if(damageRange==CLOSE_RANGE) {
-            int x=0;
-            if(direction=="right") x=-1;
-            else if(direction=="left") x=1;
-            for(int i=0; i<3; i++) {
-                if (occupiedCells[getX() - x][getY()+i] != 0) {
-                    things.get(occupiedCells[getX() - x][getY()+i]).loseHp(attackDmg);
+            if(direction=="right") {
+                for (int i = 0; i < 3; i++) {
+                    if (occupiedCells[getX()+1][getY() + i] != 0) {
+                        things.get(occupiedCells[getX()+1][getY() + i]-1).loseHp(attackDmg);
+                    }
                 }
+            }
+            else if(direction=="left") {
+                    for(int i=0; i<3; i++) {
+                        if (occupiedCells[getX()-1][getY()+i] != 0) {
+                            things.get(occupiedCells[getX()-1][getY()+i]-1).loseHp(attackDmg);
+                        }
+            }
             }
         } else if(damageRange==LONG_RANGE){
             if(direction=="right"){
             for(int i=1; i<5; i++) {
                 if (occupiedCells[getX() + i][getY()] != 0) {
-                    things.get(occupiedCells[getX() + i][getY()]).loseHp(attackDmg);
+                    things.get(occupiedCells[getX() + i][getY()]-1).loseHp(attackDmg);
                 }
                 else if(occupiedCells[getX() + i][getY()+1]!=0){
-                    things.get(occupiedCells[getX() + i][getY()+1]).loseHp(attackDmg);
+                    things.get(occupiedCells[getX() + i][getY()+1]-1).loseHp(attackDmg);
                 }
             }
             }
             else if(direction=="left"){
                 for(int i=1; i<5; i++) {
                     if (occupiedCells[getX() - i][getY()] != 0) {
-                        things.get(occupiedCells[getX() - i][getY()]).loseHp(attackDmg);
+                        things.get(occupiedCells[getX() - i][getY()]-1).loseHp(attackDmg);
                     }
                     else if(occupiedCells[getX() - i][getY()+1]!=0){
-                        things.get(occupiedCells[getX() - i][getY()+1]).loseHp(attackDmg);
+                        things.get(occupiedCells[getX() - i][getY()+1]-1).loseHp(attackDmg);
                     }
                 }
             }
@@ -190,12 +195,12 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
     public void tryChangePosition(int newPosX, int newPosY) {
         if (newPosX < occupiedCells.length && newPosX >= 0 && newPosY < occupiedCells[0].length && newPosY >= 0) {
             if (occupiedCells[newPosX][newPosY] == 0) {
-                occupiedCells[this.getX()][this.getY()] = 0;
-                occupiedCells[newPosX][newPosY] = this.getId();
-                System.out.println(this.getX());
-                System.out.println(this.getY());
-                this.setY(newPosY);
-                this.setX(newPosX);
+                occupiedCells[getX()][getY()] = 0;
+                occupiedCells[newPosX][newPosY] = getId();
+                System.out.println(getX());
+                System.out.println(getY());
+                setY(newPosY);
+                setX(newPosX);
                 System.out.println(occupiedCells[newPosX][newPosY]);
 
             } else {
@@ -204,20 +209,20 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
         }
     }
     public void left(){
-        int newPositionX = this.getX() - 1;
-        tryChangePosition(newPositionX, this.getY());
-        System.out.println(this.getX());
+        int newPositionX = getX() - 1;
+        tryChangePosition(newPositionX, getY());
+        System.out.println(getX());
     }
     public void right(){
-        int newPositionX = this.getX() + 1;
-        tryChangePosition(newPositionX, this.getY());
+        int newPositionX = getX() + 1;
+        tryChangePosition(newPositionX, getY());
     }
     public void up(){
-        int newPositionY=this.getY() - 1;
-        tryChangePosition(this.getX(), newPositionY);
+        int newPositionY=getY() - 1;
+        tryChangePosition(getX(), newPositionY);
     }
     public void down(){
-        int newPositionY=this.getY() + 1;
-        tryChangePosition(this.getX(), newPositionY);
+        int newPositionY=getY() + 1;
+        tryChangePosition(getX(), newPositionY);
     }
 }
