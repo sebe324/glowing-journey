@@ -39,8 +39,8 @@ public class GameField extends JPanel {
         public void keyPressed(KeyEvent e){
             super.keyPressed(e);
             int key = e.getKeyCode();
-            for(int i=0; i < players.size(); i++) {
-                BasePlayer player=players.get(i);
+            for(int i=0; i < getPlayers().size(); i++) {
+                BasePlayer player=getPlayers().get(i);
                     if(key==player.getUpKey())  player.up();
                     else if(key==player.getDownKey()) player.down();
                     else if(key==player.getLeftKey()) player.left();

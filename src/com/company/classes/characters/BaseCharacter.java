@@ -1,6 +1,7 @@
 package com.company.classes.characters;
 
 import com.company.classes.Something;
+import com.company.enums.ClassType;
 import com.company.enums.DamageRange;
 import com.company.enums.DamageType;
 
@@ -20,8 +21,8 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
     private DamageType damageType;
     private DamageRange damageRange;
     private Image image, baseImage, attackLeftImage, attackRightImage;
-    public BaseCharacter(int x, int y, String name){
-        super(x,y,name);
+    public BaseCharacter(int x, int y, String name, ClassType type){
+        super(x,y,name, type);
     }
     public BaseCharacter() {
     }

@@ -3,6 +3,7 @@ package com.company.classes;
 import com.company.Map;
 import com.company.classes.characters.BaseCharacter;
 import com.company.classes.particles.Particle;
+import com.company.enums.ClassType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -15,17 +16,27 @@ public abstract class Something {
     private int y;
     private int maxHp, hp;
     private String name;
+    private ClassType type;
     private Image image, baseImage;
     private int id;
-    public Something(int x, int y, String name) {
+    public Something(int x, int y, String name, ClassType type) {
         this.x = x;
         this.y = y;
         this.name = name;
+        this.type=type;
         this.id = ++Map.characterCount;
         occupiedCells[this.x][this.y]=this.id;
         System.out.println("X "+this.x);
         System.out.println("Y "+this.y);
         System.out.println("Psycha siedzi" +  occupiedCells[this.x][this.y]);
+    }
+
+    public ClassType getType() {
+        return type;
+    }
+
+    public void setType(ClassType type) {
+        this.type = type;
     }
 
     public Something() {
@@ -43,11 +54,6 @@ public abstract class Something {
             int tmp= getIdThings();
             System.out.println("deleted : " + things.get(getIdThings()));
             things.remove(getIdThings());
-            ArrayList<BaseCharacter> toRemove = new ArrayList<>();
-            for(BaseCharacter player : players){
-                if(this.equals(player)) toRemove.add(player);
-            }
-            players.removeAll(toRemove);
             for(int i=tmp; i<things.size(); i++){
                 things.get(i).id-=1;
                 occupiedCells[things.get(i).getX()][things.get(i).getY()]-=1;
