@@ -2,6 +2,7 @@ package com.company;
 
 import com.company.classes.Something;
 import com.company.classes.characters.BaseCharacter;
+import com.company.classes.characters.npcs.BaseMonster;
 import com.company.classes.characters.player.BasePlayer;
 import com.company.classes.particles.Particle;
 import com.company.enums.ClassType;
@@ -34,6 +35,15 @@ public class Map {
          if(things.get(i).getType()== ClassType.PLAYER){
             result.add((BasePlayer)things.get(i));
          }
+        }
+        return result;
+    }
+    public static ArrayList<BaseMonster> getMonsters(){
+        ArrayList<BaseMonster> result = new ArrayList<>();
+        for(int i=0; i<things.size(); i++){
+            if(things.get(i).getType()==ClassType.MONSTER){
+                result.add((BaseMonster)things.get(i));
+            }
         }
         return result;
     }

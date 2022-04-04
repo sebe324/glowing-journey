@@ -16,7 +16,7 @@ public class Warrior extends BasePlayer {
         this.setHpRegen(5);
         this.setDamageRange(CLOSE_RANGE);
         this.setDamageType(PHYSICAL);
-        this.uploadImage("WarriorBase.png", "WarriorAttackLeft.png", "WarriorAttackRight.png");
+        this.uploadImage("images/warrior/warrior.png", "images/warrior/warriorLeftAttacj.png", "images/warrior/warriorRightAttack.png");
     }
 
     public Warrior() {

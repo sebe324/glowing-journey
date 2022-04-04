@@ -3,6 +3,7 @@ package com.company.classes.characters.player;
 import com.company.classes.characters.BaseCharacter;
 
 import static com.company.enums.DamageRange.CLOSE_RANGE;
+import static com.company.enums.DamageRange.LONG_RANGE;
 import static com.company.enums.DamageType.PHYSICAL;
 
 public class Archer extends BasePlayer {
@@ -14,8 +15,8 @@ public class Archer extends BasePlayer {
         this.setMaxMana(200);
         this.setMana(200);
         this.setHpRegen(5);
-        this.setDamageRange(CLOSE_RANGE);
+        this.setDamageRange(LONG_RANGE);
         this.setDamageType(PHYSICAL);
-        this.uploadImage("ArcherStand.png", "ArcherAttackLeft.png", "ArcherAttackRight.png");
+        this.uploadImage("images/archer/archer.png", "images/archer/archerLeftAttack.png", "images/archer/archerRightAttack.png");
     }
 }

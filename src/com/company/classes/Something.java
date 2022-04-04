@@ -19,16 +19,22 @@ public abstract class Something {
     private ClassType type;
     private Image image, baseImage;
     private int id;
+    private boolean isAlive;
     public Something(int x, int y, String name, ClassType type) {
         this.x = x;
         this.y = y;
         this.name = name;
         this.type=type;
         this.id = ++Map.characterCount;
+        this.isAlive=true;
         occupiedCells[this.x][this.y]=this.id;
         System.out.println("X "+this.x);
         System.out.println("Y "+this.y);
         System.out.println("Psycha siedzi" +  occupiedCells[this.x][this.y]);
+    }
+
+    public boolean isAlive() {
+        return isAlive;
     }
 
     public ClassType getType() {
@@ -50,6 +56,7 @@ public abstract class Something {
         }
         else if(hp<=0){
             occupiedCells[this.x][this.y]=0;
+            this.isAlive=false;
             particles.add(new Particle(this.x, this.y, "images/particles/destroyed"+this.name+".png"));
             int tmp= getIdThings();
             System.out.println("deleted : " + things.get(getIdThings()));
