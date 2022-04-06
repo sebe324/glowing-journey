@@ -156,14 +156,25 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
                         }
             }
             }
+            else if(direction=="up"){
+                for(int i=0; i<3; i++){
+                    if (occupiedCells[getX()+1-i][getY()-1] != 0) {
+                        things.get(occupiedCells[getX()+1-i][getY()-1]-1).loseHp(attackDmg);
+                    }
+                }
+            }
+            else if(direction=="down") {
+                for (int i = 0; i < 3; i++) {
+                    if (occupiedCells[getX() + 1 - i][getY() + 1] != 0) {
+                        things.get(occupiedCells[getX() + 1 - i][getY() + 1] - 1).loseHp(attackDmg);
+                    }
+                }
+            }
         } else if(damageRange==LONG_RANGE){
             if(direction=="right"){
             for(int i=1; i<5; i++) {
                 if (occupiedCells[getX() + i][getY()] != 0) {
                     things.get(occupiedCells[getX() + i][getY()]-1).loseHp(attackDmg);
-                }
-                else if(occupiedCells[getX() + i][getY()+1]!=0){
-                    things.get(occupiedCells[getX() + i][getY()+1]-1).loseHp(attackDmg);
                 }
             }
             }
@@ -172,8 +183,19 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
                     if (occupiedCells[getX() - i][getY()] != 0) {
                         things.get(occupiedCells[getX() - i][getY()]-1).loseHp(attackDmg);
                     }
-                    else if(occupiedCells[getX() - i][getY()+1]!=0){
-                        things.get(occupiedCells[getX() - i][getY()+1]-1).loseHp(attackDmg);
+                }
+            }
+            else if(direction=="up"){
+                for(int i=0; i<5; i++){
+                    if (occupiedCells[getX()][getY()-i] != 0) {
+                        things.get(occupiedCells[getX()][getY()-i]-1).loseHp(attackDmg);
+                    }
+                }
+            }
+            else if(direction=="down") {
+                for (int i = 0; i < 5; i++) {
+                    if (occupiedCells[getX()][getY() + i] != 0) {
+                        things.get(occupiedCells[getX()][getY() + i] - 1).loseHp(attackDmg);
                     }
                 }
             }

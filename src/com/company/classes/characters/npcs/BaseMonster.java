@@ -39,6 +39,8 @@ public abstract class BaseMonster extends BaseCharacter implements BaseMonsterIn
         if(getDistance(this.attacked)==1){
             attack("right");
             attack("left");
+            attack("up");
+            attack("down");
             if(!this.attacked.isAlive()) this.attacked=null;
         }
         else{
