@@ -57,6 +57,7 @@ public abstract class Something {
         else if(hp<=0){
             occupiedCells[this.x][this.y]=0;
             this.isAlive=false;
+            characterCount--;
             particles.add(new Particle(this.x, this.y, "images/particles/destroyed"+this.name+".png"));
             int tmp= getIdThings();
             System.out.println("deleted : " + things.get(getIdThings()));

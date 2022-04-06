@@ -8,6 +8,7 @@ import com.company.enums.DamageType;
 import javax.swing.*;
 import java.awt.*;
 
+import static com.company.Map.getMonsters;
 import static com.company.Map.occupiedCells;
 import static com.company.Map.things;
 import static com.company.enums.DamageRange.CLOSE_RANGE;

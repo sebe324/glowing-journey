@@ -1,5 +1,6 @@
 package com.company;
 
+import com.company.classes.Something;
 import com.company.classes.characters.BaseCharacter;
 import com.company.classes.characters.npcs.BaseMonster;
 import com.company.classes.characters.npcs.Zombie;
@@ -43,9 +44,21 @@ public class Main extends Thread{
     public void run() {
         while (true) {
             try{
+                for(Something thing : things){
+                    System.out.println("things id: "+thing+" "+thing.getId());
+                }
+                System.out.println("Monsters: "+getMonsters().size());
                 for(BasePlayer player : getPlayers()){
                     player.setHp(player.getHp()+player.getHpRegen());
                 }
+                if(getMonsters().size()<4){
+                    int x=(int)(Math.random() * 35) + 1;
+                    int y=(int)(Math.random() * 19) + 1;
+                    if(occupiedCells[x][y]==0){
+                        things.add(new Zombie(x,y,"zombie"));
+                    }
+                }
+
                 for(BaseMonster monster : getMonsters()){
                     monster.pathFindToPlayer();
                 }
