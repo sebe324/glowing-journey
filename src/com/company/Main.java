@@ -1,7 +1,6 @@
 package com.company;
 
 import com.company.classes.Something;
-import com.company.classes.characters.BaseCharacter;
 import com.company.classes.characters.npcs.BaseMonster;
 import com.company.classes.characters.npcs.Zombie;
 import com.company.classes.characters.player.BasePlayer;
@@ -10,8 +9,6 @@ import com.company.classes.characters.player.Wizard;
 import com.company.classes.structures.Wall;
 
 import java.awt.event.KeyEvent;
-import java.util.ArrayList;
-import java.util.List;
 
 import static com.company.Map.*;
 
@@ -29,11 +26,7 @@ public class Main extends Thread{
     System.out.println("length"+things.size());
     System.out.println(things.get(0));
     if(map.notEmpty()){
-        map.runWindow();
-        getPlayers().get(1).setHp(100);
-        Main thread = new Main();
-        thread.start();
-        System.out.println("Cells:  " + (occupiedCells[0][10]));
+        map.runMenu();
     }
 
     else{
@@ -63,7 +56,7 @@ public class Main extends Thread{
                     monster.pathFindToPlayer();
                 }
 
-                mw.getGame().repaint();
+                mainWindow.getGame().repaint();
                 Thread.sleep(1000);
             }catch(InterruptedException ex){
                 //do stuff

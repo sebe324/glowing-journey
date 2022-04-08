@@ -1,7 +1,6 @@
 package com.company;
 
 import com.company.classes.Something;
-import com.company.classes.characters.BaseCharacter;
 import com.company.classes.characters.npcs.BaseMonster;
 import com.company.classes.characters.player.BasePlayer;
 import com.company.classes.particles.Particle;
@@ -16,7 +15,8 @@ public class Map {
     public static List<Something> things = new ArrayList<>();
     public static List<Particle> particles = new ArrayList<>();
     //public static List<BasePlayer> players;
-    public static MainWindow mw;
+    public static MainWindow mainWindow;
+    public static MenuWindow menuWindow;
     public Map(Something... input){
         //System.out.println(player.getHp());
 
@@ -47,7 +47,8 @@ public class Map {
         }
         return result;
     }
+    public void runMenu(){menuWindow = new MenuWindow(this);}
     public void runWindow(){
-        mw = new MainWindow(1800,1000, this);
+        mainWindow = new MainWindow(1800,1000, this);
     }
 }
