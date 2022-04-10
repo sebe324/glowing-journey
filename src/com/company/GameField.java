@@ -1,7 +1,6 @@
 package com.company;
 
 import com.company.classes.Something;
-import com.company.classes.characters.BaseCharacter;
 import com.company.classes.characters.player.BasePlayer;
 import com.company.classes.particles.Particle;
 
@@ -9,26 +8,23 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import static com.company.Map.*;
-
 public class GameField extends JPanel {
-    private Map map;
-    public GameField(Map map){
-        this.map = map;
+    private GameMap gameMap;
+    public GameField(GameMap gameMap){
+        this.gameMap = gameMap;
         setFocusable(true);
         addKeyListener(new FieldKeyListener());
     }
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-        for(Particle particle : particles){
+        for(Particle particle : gameMap.particles){
             g.drawImage(particle.getImage(), particle.getXWindow(), particle.getYWindow(), this);
         }
-        for(Something thing : things){
+        for(Something thing : gameMap.things){
             g.drawImage(thing.getImage(), thing.getXWindow(), thing.getYWindow(), this);
             g.drawString(""+thing.getName(), thing.getXWindow(), thing.getYWindow());
             g.drawString(""+thing.getHp(), thing.getXWindow(), thing.getYWindow()-12);
@@ -39,8 +35,8 @@ public class GameField extends JPanel {
         public void keyPressed(KeyEvent e){
             super.keyPressed(e);
             int key = e.getKeyCode();
-            for(int i=0; i < getPlayers().size(); i++) {
-                BasePlayer player=getPlayers().get(i);
+            for(int i=0; i < gameMap.getPlayers().size(); i++) {
+                BasePlayer player=gameMap.getPlayers().get(i);
                     if(key==player.getUpKey())  player.up();
                     else if(key==player.getDownKey()) player.down();
                     else if(key==player.getLeftKey()) player.left();
@@ -76,6 +72,9 @@ public class GameField extends JPanel {
                         );
                     }
 
+            }
+            if(key==KeyEvent.VK_ESCAPE){
+                gameMap.save("saves/koks.txt");
             }
             validate();
             repaint();

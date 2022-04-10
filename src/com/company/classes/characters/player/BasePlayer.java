@@ -1,19 +1,23 @@
 package com.company.classes.characters.player;
 
+import com.company.GameMap;
 import com.company.classes.characters.BaseCharacter;
 import com.company.enums.ClassType;
+
+import java.awt.event.KeyEvent;
 
 public abstract class BasePlayer extends BaseCharacter {
     private int upKey,downKey,leftKey,rightKey, leftAttackKey, rightAttackKey;
 
-    public BasePlayer(int x, int y, String name, int upKey, int downKey, int leftKey, int rightKey, int leftAttackKey, int rightAttackKey) {
-        super(x, y, name, ClassType.PLAYER);
-        this.upKey = upKey;
-        this.downKey = downKey;
-        this.leftKey = leftKey;
-        this.rightKey = rightKey;
-        this.leftAttackKey = leftAttackKey;
-        this.rightAttackKey = rightAttackKey;
+    protected BasePlayer(int x, int y, String name, GameMap gameMap) {
+        super(x, y, name, ClassType.PLAYER, gameMap);
+        upKey = KeyEvent.VK_W;
+        leftKey = KeyEvent.VK_A;
+        downKey = KeyEvent.VK_S;
+        rightKey=KeyEvent.VK_D;
+        leftAttackKey= KeyEvent.VK_Q;
+        rightAttackKey = KeyEvent.VK_E;
+
     }
 
     public BasePlayer() {
@@ -50,4 +54,27 @@ public abstract class BasePlayer extends BaseCharacter {
         return rightAttackKey;
     }
 
+    public void setUpKey(int upKey) {
+        this.upKey = upKey;
+    }
+
+    public void setDownKey(int downKey) {
+        this.downKey = downKey;
+    }
+
+    public void setLeftKey(int leftKey) {
+        this.leftKey = leftKey;
+    }
+
+    public void setRightKey(int rightKey) {
+        this.rightKey = rightKey;
+    }
+
+    public void setLeftAttackKey(int leftAttackKey) {
+        this.leftAttackKey = leftAttackKey;
+    }
+
+    public void setRightAttackKey(int rightAttackKey) {
+        this.rightAttackKey = rightAttackKey;
+    }
 }

@@ -1,17 +1,15 @@
 package com.company;
 
-import com.company.classes.characters.player.BasePlayer;
-
 import javax.swing.*;
 
 public class MenuWindow extends JFrame {
 private MainMenu mainMenu;
-public MenuWindow(){
+public MenuWindow(GameMap gameMap){
 setSize(1000,1000);
 setLocationRelativeTo(null);
-mainMenu = new MainMenu();
+mainMenu = new MainMenu(gameMap);
 add(mainMenu);
     setVisible(true);
-    setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+    setDefaultCloseOperation(EXIT_ON_CLOSE);
 }
 }

@@ -1,15 +1,11 @@
 package com.company.classes;
 
-import com.company.Map;
-import com.company.classes.characters.BaseCharacter;
+import com.company.GameMap;
 import com.company.classes.particles.Particle;
 import com.company.enums.ClassType;
 
 import javax.swing.*;
 import java.awt.*;
-import java.util.ArrayList;
-
-import static com.company.Map.*;
 
 public abstract class Something {
     private int x;
@@ -20,17 +16,16 @@ public abstract class Something {
     private Image image, baseImage;
     private int id;
     private boolean isAlive;
-    public Something(int x, int y, String name, ClassType type) {
+    private GameMap gameMap;
+    protected Something(int x, int y, String name, ClassType type, GameMap gameMap) {
         this.x = x;
         this.y = y;
+        this.gameMap = gameMap;
         this.name = name;
         this.type=type;
-        this.id = ++Map.characterCount;
+        this.id = ++gameMap.characterCount;
         this.isAlive=true;
-        occupiedCells[this.x][this.y]=this.id;
-        System.out.println("X "+this.x);
-        System.out.println("Y "+this.y);
-        System.out.println("Psycha siedzi" +  occupiedCells[this.x][this.y]);
+        gameMap.occupiedCells[this.x][this.y]=this.id;
     }
 
     public boolean isAlive() {
@@ -45,7 +40,7 @@ public abstract class Something {
         this.type = type;
     }
 
-    public Something() {
+    protected Something() {
     }
     public int getHp() {
         return hp;
@@ -55,21 +50,15 @@ public abstract class Something {
             this.hp = this.maxHp;
         }
         else if(hp<=0){
-            occupiedCells[this.x][this.y]=0;
+            gameMap.occupiedCells[this.x][this.y]=0;
             this.isAlive=false;
-            characterCount--;
-            particles.add(new Particle(this.x, this.y, "images/particles/destroyed"+this.name+".png"));
+            gameMap.characterCount--;
+            gameMap.particles.add(new Particle(this.x, this.y, "images/particles/destroyed"+this.name+".png"));
             int tmp= getIdThings();
-            System.out.println("deleted : " + things.get(getIdThings()));
-            things.remove(getIdThings());
-            for(int i=tmp; i<things.size(); i++){
-                things.get(i).id-=1;
-                occupiedCells[things.get(i).getX()][things.get(i).getY()]-=1;
-                System.out.println("i"+i+"id"+things.get(i).id+"name"+things.get(i).name);
-            }
-            System.out.println("things size" + things.size());
-            for(int i=0; i<things.size(); i++){
-                System.out.println("i"+i+"id"+things.get(i).id+"name"+things.get(i).name);
+            gameMap.things.remove(getIdThings());
+            for(int i = tmp; i< gameMap.things.size(); i++){
+                gameMap.things.get(i).id-=1;
+                gameMap.occupiedCells[gameMap.things.get(i).getX()][gameMap.things.get(i).getY()]-=1;
             }
         }
         else

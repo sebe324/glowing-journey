@@ -1,5 +1,6 @@
 package com.company.classes.characters;
 
+import com.company.GameMap;
 import com.company.classes.Something;
 import com.company.enums.ClassType;
 import com.company.enums.DamageRange;
@@ -7,10 +8,6 @@ import com.company.enums.DamageType;
 
 import javax.swing.*;
 import java.awt.*;
-
-import static com.company.Map.getMonsters;
-import static com.company.Map.occupiedCells;
-import static com.company.Map.things;
 import static com.company.enums.DamageRange.CLOSE_RANGE;
 import static com.company.enums.DamageRange.LONG_RANGE;
 
@@ -21,10 +18,12 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
     private DamageType damageType;
     private DamageRange damageRange;
     private Image image, baseImage, attackLeftImage, attackRightImage;
-    public BaseCharacter(int x, int y, String name, ClassType type){
-        super(x,y,name, type);
+    private GameMap gameMap;
+    protected BaseCharacter(int x, int y, String name, ClassType type, GameMap gameMap){
+        super(x,y,name, type, gameMap);
+        this.gameMap=gameMap;
     }
-    public BaseCharacter() {
+    protected BaseCharacter() {
     }
 
     public int getMana() {
@@ -35,8 +34,7 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
         if(this.mana>this.getMaxMana()){
             this.mana=maxMana;
         }
-        else
-        this.mana = mana;
+        else this.mana = mana;
     }
 
     public int getMaxMana() {
@@ -78,19 +76,19 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
     public void setManaRegen(int manaRegen) {
         this.manaRegen = manaRegen;
     }
-
+    @Override
     public Image getBaseImage() {
         return baseImage;
     }
-
+    @Override
     public Image getImage() {
         return image;
     }
-
+    @Override
     public void setImage(Image image) {
         this.image = image;
     }
-
+    @Override
     public void setBaseImage() {
         this.image = this.baseImage;
     }
@@ -142,60 +140,60 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
     @Override
     public void attack(String direction){
         if(damageRange==CLOSE_RANGE) {
-            if(direction=="right") {
+            if(direction.equals("right")) {
                 for (int i = 0; i < 3; i++) {
-                    if (occupiedCells[getX()+1][getY() + i] != 0) {
-                        things.get(occupiedCells[getX()+1][getY() + i]-1).loseHp(attackDmg);
+                    if (gameMap.occupiedCells[getX()+1][getY() + i] != 0) {
+                        gameMap.things.get(gameMap.occupiedCells[getX()+1][getY() + i]-1).loseHp(attackDmg);
                     }
                 }
             }
-            else if(direction=="left") {
+            else if(direction.equals("left")) {
                     for(int i=0; i<3; i++) {
-                        if (occupiedCells[getX()-1][getY()+i] != 0) {
-                            things.get(occupiedCells[getX()-1][getY()+i]-1).loseHp(attackDmg);
+                        if (gameMap.occupiedCells[getX()-1][getY()+i] != 0) {
+                            gameMap.things.get(gameMap.occupiedCells[getX()-1][getY()+i]-1).loseHp(attackDmg);
                         }
             }
             }
-            else if(direction=="up"){
+            else if(direction.equals("up")){
                 for(int i=0; i<3; i++){
-                    if (occupiedCells[getX()+1-i][getY()-1] != 0) {
-                        things.get(occupiedCells[getX()+1-i][getY()-1]-1).loseHp(attackDmg);
+                    if (gameMap.occupiedCells[getX()+1-i][getY()-1] != 0) {
+                        gameMap.things.get(gameMap.occupiedCells[getX()+1-i][getY()-1]-1).loseHp(attackDmg);
                     }
                 }
             }
-            else if(direction=="down") {
+            else if(direction.equals("down")) {
                 for (int i = 0; i < 3; i++) {
-                    if (occupiedCells[getX() + 1 - i][getY() + 1] != 0) {
-                        things.get(occupiedCells[getX() + 1 - i][getY() + 1] - 1).loseHp(attackDmg);
+                    if (gameMap.occupiedCells[getX() + 1 - i][getY() + 1] != 0) {
+                        gameMap.things.get(gameMap.occupiedCells[getX() + 1 - i][getY() + 1] - 1).loseHp(attackDmg);
                     }
                 }
             }
         } else if(damageRange==LONG_RANGE){
-            if(direction=="right"){
+            if(direction.equals("right")){
             for(int i=1; i<5; i++) {
-                if (occupiedCells[getX() + i][getY()] != 0) {
-                    things.get(occupiedCells[getX() + i][getY()]-1).loseHp(attackDmg);
+                if (gameMap.occupiedCells[getX() + i][getY()] != 0) {
+                    gameMap.things.get(gameMap.occupiedCells[getX() + i][getY()]-1).loseHp(attackDmg);
                 }
             }
             }
-            else if(direction=="left"){
+            else if(direction.equals("left")){
                 for(int i=1; i<5; i++) {
-                    if (occupiedCells[getX() - i][getY()] != 0) {
-                        things.get(occupiedCells[getX() - i][getY()]-1).loseHp(attackDmg);
+                    if (gameMap.occupiedCells[getX() - i][getY()] != 0) {
+                        gameMap.things.get(gameMap.occupiedCells[getX() - i][getY()]-1).loseHp(attackDmg);
                     }
                 }
             }
-            else if(direction=="up"){
+            else if(direction.equals("up")){
                 for(int i=0; i<5; i++){
-                    if (occupiedCells[getX()][getY()-i] != 0) {
-                        things.get(occupiedCells[getX()][getY()-i]-1).loseHp(attackDmg);
+                    if (gameMap.occupiedCells[getX()][getY()-i] != 0) {
+                        gameMap.things.get(gameMap.occupiedCells[getX()][getY()-i]-1).loseHp(attackDmg);
                     }
                 }
             }
-            else if(direction=="down") {
+            else if(direction.equals("down")) {
                 for (int i = 0; i < 5; i++) {
-                    if (occupiedCells[getX()][getY() + i] != 0) {
-                        things.get(occupiedCells[getX()][getY() + i] - 1).loseHp(attackDmg);
+                    if (gameMap.occupiedCells[getX()][getY() + i] != 0) {
+                        gameMap.things.get(gameMap.occupiedCells[getX()][getY() + i] - 1).loseHp(attackDmg);
                     }
                 }
             }
@@ -216,15 +214,12 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
         setBaseImage();
     }
     public void tryChangePosition(int newPosX, int newPosY) {
-        if (newPosX < occupiedCells.length && newPosX >= 0 && newPosY < occupiedCells[0].length && newPosY >= 0) {
-            if (occupiedCells[newPosX][newPosY] == 0) {
-                occupiedCells[getX()][getY()] = 0;
-                occupiedCells[newPosX][newPosY] = getId();
-                System.out.println(getX());
-                System.out.println(getY());
+        if (newPosX < gameMap.occupiedCells.length && newPosX >= 0 && newPosY < gameMap.occupiedCells[0].length && newPosY >= 0) {
+            if (gameMap.occupiedCells[newPosX][newPosY] == 0) {
+                gameMap.occupiedCells[getX()][getY()] = 0;
+                gameMap.occupiedCells[newPosX][newPosY] = getId();
                 setY(newPosY);
                 setX(newPosX);
-                System.out.println(occupiedCells[newPosX][newPosY]);
 
             } else {
                 loseHp(30);
@@ -234,7 +229,6 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
     public void left(){
         int newPositionX = getX() - 1;
         tryChangePosition(newPositionX, getY());
-        System.out.println(getX());
     }
     public void right(){
         int newPositionX = getX() + 1;

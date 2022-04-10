@@ -1,22 +1,23 @@
 package com.company.classes.characters.npcs;
 
+import com.company.GameMap;
 import com.company.classes.characters.BaseCharacter;
 import com.company.classes.characters.player.BasePlayer;
 import com.company.enums.ClassType;
 
-import static com.company.Map.getPlayers;
-
 public abstract class BaseMonster extends BaseCharacter implements BaseMonsterInterface{
     private BasePlayer attacked=null;
     private int range;
-    public BaseMonster(int x, int y, String name, int range) {
-        super(x, y, name, ClassType.MONSTER);
+    private GameMap gameMap;
+    protected BaseMonster(int x, int y, String name, int range, GameMap gameMap) {
+        super(x, y, name, ClassType.MONSTER, gameMap);
         this.range=range;
+        this.gameMap=gameMap;
     }
     @Override
     public boolean IsPlayerInRange() {
         if(this.attacked==null) {
-            for (BasePlayer player : getPlayers()) {
+            for (BasePlayer player : gameMap.getPlayers()) {
 
                 if (getDistance(player) <= this.range) {
                     this.attacked = player;
@@ -46,22 +47,17 @@ public abstract class BaseMonster extends BaseCharacter implements BaseMonsterIn
         else{
             if((this.attacked.getX()-getX())<0){
                 left();
-                System.out.println("Moving left");
             }
             else if((this.attacked.getX()-getX())>0){
                 right();
-                System.out.println("Moving right");
             }
             else if((this.attacked.getY()-getY())<0){
                 up();
-                System.out.println("Moving up");
             }
             else if((this.attacked.getY()-getY())>0){
                 down();
-                System.out.println("Moving down");
             }
         }
-        System.out.println("target: " + this.attacked);
     }
     }
     @Override
