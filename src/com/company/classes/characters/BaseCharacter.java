@@ -18,7 +18,6 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
 
     private int mana, maxMana, level, attackDmg;
     private int hpRegen, manaRegen;
-    protected String className;
     private DamageType damageType;
     private DamageRange damageRange;
     private Image image, baseImage, attackLeftImage, attackRightImage;

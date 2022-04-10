@@ -3,7 +3,7 @@ package com.company.classes.characters.player;
 import com.company.classes.characters.BaseCharacter;
 import com.company.enums.ClassType;
 
-public class BasePlayer extends BaseCharacter {
+public abstract class BasePlayer extends BaseCharacter {
     private int upKey,downKey,leftKey,rightKey, leftAttackKey, rightAttackKey;
 
     public BasePlayer(int x, int y, String name, int upKey, int downKey, int leftKey, int rightKey, int leftAttackKey, int rightAttackKey) {
