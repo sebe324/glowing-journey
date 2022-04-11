@@ -1,6 +1,6 @@
 package com.company.classes.structures;
 
-import com.company.GameMap;
+import com.company.game.GameMap;
 import com.company.classes.Something;
 import com.company.enums.ClassType;
 

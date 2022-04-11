@@ -1,4 +1,4 @@
-package com.company;
+package com.company.game;
 
 import com.company.classes.characters.npcs.BaseMonster;
 import com.company.classes.characters.npcs.Zombie;

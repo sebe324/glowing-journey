@@ -1,6 +1,6 @@
 package com.company.classes.characters.player;
 
-import com.company.GameMap;
+import com.company.game.GameMap;
 import com.company.classes.characters.BaseCharacter;
 import com.company.enums.ClassType;
 
@@ -20,7 +20,7 @@ public abstract class BasePlayer extends BaseCharacter {
 
     }
 
-    public BasePlayer() {
+    protected BasePlayer() {
     }
 
     public int getUpKey() {

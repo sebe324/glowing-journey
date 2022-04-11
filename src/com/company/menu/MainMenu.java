@@ -1,4 +1,6 @@
-package com.company;
+package com.company.menu;
+
+import com.company.game.GameMap;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
@@ -18,9 +20,10 @@ public class MainMenu extends JLabel {
         buttonStart.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
                 try {
-                    File file=new File("saves/"+JOptionPane.showInputDialog("Nazwa zapisu: ")+".txt");
+                    gameMap.filePath = ("saves/"+JOptionPane.showInputDialog("Nazwa zapisu: ")+".txt");
+                    File file=new File(gameMap.filePath);
                     if (file.createNewFile()) {
-                       SinglePlayerStartWindow nw = new SinglePlayerStartWindow(gameMap);
+                       new SinglePlayerStartWindow(gameMap);
                         gameMap.menuWindow.dispose();
                         System.out.println("File created: " + file.getName());
                     } else {
@@ -36,7 +39,8 @@ public class MainMenu extends JLabel {
                 buttonArena.setBounds(400,200,200,60);
                 buttonArena.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-
+                    new ArenaStartWindow(gameMap);
+                    gameMap.menuWindow.dispose();
                     }
                 });
 
@@ -48,10 +52,8 @@ public class MainMenu extends JLabel {
             } else {
                 buttonLoad.addActionListener(new ActionListener() {
                     public void actionPerformed(ActionEvent e) {
-                      //Menu with saves
-                        /*  menuWindow.dispose();
-                        map.runWindow();
-                        thread.start();*/
+                        gameMap.menuWindow.dispose();
+                   new LoadWindow(savesFolder);
                     }
                 });
             }

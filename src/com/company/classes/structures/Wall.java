@@ -1,6 +1,6 @@
 package com.company.classes.structures;
 
-import com.company.GameMap;
+import com.company.game.GameMap;
 
 public class Wall extends BaseStructure {
 public Wall(int x, int y, String name, GameMap gameMap){

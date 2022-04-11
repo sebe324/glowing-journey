@@ -1,5 +1,5 @@
 package com.company.classes.characters.player;
-import com.company.GameMap;
+import com.company.game.GameMap;
 
 import static com.company.enums.DamageRange.LONG_RANGE;
 import static com.company.enums.DamageType.PHYSICAL;

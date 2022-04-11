@@ -1,6 +1,6 @@
 package com.company.classes.characters.npcs;
 
-import com.company.GameMap;
+import com.company.game.GameMap;
 import com.company.classes.characters.BaseCharacter;
 import com.company.classes.characters.player.BasePlayer;
 import com.company.enums.ClassType;

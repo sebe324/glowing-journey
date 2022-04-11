@@ -1,9 +1,11 @@
-package com.company;
+package com.company.menu;
 
 import com.company.classes.characters.player.Archer;
 import com.company.classes.characters.player.Healer;
 import com.company.classes.characters.player.Warrior;
 import com.company.classes.characters.player.Wizard;
+import com.company.game.GameLoop;
+import com.company.game.GameMap;
 
 import javax.swing.*;
 import java.util.ArrayList;
@@ -45,8 +47,8 @@ public class SinglePlayerStartWindow extends JFrame {
         start.addActionListener(e -> {
             switch(selectedClass){
                 case "Warrior":
-                      gameMap.things.add(new Warrior(10,10,characterName.getText(),120,1000,1000,200,200,10, gameMap));
-                      gameMap.runWindow();
+                    gameMap.things.add(new Warrior(10,10,characterName.getText(),120,1000,1000,200,200,10, gameMap));
+                    gameMap.runWindow();
                     new Thread(r).start();
                     dispose();
                     break;

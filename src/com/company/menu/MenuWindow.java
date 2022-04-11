@@ -1,4 +1,7 @@
-package com.company;
+package com.company.menu;
+
+import com.company.game.GameMap;
+import com.company.menu.MainMenu;
 
 import javax.swing.*;
 

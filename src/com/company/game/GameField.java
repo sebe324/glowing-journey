@@ -1,4 +1,4 @@
-package com.company;
+package com.company.game;
 
 import com.company.classes.Something;
 import com.company.classes.characters.player.BasePlayer;
@@ -74,7 +74,7 @@ public class GameField extends JPanel {
 
             }
             if(key==KeyEvent.VK_ESCAPE){
-                gameMap.save("saves/koks.txt");
+                gameMap.save(gameMap.filePath);
             }
             validate();
             repaint();

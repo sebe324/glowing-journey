@@ -1,4 +1,7 @@
-package com.company;
+package com.company.menu;
+
+import com.company.game.GameField;
+import com.company.game.GameMap;
 
 import javax.swing.*;
 public class MainWindow extends JFrame {

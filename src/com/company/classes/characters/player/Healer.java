@@ -1,7 +1,6 @@
 package com.company.classes.characters.player;
 
-import com.company.GameMap;
-import com.company.classes.characters.BaseCharacter;
+import com.company.game.GameMap;
 
 import static com.company.enums.DamageRange.CLOSE_RANGE;
 import static com.company.enums.DamageType.MAGIC;

@@ -1,6 +1,6 @@
 package com.company.classes;
 
-import com.company.GameMap;
+import com.company.game.GameMap;
 import com.company.classes.particles.Particle;
 import com.company.enums.ClassType;
 
@@ -79,6 +79,8 @@ public abstract class Something {
     }
 
     public void setX(int x) {
+        gameMap.occupiedCells[this.x][this.y]=0;
+        gameMap.occupiedCells[x][this.y]=this.id;
         this.x = x;
     }
 
@@ -87,6 +89,8 @@ public abstract class Something {
     }
 
     public void setY(int y) {
+        gameMap.occupiedCells[this.x][this.y]=0;
+        gameMap.occupiedCells[this.x][y]=this.id;
         this.y = y;
     }
 

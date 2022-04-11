@@ -1,5 +1,7 @@
-package com.company;
+package com.company.game;
 
+import com.company.menu.MainWindow;
+import com.company.menu.MenuWindow;
 import com.company.classes.Something;
 import com.company.classes.characters.npcs.BaseMonster;
 import com.company.classes.characters.player.BasePlayer;
@@ -10,6 +12,7 @@ import com.company.enums.ClassType;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Scanner;
 
 public class GameMap {
     public int characterCount = 0;
@@ -18,6 +21,7 @@ public class GameMap {
     public List<Particle> particles = new ArrayList<>();
     public MainWindow mainWindow;
     public MenuWindow menuWindow;
+    public String filePath;
     public GameMap(Something... input){
        for(int i = 0; i <input.length; i++){
             things.add(input[i]);
@@ -62,10 +66,9 @@ public class GameMap {
     public void save(String path){
         try(
                 FileWriter writer = new FileWriter(path);
-                BufferedWriter br = new BufferedWriter(writer);
                 ){
         for(BasePlayer player : getPlayers()){
-            String line=(player.getX()+" "+player.getY()+" "+player.getName()+" "+player.getAttackDmg()+" "+player.getMaxHp()+" "+player.getHp()+" "+player.getMaxMana()+" "+player.getMana()+" "+player.getUpKey()+" "+player.getDownKey()+" "+player.getLeftKey()+" "+player.getRightKey()+" "+player.getLeftAttackKey()+" "+player.getRightAttackKey()+"\n");
+            String line=(player.getX()+" "+player.getY()+" "+player.getName()+" "+player.getAttackDmg()+" "+player.getMaxHp()+" "+player.getHp()+" "+player.getMaxMana()+" "+player.getMana()+"\n");
             writer.write(line);
         }
             for(BaseMonster monster: getMonsters()){
@@ -79,7 +82,16 @@ public class GameMap {
             //something idk
         }
     }
-    public static void load(String path){
-        //kiedys dodam
+    public GameMap load(File file){
+        try{
+            Scanner reader = new Scanner(file);
+            while(reader.hasNextLine()){
+                String data = reader.nextLine();
+            }
+            reader.close();
+        }catch(FileNotFoundException e){
+            e.printStackTrace();
+        }
+        return null;
     }
 }
