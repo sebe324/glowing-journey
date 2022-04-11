@@ -9,7 +9,7 @@ import java.awt.event.KeyEvent;
 public abstract class BasePlayer extends BaseCharacter {
     private int upKey,downKey,leftKey,rightKey, leftAttackKey, rightAttackKey;
 
-    protected BasePlayer(int x, int y, String name, GameMap gameMap) {
+    protected BasePlayer(int x, int y, java.lang.String name, GameMap gameMap) {
         super(x, y, name, ClassType.PLAYER, gameMap);
         upKey = KeyEvent.VK_W;
         leftKey = KeyEvent.VK_A;

@@ -6,7 +6,7 @@ import com.company.enums.ClassType;
 
 public abstract class BaseStructure extends Something {
     private Boolean Destructible;
-    public BaseStructure(int x, int y, String name, GameMap gameMap){
+    public BaseStructure(int x, int y, java.lang.String name, GameMap gameMap){
         super(x,y,name, ClassType.STRUCTURE, gameMap);
     }
 

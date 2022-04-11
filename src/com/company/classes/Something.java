@@ -11,13 +11,14 @@ public abstract class Something {
     private int x;
     private int y;
     private int maxHp, hp;
-    private String name;
+    private java.lang.String name;
     private ClassType type;
     private Image image, baseImage;
     private int id;
     private boolean isAlive;
     private GameMap gameMap;
-    protected Something(int x, int y, String name, ClassType type, GameMap gameMap) {
+    private String className;
+    protected Something(int x, int y, java.lang.String name, ClassType type, GameMap gameMap) {
         this.x = x;
         this.y = y;
         this.gameMap = gameMap;
@@ -26,6 +27,7 @@ public abstract class Something {
         this.id = ++gameMap.characterCount;
         this.isAlive=true;
         gameMap.occupiedCells[this.x][this.y]=this.id;
+        System.out.println(this.name+gameMap.occupiedCells[this.x][this.y]);
     }
 
     public boolean isAlive() {
@@ -38,6 +40,14 @@ public abstract class Something {
 
     public void setType(ClassType type) {
         this.type = type;
+    }
+
+    public String getClassName() {
+        return className;
+    }
+
+    public void setClassName(String string) {
+        this.className = string;
     }
 
     protected Something() {
@@ -94,14 +104,14 @@ public abstract class Something {
         this.y = y;
     }
 
-    public String getName() {
+    public java.lang.String getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(java.lang.String name) {
         this.name = name;
     }
-    public void uploadImage(String baseImage){
+    public void uploadImage(java.lang.String baseImage){
         this.baseImage = new ImageIcon(baseImage).getImage();
         setBaseImage();
     }

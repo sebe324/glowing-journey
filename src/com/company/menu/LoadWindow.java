@@ -24,8 +24,13 @@ for(int i=0; i<saves.size(); i++){
     saveButton.setBounds(10, i*40+10, 120, 20);
     saveButton.addActionListener(e->{
         GameMap gameMap=new GameMap();
-        gameMap.load(file);
+       gameMap.load(file);
+       gameMap.runWindow();
+       System.out.println(gameMap.occupiedCells[gameMap.things.get(1).getX()][gameMap.things.get(1).getY()]);
+       dispose();
         Runnable r = new GameLoop(gameMap);
+        new Thread(r).start();
+
     });
     container.add(saveButton);
     JButton deleteButton = new JButton("delete");
@@ -34,6 +39,7 @@ for(int i=0; i<saves.size(); i++){
         container.remove(deleteButton);
         container.remove(saveButton);
         file.delete();
+        container.repaint();
     });
     container.add(deleteButton);
 }

@@ -3,7 +3,7 @@ package com.company.classes.structures;
 import com.company.game.GameMap;
 
 public class Wall extends BaseStructure {
-public Wall(int x, int y, String name, GameMap gameMap){
+public Wall(int x, int y, java.lang.String name, GameMap gameMap){
  super(x,y,name, gameMap);
  this.setDestructible(true);
  this.setMaxHp(2000);

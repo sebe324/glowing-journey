@@ -7,7 +7,7 @@ import static com.company.enums.DamageType.PHYSICAL;
 
 
 public class Warrior extends BasePlayer {
-    public Warrior(int x, int y, String name, int attackDmg, int maxHp, int hp, int maxMana, int mana, int hpRegen, GameMap gameMap) {
+    public Warrior(int x, int y, java.lang.String name, int attackDmg, int maxHp, int hp, int maxMana, int mana, int hpRegen, GameMap gameMap) {
         super(x,y,name, gameMap);
         this.setAttackDmg(attackDmg);
         this.setMaxHp(maxHp);

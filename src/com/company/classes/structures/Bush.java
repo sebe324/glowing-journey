@@ -4,7 +4,7 @@ import com.company.game.GameMap;
 
 public class Bush extends BaseStructure {
 
-    public Bush(int x, int y, String name, GameMap gameMap) {
+    public Bush(int x, int y, java.lang.String name, GameMap gameMap) {
         super(x, y, name, gameMap);
         this.setDestructible(false);
         this.uploadImage("Wall.png");

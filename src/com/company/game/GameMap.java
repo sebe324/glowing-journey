@@ -1,5 +1,6 @@
 package com.company.game;
 
+import com.company.classes.characters.player.Wizard;
 import com.company.menu.MainWindow;
 import com.company.menu.MenuWindow;
 import com.company.classes.Something;
@@ -8,9 +9,10 @@ import com.company.classes.characters.player.BasePlayer;
 import com.company.classes.particles.Particle;
 import com.company.classes.structures.BaseStructure;
 import com.company.enums.ClassType;
-
+import java.lang.reflect.*;
 import java.io.*;
 import java.util.ArrayList;
+import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Scanner;
 
@@ -21,7 +23,7 @@ public class GameMap {
     public List<Particle> particles = new ArrayList<>();
     public MainWindow mainWindow;
     public MenuWindow menuWindow;
-    public String filePath;
+    public java.lang.String filePath;
     public GameMap(Something... input){
        for(int i = 0; i <input.length; i++){
             things.add(input[i]);
@@ -63,35 +65,70 @@ public class GameMap {
     public void runWindow(){
         mainWindow = new MainWindow(1800,1000, this);
     }
-    public void save(String path){
+    public void save(java.lang.String path){
         try(
                 FileWriter writer = new FileWriter(path);
                 ){
         for(BasePlayer player : getPlayers()){
-            String line=(player.getX()+" "+player.getY()+" "+player.getName()+" "+player.getAttackDmg()+" "+player.getMaxHp()+" "+player.getHp()+" "+player.getMaxMana()+" "+player.getMana()+"\n");
+            java.lang.String line=(player.getType()+";"+player.getClass().getCanonicalName()+";"+ player.getX()+";"+player.getY()+";"+player.getName()+";"+player.getAttackDmg()+";"+player.getMaxHp()+";"+player.getHp()+";"+player.getMaxMana()+";"+player.getMana()+";"+player.getHpRegen()+"\n");
             writer.write(line);
         }
             for(BaseMonster monster: getMonsters()){
-            //will add later
+            java.lang.String line=(monster.getType()+";"+monster.getClass().getCanonicalName()+";"+monster.getX()+";"+monster.getY()+";"+monster.getName()+";"+monster.getLevel()+"\n");
+            writer.write(line);
             }
             for(BaseStructure structure : getStructures()){
-            //will add later
+            java.lang.String line=(structure.getType()+";"+structure.getClass().getCanonicalName()+";"+structure.getX()+";"+structure.getY()+structure.getName()+"\n");
+            writer.write(line);
             }
             writer.close();
         }catch(IOException e){
             //something idk
         }
     }
-    public GameMap load(File file){
-        try{
-            Scanner reader = new Scanner(file);
+    public void load(File file){
+        try(Scanner reader = new Scanner(file);){
+            this.things.clear();
             while(reader.hasNextLine()){
-                String data = reader.nextLine();
-            }
+                java.lang.String data = reader.nextLine();
+                java.lang.String[] line = data.split(";");
+                if(line[0].equals("PLAYER")) {
+                    int x = Integer.parseInt(line[2]);
+                    int y = Integer.parseInt(line[3]);
+                    String name = line[4];
+                    int attackDmg = Integer.parseInt(line[5]);
+                    int maxHp = Integer.parseInt(line[6]);
+                    int hp = Integer.parseInt(line[7]);
+                    int maxMana = Integer.parseInt(line[8]);
+                    int mana = Integer.parseInt(line[9]);
+                    int hpRegen = Integer.parseInt(line[10]);
+                    Class player = Class.forName(line[1]);
+                    Constructor con = player.getConstructor(int.class, int.class, String.class, int.class, int.class, int.class, int.class, int.class, int.class, GameMap.class);
+                    this.things.add((Something) con.newInstance(x, y, name, attackDmg, maxHp, hp, maxMana, mana, hpRegen, this));
+                }
+                    else if(line[0].equals("MONSTER")) {
+
+                    int x = Integer.parseInt(line[2]);
+                    int y=Integer.parseInt(line[3]);
+                    String name=line[4];
+                    int level =Integer.parseInt(line[5]);
+                    Class monster = Class.forName(line[1]);
+                    Constructor con = monster.getConstructor(int.class,int.class,String.class,int.class,GameMap.class);
+                    this.things.add((Something)con.newInstance(x,y,name,level,this));
+                }
+                    else if(line[0].equals("STRUCTURE")){
+                    int x=Integer.parseInt(line[2]);
+                    int y=Integer.parseInt(line[3]);
+                    String name=line[4];
+                    Class structure = Class.forName(line[1]);
+                    Constructor con = structure.getConstructor(int.class,int.class,String.class,int.class,GameMap.class);
+                    this.things.add((Something)con.newInstance(x,y,name,this));
+                }
+                }
+
             reader.close();
-        }catch(FileNotFoundException e){
+        }catch(Exception e){
             e.printStackTrace();
         }
-        return null;
     }
 }

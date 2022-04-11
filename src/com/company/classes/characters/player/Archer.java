@@ -1,11 +1,11 @@
 package com.company.classes.characters.player;
-import com.company.game.GameMap;
 
+import com.company.game.GameMap;
 import static com.company.enums.DamageRange.LONG_RANGE;
 import static com.company.enums.DamageType.PHYSICAL;
 
 public class Archer extends BasePlayer {
-    public Archer(int x, int y, String name, int attackDmg, int maxHp, int hp, int maxMana, int mana, int hpRegen, GameMap gameMap){
+    public Archer(int x, int y, java.lang.String name, int attackDmg, int maxHp, int hp, int maxMana, int mana, int hpRegen, GameMap gameMap){
         super(x,y, name, gameMap);
         this.setAttackDmg(attackDmg);
         this.setMaxHp(maxHp);

@@ -4,6 +4,7 @@ import com.company.game.GameMap;
 import com.company.menu.MainMenu;
 
 import javax.swing.*;
+import java.awt.*;
 
 public class MenuWindow extends JFrame {
 private MainMenu mainMenu;

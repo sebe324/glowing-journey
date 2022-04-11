@@ -6,7 +6,7 @@ import static com.company.enums.DamageRange.CLOSE_RANGE;
 import static com.company.enums.DamageType.MAGIC;
 
 public class Healer extends BasePlayer {
-    public Healer(int x, int y, String name, int attackDmg, int maxHp, int hp, int maxMana, int mana, int hpRegen, GameMap gameMap){
+    public Healer(int x, int y, java.lang.String name, int attackDmg, int maxHp, int hp, int maxMana, int mana, int hpRegen, GameMap gameMap){
         super(x,y,name, gameMap);
         this.setAttackDmg(attackDmg);
         this.setMaxHp(maxHp);

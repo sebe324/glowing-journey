@@ -9,7 +9,7 @@ public abstract class BaseMonster extends BaseCharacter implements BaseMonsterIn
     private BasePlayer attacked=null;
     private int range;
     private GameMap gameMap;
-    protected BaseMonster(int x, int y, String name, int range, GameMap gameMap) {
+    protected BaseMonster(int x, int y, java.lang.String name, int range, GameMap gameMap) {
         super(x, y, name, ClassType.MONSTER, gameMap);
         this.range=range;
         this.gameMap=gameMap;
@@ -32,6 +32,14 @@ public abstract class BaseMonster extends BaseCharacter implements BaseMonsterIn
             else return false;
             }
         return false;
+    }
+
+    public int getRange() {
+        return range;
+    }
+
+    public void setRange(int range) {
+        this.range = range;
     }
 
     @Override

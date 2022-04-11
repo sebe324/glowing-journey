@@ -19,7 +19,7 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
     private DamageRange damageRange;
     private Image image, baseImage, attackLeftImage, attackRightImage;
     private GameMap gameMap;
-    protected BaseCharacter(int x, int y, String name, ClassType type, GameMap gameMap){
+    protected BaseCharacter(int x, int y, java.lang.String name, ClassType type, GameMap gameMap){
         super(x,y,name, type, gameMap);
         this.gameMap=gameMap;
     }
@@ -138,7 +138,7 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
         setMana(getMana()+amount);
     }
     @Override
-    public void attack(String direction){
+    public void attack(java.lang.String direction){
         if(damageRange==CLOSE_RANGE) {
             if(direction.equals("right")) {
                 for (int i = 0; i < 3; i++) {
@@ -207,7 +207,7 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
     public void info(){
 
     }
-    public void uploadImage(String baseImage, String attackLeftImage, String attackRightImage){
+    public void uploadImage(java.lang.String baseImage, java.lang.String attackLeftImage, java.lang.String attackRightImage){
         this.baseImage = new ImageIcon(baseImage).getImage();
         this.attackLeftImage = new ImageIcon(attackLeftImage).getImage();
         this.attackRightImage = new ImageIcon(attackRightImage).getImage();

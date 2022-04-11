@@ -5,6 +5,7 @@ import com.company.game.GameLoop;
 import com.company.game.GameMap;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
@@ -74,6 +75,7 @@ ArenaStartWindow(GameMap gameMap){
             player2.setLeftAttackKey(KeyEvent.VK_U);
             player2.setRightAttackKey(KeyEvent.VK_O);
             gameMap.runWindow();
+            gameMap.mainWindow.getGame().setBackground(new Color(255, 234, 167));
             new Thread(r).start();
             dispose();
         }
