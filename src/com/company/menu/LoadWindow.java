@@ -26,7 +26,7 @@ for(int i=0; i<saves.size(); i++){
         GameMap gameMap=new GameMap();
        gameMap.load(file);
        gameMap.runWindow();
-       System.out.println(gameMap.occupiedCells[gameMap.things.get(1).getX()][gameMap.things.get(1).getY()]);
+       System.out.println(gameMap.occupiedCells[gameMap.gameObjs.get(1).getX()][gameMap.gameObjs.get(1).getY()]);
        dispose();
         Runnable r = new GameLoop(gameMap);
         new Thread(r).start();

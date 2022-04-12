@@ -2,7 +2,6 @@ package com.company.classes.characters.player;
 
 import com.company.game.GameMap;
 
-import static com.company.enums.DamageRange.LONG_RANGE;
 import static com.company.enums.DamageType.MAGIC;
 
 public class Wizard extends BasePlayer{
@@ -14,7 +13,7 @@ public class Wizard extends BasePlayer{
         this.setMaxMana(maxMana);
         this.setMana(mana);
         this.setHpRegen(hpRegen);
-        this.setDamageRange(LONG_RANGE);
+        this.setDamageRange(4);
         this.setDamageType(MAGIC);
         this.uploadImage("images/wizard/wizard.png", "images/wizard/wizardLeftAttack.png", "images/wizard/wizardRightAttack.png");
     }

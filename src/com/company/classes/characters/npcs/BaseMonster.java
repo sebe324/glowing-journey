@@ -5,10 +5,11 @@ import com.company.classes.characters.BaseCharacter;
 import com.company.classes.characters.player.BasePlayer;
 import com.company.enums.ClassType;
 
+import java.util.Random;
+
 public abstract class BaseMonster extends BaseCharacter implements BaseMonsterInterface{
     private BasePlayer attacked=null;
     private int range;
-    private GameMap gameMap;
     protected BaseMonster(int x, int y, java.lang.String name, int range, GameMap gameMap) {
         super(x, y, name, ClassType.MONSTER, gameMap);
         this.range=range;
@@ -45,26 +46,23 @@ public abstract class BaseMonster extends BaseCharacter implements BaseMonsterIn
     @Override
     public void pathFindToPlayer() {
     if(IsPlayerInRange()){
-        if(getDistance(this.attacked)==1){
-            attack("right");
-            attack("left");
-            attack("up");
-            attack("down");
+        if(getDistance(this.attacked)<=getDamageRange()){
+            attack(attacked.getX(),attacked.getY());
             if(!this.attacked.isAlive()) this.attacked=null;
         }
         else{
-            if((this.attacked.getX()-getX())<0){
-                left();
-            }
-            else if((this.attacked.getX()-getX())>0){
-                right();
-            }
-            else if((this.attacked.getY()-getY())<0){
-                up();
-            }
-            else if((this.attacked.getY()-getY())>0){
-                down();
-            }
+            if(getX()>attacked.getX()) left();
+            else if(getX()<attacked.getX()) right();
+            if(getY()>attacked.getY())up();
+            else if(getY()<attacked.getY())down();
+        }
+    }
+    else if(new Random().nextInt((3-1)+1)==1){ //33% chance to move randomly
+        switch(new Random().nextInt((4 - 1) + 1) + 1){
+            case 1: up(); break;
+            case 2: down(); break;
+            case 3: left(); break;
+            case 4: right(); break;
         }
     }
     }

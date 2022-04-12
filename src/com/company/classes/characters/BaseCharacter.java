@@ -1,24 +1,21 @@
 package com.company.classes.characters;
 
+import com.company.classes.particles.Particle;
 import com.company.game.GameMap;
-import com.company.classes.Something;
+import com.company.classes.GameObj;
 import com.company.enums.ClassType;
-import com.company.enums.DamageRange;
 import com.company.enums.DamageType;
 
 import javax.swing.*;
 import java.awt.*;
-import static com.company.enums.DamageRange.CLOSE_RANGE;
-import static com.company.enums.DamageRange.LONG_RANGE;
 
-public abstract class BaseCharacter extends Something implements BaseCharacterInterface{
+public abstract class BaseCharacter extends GameObj implements BaseCharacterInterface{
 
     private int mana, maxMana, level, attackDmg;
     private int hpRegen, manaRegen;
     private DamageType damageType;
-    private DamageRange damageRange;
-    private Image image, baseImage, attackLeftImage, attackRightImage;
-    private GameMap gameMap;
+    private int damageRange;
+    private Image attackLeftImage, attackRightImage;
     protected BaseCharacter(int x, int y, java.lang.String name, ClassType type, GameMap gameMap){
         super(x,y,name, type, gameMap);
         this.gameMap=gameMap;
@@ -76,29 +73,13 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
     public void setManaRegen(int manaRegen) {
         this.manaRegen = manaRegen;
     }
-    @Override
-    public Image getBaseImage() {
-        return baseImage;
-    }
-    @Override
-    public Image getImage() {
-        return image;
-    }
-    @Override
-    public void setImage(Image image) {
-        this.image = image;
-    }
-    @Override
-    public void setBaseImage() {
-        this.image = this.baseImage;
-    }
 
     public Image getAttackLeftImage() {
         return attackLeftImage;
     }
 
     public void setAttackLeftImage() {
-        this.image = this.attackLeftImage;
+        setImage(this.attackLeftImage);
     }
 
     public Image getAttackRightImage() {
@@ -106,7 +87,7 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
     }
 
     public void setAttackRightImage() {
-        this.image = this.attackRightImage;
+        setImage(this.attackRightImage);
     }
 
     public DamageType getDamageType() {
@@ -117,11 +98,11 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
         this.damageType = damageType;
     }
 
-    public DamageRange getDamageRange() {
+    public int getDamageRange() {
         return damageRange;
     }
 
-    public void setDamageRange(DamageRange damageRange) {
+    public void setDamageRange(int damageRange) {
         this.damageRange = damageRange;
     }
 
@@ -138,33 +119,44 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
         setMana(getMana()+amount);
     }
     @Override
-    public void attack(java.lang.String direction){
-        if(damageRange==CLOSE_RANGE) {
+    public void attack(int directionX, int directionY){
+    int i=getX();
+    int j=getY();
+        while(i!=directionX || j!=directionY){
+            if(i>directionX) i--;
+            else if(i<directionX) i++;
+            if(j>directionY)j--;
+            else if(j<directionY)j++;
+            if (gameMap.occupiedCells[i][j] != 0) {
+                gameMap.gameObjs.get(gameMap.occupiedCells[i][j] - 1).loseHp(attackDmg);
+            }
+        }
+        /*if(damageRange==CLOSE_RANGE) {
             if(direction.equals("right")) {
                 for (int i = 0; i < 3; i++) {
                     if (gameMap.occupiedCells[getX()+1][getY() + i] != 0) {
-                        gameMap.things.get(gameMap.occupiedCells[getX()+1][getY() + i]-1).loseHp(attackDmg);
+                        gameMap.gameObjs.get(gameMap.occupiedCells[getX()+1][getY() + i]-1).loseHp(attackDmg);
                     }
                 }
             }
             else if(direction.equals("left")) {
                     for(int i=0; i<3; i++) {
                         if (gameMap.occupiedCells[getX()-1][getY()+i] != 0) {
-                            gameMap.things.get(gameMap.occupiedCells[getX()-1][getY()+i]-1).loseHp(attackDmg);
+                            gameMap.gameObjs.get(gameMap.occupiedCells[getX()-1][getY()+i]-1).loseHp(attackDmg);
                         }
             }
             }
             else if(direction.equals("up")){
                 for(int i=0; i<3; i++){
                     if (gameMap.occupiedCells[getX()+1-i][getY()-1] != 0) {
-                        gameMap.things.get(gameMap.occupiedCells[getX()+1-i][getY()-1]-1).loseHp(attackDmg);
+                        gameMap.gameObjs.get(gameMap.occupiedCells[getX()+1-i][getY()-1]-1).loseHp(attackDmg);
                     }
                 }
             }
             else if(direction.equals("down")) {
                 for (int i = 0; i < 3; i++) {
                     if (gameMap.occupiedCells[getX() + 1 - i][getY() + 1] != 0) {
-                        gameMap.things.get(gameMap.occupiedCells[getX() + 1 - i][getY() + 1] - 1).loseHp(attackDmg);
+                        gameMap.gameObjs.get(gameMap.occupiedCells[getX() + 1 - i][getY() + 1] - 1).loseHp(attackDmg);
                     }
                 }
             }
@@ -172,32 +164,32 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
             if(direction.equals("right")){
             for(int i=1; i<5; i++) {
                 if (gameMap.occupiedCells[getX() + i][getY()] != 0) {
-                    gameMap.things.get(gameMap.occupiedCells[getX() + i][getY()]-1).loseHp(attackDmg);
+                    gameMap.gameObjs.get(gameMap.occupiedCells[getX() + i][getY()]-1).loseHp(attackDmg);
                 }
             }
             }
             else if(direction.equals("left")){
                 for(int i=1; i<5; i++) {
                     if (gameMap.occupiedCells[getX() - i][getY()] != 0) {
-                        gameMap.things.get(gameMap.occupiedCells[getX() - i][getY()]-1).loseHp(attackDmg);
+                        gameMap.gameObjs.get(gameMap.occupiedCells[getX() - i][getY()]-1).loseHp(attackDmg);
                     }
                 }
             }
             else if(direction.equals("up")){
                 for(int i=0; i<5; i++){
                     if (gameMap.occupiedCells[getX()][getY()-i] != 0) {
-                        gameMap.things.get(gameMap.occupiedCells[getX()][getY()-i]-1).loseHp(attackDmg);
+                        gameMap.gameObjs.get(gameMap.occupiedCells[getX()][getY()-i]-1).loseHp(attackDmg);
                     }
                 }
             }
             else if(direction.equals("down")) {
                 for (int i = 0; i < 5; i++) {
                     if (gameMap.occupiedCells[getX()][getY() + i] != 0) {
-                        gameMap.things.get(gameMap.occupiedCells[getX()][getY() + i] - 1).loseHp(attackDmg);
+                        gameMap.gameObjs.get(gameMap.occupiedCells[getX()][getY() + i] - 1).loseHp(attackDmg);
                     }
                 }
             }
-        }
+        }*/
     }
     @Override
     public void levelUp(){
@@ -208,10 +200,10 @@ public abstract class BaseCharacter extends Something implements BaseCharacterIn
 
     }
     public void uploadImage(java.lang.String baseImage, java.lang.String attackLeftImage, java.lang.String attackRightImage){
-        this.baseImage = new ImageIcon(baseImage).getImage();
+        setBaseImage(new ImageIcon(baseImage).getImage());
         this.attackLeftImage = new ImageIcon(attackLeftImage).getImage();
         this.attackRightImage = new ImageIcon(attackRightImage).getImage();
-        setBaseImage();
+        setBaseImageToImage();
     }
     public void tryChangePosition(int newPosX, int newPosY) {
         if (newPosX < gameMap.occupiedCells.length && newPosX >= 0 && newPosY < gameMap.occupiedCells[0].length && newPosY >= 0) {

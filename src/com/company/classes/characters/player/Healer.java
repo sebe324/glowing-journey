@@ -2,7 +2,6 @@ package com.company.classes.characters.player;
 
 import com.company.game.GameMap;
 
-import static com.company.enums.DamageRange.CLOSE_RANGE;
 import static com.company.enums.DamageType.MAGIC;
 
 public class Healer extends BasePlayer {
@@ -14,7 +13,7 @@ public class Healer extends BasePlayer {
         this.setMaxMana(maxMana);
         this.setMana(mana);
         this.setHpRegen(hpRegen);
-        this.setDamageRange(CLOSE_RANGE);
+        this.setDamageRange(1);
         this.setDamageType(MAGIC);
         this.uploadImage("images/healer/healer.png", "images/healer/healerLeftAttack.png", "images/healer/healerRightAttack.png");
     }

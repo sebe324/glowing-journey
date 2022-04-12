@@ -51,16 +51,16 @@ ArenaStartWindow(GameMap gameMap){
             for (int i = 0; i < 2; i++) {
                 switch (selectedClasses.get(i)) {
                     case "Warrior":
-                        gameMap.things.add(new Warrior(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, gameMap));
+                        gameMap.gameObjs.add(new Warrior(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, gameMap));
                         break;
                     case "Archer":
-                        gameMap.things.add(new Archer(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, gameMap));
+                        gameMap.gameObjs.add(new Archer(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, gameMap));
                         break;
                     case "Wizard":
-                        gameMap.things.add(new Wizard(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, gameMap));
+                        gameMap.gameObjs.add(new Wizard(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, gameMap));
                         break;
                     case "Healer":
-                        gameMap.things.add(new Healer(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, gameMap));
+                        gameMap.gameObjs.add(new Healer(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, gameMap));
                         break;
                     default:
 

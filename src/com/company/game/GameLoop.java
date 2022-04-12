@@ -19,7 +19,7 @@ public void run(){
                     int x=(int)(Math.random() * 35) + 1;
                     int y=(int)(Math.random() * 19) + 1;
                     if(gameMap.occupiedCells[x][y]==0){
-                        gameMap.things.add(new Zombie(x,y,"zombie", 1,  gameMap));
+                        gameMap.gameObjs.add(new Zombie(x,y,"zombie", 1,  gameMap));
                     }
                 }
 

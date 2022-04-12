@@ -2,7 +2,6 @@ package com.company.classes.characters.player;
 
 import com.company.game.GameMap;
 
-import static com.company.enums.DamageRange.CLOSE_RANGE;
 import static com.company.enums.DamageType.PHYSICAL;
 
 
@@ -15,7 +14,7 @@ public class Warrior extends BasePlayer {
         this.setMaxMana(maxMana);
         this.setMana(mana);
         this.setHpRegen(hpRegen);
-        this.setDamageRange(CLOSE_RANGE);
+        this.setDamageRange(1);
         this.setDamageType(PHYSICAL);
         this.uploadImage("images/warrior/warrior.png", "images/warrior/warriorLeftAttacj.png", "images/warrior/warriorRightAttack.png");
     }

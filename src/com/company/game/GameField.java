@@ -1,6 +1,6 @@
 package com.company.game;
 
-import com.company.classes.Something;
+import com.company.classes.GameObj;
 import com.company.classes.characters.player.BasePlayer;
 import com.company.classes.particles.Particle;
 
@@ -24,7 +24,7 @@ public class GameField extends JPanel {
         for(Particle particle : gameMap.particles){
             g.drawImage(particle.getImage(), particle.getXWindow(), particle.getYWindow(), this);
         }
-        for(Something thing : gameMap.things){
+        for(GameObj thing : gameMap.gameObjs){
             g.drawImage(thing.getImage(), thing.getXWindow(), thing.getYWindow(), this);
             g.drawString(""+thing.getName(), thing.getXWindow(), thing.getYWindow());
             g.drawString(""+thing.getHp(), thing.getXWindow(), thing.getYWindow()-12);
@@ -43,21 +43,21 @@ public class GameField extends JPanel {
                     else if (key==player.getRightKey()) player.right();
                     else if (key==player.getLeftAttackKey()) {
                         player.setAttackLeftImage();
-                        player.attack("left");
+                        player.attack(player.getX()-player.getDamageRange(), player.getY());
 
                         //timer
                         new Timer().schedule(
                                 new TimerTask() {
                                     @Override
                                     public void run() {
-                                        player.setBaseImage();
+                                        player.setBaseImageToImage();
                                         repaint();
                                     }
                                 }, 200
                         );
                     }
                     else if(key==player.getRightAttackKey()) {
-                        player.attack("right");
+                        player.attack(player.getX()+player.getDamageRange(),player.getY());
                         player.setAttackRightImage();
 
                         //timer
@@ -65,7 +65,7 @@ public class GameField extends JPanel {
                                 new TimerTask() {
                                     @Override
                                     public void run() {
-                                        player.setBaseImage();
+                                        player.setBaseImageToImage();
                                         repaint();
                                     }
                                 }, 200

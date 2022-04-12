@@ -7,18 +7,17 @@ import com.company.enums.ClassType;
 import javax.swing.*;
 import java.awt.*;
 
-public abstract class Something {
+public abstract class GameObj {
     private int x;
     private int y;
     private int maxHp, hp;
-    private java.lang.String name;
+    private String name;
     private ClassType type;
     private Image image, baseImage;
     private int id;
     private boolean isAlive;
-    private GameMap gameMap;
-    private String className;
-    protected Something(int x, int y, java.lang.String name, ClassType type, GameMap gameMap) {
+    protected GameMap gameMap;
+    protected GameObj(int x, int y, java.lang.String name, ClassType type, GameMap gameMap) {
         this.x = x;
         this.y = y;
         this.gameMap = gameMap;
@@ -42,15 +41,7 @@ public abstract class Something {
         this.type = type;
     }
 
-    public String getClassName() {
-        return className;
-    }
-
-    public void setClassName(String string) {
-        this.className = string;
-    }
-
-    protected Something() {
+    protected GameObj() {
     }
     public int getHp() {
         return hp;
@@ -65,10 +56,10 @@ public abstract class Something {
             gameMap.characterCount--;
             gameMap.particles.add(new Particle(this.x, this.y, "images/particles/destroyed"+this.name+".png"));
             int tmp= getIdThings();
-            gameMap.things.remove(getIdThings());
-            for(int i = tmp; i< gameMap.things.size(); i++){
-                gameMap.things.get(i).id-=1;
-                gameMap.occupiedCells[gameMap.things.get(i).getX()][gameMap.things.get(i).getY()]-=1;
+            gameMap.gameObjs.remove(getIdThings());
+            for(int i = tmp; i< gameMap.gameObjs.size(); i++){
+                gameMap.gameObjs.get(i).id-=1;
+                gameMap.occupiedCells[gameMap.gameObjs.get(i).getX()][gameMap.gameObjs.get(i).getY()]-=1;
             }
         }
         else
@@ -113,7 +104,11 @@ public abstract class Something {
     }
     public void uploadImage(java.lang.String baseImage){
         this.baseImage = new ImageIcon(baseImage).getImage();
-        setBaseImage();
+        setBaseImageToImage();
+    }
+
+    public void setBaseImage(Image baseImage) {
+        this.baseImage = baseImage;
     }
 
     public Image getImage() {
@@ -128,7 +123,7 @@ public abstract class Something {
         return baseImage;
     }
 
-    public void setBaseImage() {
+    public void setBaseImageToImage() {
         this.image=this.baseImage;
     }
     public int getId(){

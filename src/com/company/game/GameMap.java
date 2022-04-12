@@ -1,9 +1,8 @@
 package com.company.game;
 
-import com.company.classes.characters.player.Wizard;
 import com.company.menu.MainWindow;
 import com.company.menu.MenuWindow;
-import com.company.classes.Something;
+import com.company.classes.GameObj;
 import com.company.classes.characters.npcs.BaseMonster;
 import com.company.classes.characters.player.BasePlayer;
 import com.company.classes.particles.Particle;
@@ -12,21 +11,20 @@ import com.company.enums.ClassType;
 import java.lang.reflect.*;
 import java.io.*;
 import java.util.ArrayList;
-import java.util.ConcurrentModificationException;
 import java.util.List;
 import java.util.Scanner;
 
 public class GameMap {
     public int characterCount = 0;
     public int[][] occupiedCells = new int[36][20];
-    public List<Something> things = new ArrayList<>();
+    public List<GameObj> gameObjs = new ArrayList<>();
     public List<Particle> particles = new ArrayList<>();
     public MainWindow mainWindow;
     public MenuWindow menuWindow;
     public java.lang.String filePath;
-    public GameMap(Something... input){
+    public GameMap(GameObj... input){
        for(int i = 0; i <input.length; i++){
-            things.add(input[i]);
+            gameObjs.add(input[i]);
         }
     }
 
@@ -36,27 +34,27 @@ public class GameMap {
 
     public ArrayList<BasePlayer> getPlayers(){
         ArrayList<BasePlayer> result = new ArrayList<>();
-        for(int i=0; i<things.size(); i++){
-         if(things.get(i).getType()== ClassType.PLAYER){
-            result.add((BasePlayer)things.get(i));
+        for(int i = 0; i< gameObjs.size(); i++){
+         if(gameObjs.get(i).getType()== ClassType.PLAYER){
+            result.add((BasePlayer) gameObjs.get(i));
          }
         }
         return result;
     }
     public ArrayList<BaseMonster> getMonsters(){
         ArrayList<BaseMonster> result = new ArrayList<>();
-        for(int i=0; i<things.size(); i++){
-            if(things.get(i).getType()==ClassType.MONSTER){
-                result.add((BaseMonster)things.get(i));
+        for(int i = 0; i< gameObjs.size(); i++){
+            if(gameObjs.get(i).getType()==ClassType.MONSTER){
+                result.add((BaseMonster) gameObjs.get(i));
             }
         }
         return result;
     }
     public ArrayList<BaseStructure> getStructures(){
         ArrayList<BaseStructure> result = new ArrayList<>();
-        for(int i=0; i<things.size(); i++){
-            if(things.get(i).getType()==ClassType.STRUCTURE){
-                result.add((BaseStructure) things.get(i));
+        for(int i = 0; i< gameObjs.size(); i++){
+            if(gameObjs.get(i).getType()==ClassType.STRUCTURE){
+                result.add((BaseStructure) gameObjs.get(i));
             }
         }
         return result;
@@ -88,7 +86,7 @@ public class GameMap {
     }
     public void load(File file){
         try(Scanner reader = new Scanner(file);){
-            this.things.clear();
+            this.gameObjs.clear();
             while(reader.hasNextLine()){
                 java.lang.String data = reader.nextLine();
                 java.lang.String[] line = data.split(";");
@@ -104,7 +102,7 @@ public class GameMap {
                     int hpRegen = Integer.parseInt(line[10]);
                     Class player = Class.forName(line[1]);
                     Constructor con = player.getConstructor(int.class, int.class, String.class, int.class, int.class, int.class, int.class, int.class, int.class, GameMap.class);
-                    this.things.add((Something) con.newInstance(x, y, name, attackDmg, maxHp, hp, maxMana, mana, hpRegen, this));
+                    this.gameObjs.add((GameObj) con.newInstance(x, y, name, attackDmg, maxHp, hp, maxMana, mana, hpRegen, this));
                 }
                     else if(line[0].equals("MONSTER")) {
 
@@ -114,7 +112,7 @@ public class GameMap {
                     int level =Integer.parseInt(line[5]);
                     Class monster = Class.forName(line[1]);
                     Constructor con = monster.getConstructor(int.class,int.class,String.class,int.class,GameMap.class);
-                    this.things.add((Something)con.newInstance(x,y,name,level,this));
+                    this.gameObjs.add((GameObj)con.newInstance(x,y,name,level,this));
                 }
                     else if(line[0].equals("STRUCTURE")){
                     int x=Integer.parseInt(line[2]);
@@ -122,7 +120,7 @@ public class GameMap {
                     String name=line[4];
                     Class structure = Class.forName(line[1]);
                     Constructor con = structure.getConstructor(int.class,int.class,String.class,int.class,GameMap.class);
-                    this.things.add((Something)con.newInstance(x,y,name,this));
+                    this.gameObjs.add((GameObj)con.newInstance(x,y,name,this));
                 }
                 }
 
