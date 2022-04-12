@@ -51,16 +51,16 @@ ArenaStartWindow(GameMap gameMap){
             for (int i = 0; i < 2; i++) {
                 switch (selectedClasses.get(i)) {
                     case "Warrior":
-                        gameMap.gameObjs.add(new Warrior(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, gameMap));
+                        gameMap.gameObjs.add(new Warrior(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5, gameMap));
                         break;
                     case "Archer":
-                        gameMap.gameObjs.add(new Archer(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, gameMap));
+                        gameMap.gameObjs.add(new Archer(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5, gameMap));
                         break;
                     case "Wizard":
-                        gameMap.gameObjs.add(new Wizard(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, gameMap));
+                        gameMap.gameObjs.add(new Wizard(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5,gameMap));
                         break;
                     case "Healer":
-                        gameMap.gameObjs.add(new Healer(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, gameMap));
+                        gameMap.gameObjs.add(new Healer(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5, gameMap));
                         break;
                     default:
 
@@ -74,6 +74,8 @@ ArenaStartWindow(GameMap gameMap){
             player2.setDownKey(KeyEvent.VK_K);
             player2.setLeftAttackKey(KeyEvent.VK_U);
             player2.setRightAttackKey(KeyEvent.VK_O);
+            player2.setAbilityOneKey(KeyEvent.VK_7);
+            player2.setAbilityTwoKey(KeyEvent.VK_8);
             gameMap.runWindow();
             gameMap.mainWindow.getGame().setBackground(new Color(255, 234, 167));
             new Thread(r).start();

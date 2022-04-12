@@ -122,7 +122,7 @@ public abstract class BaseCharacter extends GameObj implements BaseCharacterInte
     public void attack(int directionX, int directionY){
     int i=getX();
     int j=getY();
-        while(i!=directionX || j!=directionY){
+        while((i!=directionX || j!=directionY) &&(i>0&&i<35&&j>0&&j<20)){ //check if attack is in map
             if(i>directionX) i--;
             else if(i<directionX) i++;
             if(j>directionY)j--;
@@ -131,65 +131,6 @@ public abstract class BaseCharacter extends GameObj implements BaseCharacterInte
                 gameMap.gameObjs.get(gameMap.occupiedCells[i][j] - 1).loseHp(attackDmg);
             }
         }
-        /*if(damageRange==CLOSE_RANGE) {
-            if(direction.equals("right")) {
-                for (int i = 0; i < 3; i++) {
-                    if (gameMap.occupiedCells[getX()+1][getY() + i] != 0) {
-                        gameMap.gameObjs.get(gameMap.occupiedCells[getX()+1][getY() + i]-1).loseHp(attackDmg);
-                    }
-                }
-            }
-            else if(direction.equals("left")) {
-                    for(int i=0; i<3; i++) {
-                        if (gameMap.occupiedCells[getX()-1][getY()+i] != 0) {
-                            gameMap.gameObjs.get(gameMap.occupiedCells[getX()-1][getY()+i]-1).loseHp(attackDmg);
-                        }
-            }
-            }
-            else if(direction.equals("up")){
-                for(int i=0; i<3; i++){
-                    if (gameMap.occupiedCells[getX()+1-i][getY()-1] != 0) {
-                        gameMap.gameObjs.get(gameMap.occupiedCells[getX()+1-i][getY()-1]-1).loseHp(attackDmg);
-                    }
-                }
-            }
-            else if(direction.equals("down")) {
-                for (int i = 0; i < 3; i++) {
-                    if (gameMap.occupiedCells[getX() + 1 - i][getY() + 1] != 0) {
-                        gameMap.gameObjs.get(gameMap.occupiedCells[getX() + 1 - i][getY() + 1] - 1).loseHp(attackDmg);
-                    }
-                }
-            }
-        } else if(damageRange==LONG_RANGE){
-            if(direction.equals("right")){
-            for(int i=1; i<5; i++) {
-                if (gameMap.occupiedCells[getX() + i][getY()] != 0) {
-                    gameMap.gameObjs.get(gameMap.occupiedCells[getX() + i][getY()]-1).loseHp(attackDmg);
-                }
-            }
-            }
-            else if(direction.equals("left")){
-                for(int i=1; i<5; i++) {
-                    if (gameMap.occupiedCells[getX() - i][getY()] != 0) {
-                        gameMap.gameObjs.get(gameMap.occupiedCells[getX() - i][getY()]-1).loseHp(attackDmg);
-                    }
-                }
-            }
-            else if(direction.equals("up")){
-                for(int i=0; i<5; i++){
-                    if (gameMap.occupiedCells[getX()][getY()-i] != 0) {
-                        gameMap.gameObjs.get(gameMap.occupiedCells[getX()][getY()-i]-1).loseHp(attackDmg);
-                    }
-                }
-            }
-            else if(direction.equals("down")) {
-                for (int i = 0; i < 5; i++) {
-                    if (gameMap.occupiedCells[getX()][getY() + i] != 0) {
-                        gameMap.gameObjs.get(gameMap.occupiedCells[getX()][getY() + i] - 1).loseHp(attackDmg);
-                    }
-                }
-            }
-        }*/
     }
     @Override
     public void levelUp(){

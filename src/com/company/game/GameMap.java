@@ -68,7 +68,7 @@ public class GameMap {
                 FileWriter writer = new FileWriter(path);
                 ){
         for(BasePlayer player : getPlayers()){
-            java.lang.String line=(player.getType()+";"+player.getClass().getCanonicalName()+";"+ player.getX()+";"+player.getY()+";"+player.getName()+";"+player.getAttackDmg()+";"+player.getMaxHp()+";"+player.getHp()+";"+player.getMaxMana()+";"+player.getMana()+";"+player.getHpRegen()+"\n");
+            java.lang.String line=(player.getType()+";"+player.getClass().getCanonicalName()+";"+ player.getX()+";"+player.getY()+";"+player.getName()+";"+player.getAttackDmg()+";"+player.getMaxHp()+";"+player.getHp()+";"+player.getMaxMana()+";"+player.getMana()+";"+player.getHpRegen()+";"+player.getManaRegen()+"\n");
             writer.write(line);
         }
             for(BaseMonster monster: getMonsters()){
@@ -86,7 +86,8 @@ public class GameMap {
     }
     public void load(File file){
         try(Scanner reader = new Scanner(file);){
-            this.gameObjs.clear();
+            filePath=file.getPath();
+            gameObjs.clear();
             while(reader.hasNextLine()){
                 java.lang.String data = reader.nextLine();
                 java.lang.String[] line = data.split(";");
@@ -100,9 +101,10 @@ public class GameMap {
                     int maxMana = Integer.parseInt(line[8]);
                     int mana = Integer.parseInt(line[9]);
                     int hpRegen = Integer.parseInt(line[10]);
+                    int manaRegen = Integer.parseInt(line[11]);
                     Class player = Class.forName(line[1]);
-                    Constructor con = player.getConstructor(int.class, int.class, String.class, int.class, int.class, int.class, int.class, int.class, int.class, GameMap.class);
-                    this.gameObjs.add((GameObj) con.newInstance(x, y, name, attackDmg, maxHp, hp, maxMana, mana, hpRegen, this));
+                    Constructor con = player.getConstructor(int.class, int.class, String.class, int.class, int.class, int.class, int.class, int.class, int.class, int.class, GameMap.class);
+                    this.gameObjs.add((GameObj) con.newInstance(x, y, name, attackDmg, maxHp, hp, maxMana, mana, hpRegen, manaRegen, this));
                 }
                     else if(line[0].equals("MONSTER")) {
 

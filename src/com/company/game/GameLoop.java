@@ -1,6 +1,7 @@
 package com.company.game;
 
 import com.company.classes.characters.npcs.BaseMonster;
+import com.company.classes.characters.npcs.Necromancer;
 import com.company.classes.characters.npcs.Zombie;
 import com.company.classes.characters.player.BasePlayer;
 
@@ -19,7 +20,7 @@ public void run(){
                     int x=(int)(Math.random() * 35) + 1;
                     int y=(int)(Math.random() * 19) + 1;
                     if(gameMap.occupiedCells[x][y]==0){
-                        gameMap.gameObjs.add(new Zombie(x,y,"zombie", 1,  gameMap));
+                        gameMap.gameObjs.add(new Necromancer(x,y,"necromancer", 1,  gameMap));
                     }
                 }
 

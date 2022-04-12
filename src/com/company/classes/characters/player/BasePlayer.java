@@ -7,7 +7,7 @@ import com.company.enums.ClassType;
 import java.awt.event.KeyEvent;
 
 public abstract class BasePlayer extends BaseCharacter {
-    private int upKey,downKey,leftKey,rightKey, leftAttackKey, rightAttackKey;
+    private int upKey,downKey,leftKey,rightKey, leftAttackKey, rightAttackKey, abilityOneKey, abilityTwoKey;
 
     protected BasePlayer(int x, int y, java.lang.String name, GameMap gameMap) {
         super(x, y, name, ClassType.PLAYER, gameMap);
@@ -17,7 +17,8 @@ public abstract class BasePlayer extends BaseCharacter {
         rightKey=KeyEvent.VK_D;
         leftAttackKey= KeyEvent.VK_Q;
         rightAttackKey = KeyEvent.VK_E;
-
+        abilityOneKey = KeyEvent.VK_1;
+        abilityTwoKey = KeyEvent.VK_2;
     }
 
     protected BasePlayer() {
@@ -76,5 +77,27 @@ public abstract class BasePlayer extends BaseCharacter {
 
     public void setRightAttackKey(int rightAttackKey) {
         this.rightAttackKey = rightAttackKey;
+    }
+
+    public int getAbilityOneKey() {
+        return abilityOneKey;
+    }
+
+    public void setAbilityOneKey(int abilityOneKey) {
+        this.abilityOneKey = abilityOneKey;
+    }
+
+    public int getAbilityTwoKey() {
+        return abilityTwoKey;
+    }
+
+    public void setAbilityTwoKey(int abilityTwoKey) {
+        this.abilityTwoKey = abilityTwoKey;
+    }
+    public void abilityOne(){
+
+    }
+    public void abilityTwo(){
+
     }
 }

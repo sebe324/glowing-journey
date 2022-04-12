@@ -26,8 +26,12 @@ public class GameField extends JPanel {
         }
         for(GameObj thing : gameMap.gameObjs){
             g.drawImage(thing.getImage(), thing.getXWindow(), thing.getYWindow(), this);
-            g.drawString(""+thing.getName(), thing.getXWindow(), thing.getYWindow());
-            g.drawString(""+thing.getHp(), thing.getXWindow(), thing.getYWindow()-12);
+        }
+        for(BasePlayer player: gameMap.getPlayers()){
+            g.drawImage(player.getImage(), player.getXWindow(), player.getYWindow(), this);
+            g.drawString(""+player.getName(), player.getXWindow(), player.getYWindow());
+            g.drawString("Health "+player.getHp(), player.getXWindow(), player.getYWindow()-12);
+            g.drawString("Mana "+player.getMana(), player.getXWindow(), player.getYWindow()-24);
         }
     }
     public class FieldKeyListener extends KeyAdapter{
@@ -71,9 +75,11 @@ public class GameField extends JPanel {
                                 }, 200
                         );
                     }
-
+                    else if(key==player.getAbilityOneKey()) player.abilityOne();
+                    else if(key==player.getAbilityTwoKey()) player.abilityTwo();
             }
             if(key==KeyEvent.VK_ESCAPE){
+                System.out.print(gameMap.filePath);
                 gameMap.save(gameMap.filePath);
             }
             validate();

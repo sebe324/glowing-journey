@@ -6,7 +6,7 @@ import static com.company.enums.DamageType.PHYSICAL;
 
 
 public class Warrior extends BasePlayer {
-    public Warrior(int x, int y, java.lang.String name, int attackDmg, int maxHp, int hp, int maxMana, int mana, int hpRegen, GameMap gameMap) {
+    public Warrior(int x, int y, java.lang.String name, int attackDmg, int maxHp, int hp, int maxMana, int mana, int hpRegen, int manaRegen, GameMap gameMap) {
         super(x,y,name, gameMap);
         this.setAttackDmg(attackDmg);
         this.setMaxHp(maxHp);
@@ -14,21 +14,26 @@ public class Warrior extends BasePlayer {
         this.setMaxMana(maxMana);
         this.setMana(mana);
         this.setHpRegen(hpRegen);
+        this.setManaRegen(manaRegen);
         this.setDamageRange(1);
         this.setDamageType(PHYSICAL);
         this.uploadImage("images/warrior/warrior.png", "images/warrior/warriorLeftAttacj.png", "images/warrior/warriorRightAttack.png");
     }
 
-    public Warrior() {
+    public void abilityOne() {
+        if (getMana() >= 50) {
+            attack(getX(), getY() + 2);
+            attack(getX(), getY() - 2);
+            attack(getX() + 2, getY());
+            attack(getX() - 2, getY());
+            loseMana(50);
+        }
     }
-
-    public void abilityOne(int manaCost){
-
-    }
-    public void abilityTwo(int manaCost){
-
-    }
-    public void abilityThree(int manaCost){
-
+    public void abilityTwo(){
+        if(getMana()>=100) {
+            setAttackDmg(getAttackDmg() + 10);
+            loseHp(50);
+            loseMana(100);
+        }
     }
 }

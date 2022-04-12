@@ -47,25 +47,25 @@ public class SinglePlayerStartWindow extends JFrame {
         start.addActionListener(e -> {
             switch(selectedClass){
                 case "Warrior":
-                    gameMap.gameObjs.add(new Warrior(10,10,characterName.getText(),120,1000,1000,200,200,10, gameMap));
+                    gameMap.gameObjs.add(new Warrior(10,10,characterName.getText(),120,1000,1000,200,200,10, 5, gameMap));
                     gameMap.runWindow();
                     new Thread(r).start();
                     dispose();
                     break;
                 case "Archer":
-                    gameMap.gameObjs.add(new Archer(10,10,characterName.getText(),120,1000,1000,200,200,10,gameMap));
+                    gameMap.gameObjs.add(new Archer(10,10,characterName.getText(),120,1000,1000,200,200,10,5,gameMap));
                     gameMap.runWindow();
                     new Thread(r).start();
                     dispose();
                     break;
                 case "Wizard":
-                    gameMap.gameObjs.add(new Wizard(10,10,characterName.getText(),120,1000,1000,200,200,10,gameMap));
+                    gameMap.gameObjs.add(new Wizard(10,10,characterName.getText(),120,1000,1000,200,200,10,5,gameMap));
                     gameMap.runWindow();
                     new Thread(r).start();
                     dispose();
                     break;
                 case "Healer":
-                    gameMap.gameObjs.add(new Healer(10,10,characterName.getText(),120,1000,1000,200,200,10,gameMap));
+                    gameMap.gameObjs.add(new Healer(10,10,characterName.getText(),120,1000,1000,200,200,10,5,gameMap));
                     gameMap.runWindow();
                     new Thread(r).start();
                     dispose();

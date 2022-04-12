@@ -5,6 +5,7 @@ import com.company.classes.characters.BaseCharacter;
 import com.company.classes.characters.player.BasePlayer;
 import com.company.enums.ClassType;
 
+import java.security.SecureRandom;
 import java.util.Random;
 
 public abstract class BaseMonster extends BaseCharacter implements BaseMonsterInterface{
@@ -45,6 +46,7 @@ public abstract class BaseMonster extends BaseCharacter implements BaseMonsterIn
 
     @Override
     public void pathFindToPlayer() {
+        Random random = new SecureRandom();
     if(IsPlayerInRange()){
         if(getDistance(this.attacked)<=getDamageRange()){
             attack(attacked.getX(),attacked.getY());
@@ -57,12 +59,13 @@ public abstract class BaseMonster extends BaseCharacter implements BaseMonsterIn
             else if(getY()<attacked.getY())down();
         }
     }
-    else if(new Random().nextInt((3-1)+1)==1){ //33% chance to move randomly
-        switch(new Random().nextInt((4 - 1) + 1) + 1){
+    else if(random.nextInt((3-1)+1)==1){ //33% chance to move randomly
+        switch(random.nextInt((4 - 1) + 1) + 1){
             case 1: up(); break;
             case 2: down(); break;
             case 3: left(); break;
             case 4: right(); break;
+            default: break;
         }
     }
     }
