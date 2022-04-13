@@ -1,0 +1,14 @@
+PLAYER;com.company.classes.characters.player.Gunslinger;8;16;gg;120;1000;540;200;200;10;5;40;3
+MONSTER;com.company.classes.characters.npcs.Zombie;31;18;zombie;1
+MONSTER;com.company.classes.characters.npcs.Zombie;15;0;zombie;1
+MONSTER;com.company.classes.characters.npcs.Necromancer;25;17;necromancer;1
+MONSTER;com.company.classes.characters.npcs.Zombie;27;4;zombie;1
+STRUCTURE;com.company.classes.structures.Wall;4;9;wall
+STRUCTURE;com.company.classes.structures.Bush;23;5;bush
+STRUCTURE;com.company.classes.structures.Wall;31;19;wall
+STRUCTURE;com.company.classes.structures.Wall;33;16;wall
+STRUCTURE;com.company.classes.structures.Wall;3;15;wall
+STRUCTURE;com.company.classes.structures.Wall;5;5;wall
+STRUCTURE;com.company.classes.structures.Bush;3;2;bush
+STRUCTURE;com.company.classes.structures.Bush;30;6;bush
+STRUCTURE;com.company.classes.structures.Bush;12;1;bush
