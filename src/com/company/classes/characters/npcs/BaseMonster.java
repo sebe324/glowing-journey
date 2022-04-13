@@ -1,5 +1,6 @@
 package com.company.classes.characters.npcs;
 
+import com.company.classes.characters.player.Gunslinger;
 import com.company.game.GameMap;
 import com.company.classes.characters.BaseCharacter;
 import com.company.classes.characters.player.BasePlayer;
@@ -47,7 +48,7 @@ public abstract class BaseMonster extends BaseCharacter implements BaseMonsterIn
     @Override
     public void pathFindToPlayer() {
         Random random = new SecureRandom();
-    if(IsPlayerInRange()){
+    if(IsPlayerInRange() && !this.attacked.isInvisible()){
         if(getDistance(this.attacked)<=getDamageRange()){
             attack(attacked.getX(),attacked.getY());
             if(!this.attacked.isAlive()) this.attacked=null;

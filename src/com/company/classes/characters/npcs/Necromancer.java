@@ -14,6 +14,6 @@ public class Necromancer extends BaseMonster{
         this.setLevel(level);
         this.setDamageRange(4);
         this.setDamageType(MAGIC);
-        this.uploadImage("images/npcs/monsters/zombie.png", "images/npcs/monsters/zombie.png", "images/npcs/monsters/zombie.png");
+        this.uploadImage("images/npcs/monsters/necromancer.png", "images/npcs/monsters/necromancer.png", "images/npcs/monsters/necromancer.png");
     }
 }

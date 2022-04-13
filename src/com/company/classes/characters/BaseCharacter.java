@@ -28,7 +28,7 @@ public abstract class BaseCharacter extends GameObj implements BaseCharacterInte
     }
 
     public void setMana(int mana) {
-        if(this.mana>this.getMaxMana()){
+        if(mana>this.getMaxMana()){
             this.mana=maxMana;
         }
         else this.mana = mana;
@@ -119,7 +119,7 @@ public abstract class BaseCharacter extends GameObj implements BaseCharacterInte
         setMana(getMana()+amount);
     }
     @Override
-    public void attack(int directionX, int directionY){
+    public boolean attack(int directionX, int directionY){
     int i=getX();
     int j=getY();
         while((i!=directionX || j!=directionY) &&(i>0&&i<35&&j>0&&j<20)){ //check if attack is in map
@@ -128,9 +128,16 @@ public abstract class BaseCharacter extends GameObj implements BaseCharacterInte
             if(j>directionY)j--;
             else if(j<directionY)j++;
             if (gameMap.occupiedCells[i][j] != 0) {
-                gameMap.gameObjs.get(gameMap.occupiedCells[i][j] - 1).loseHp(attackDmg);
+                if(gameMap.gameObjs.get(gameMap.occupiedCells[i][j] - 1).getHp()-attackDmg<=0){
+               gameMap.gameObjs.get(gameMap.occupiedCells[i][j] - 1).loseHp(attackDmg);
+                    return true;
+                }
+                else{
+                    gameMap.gameObjs.get(gameMap.occupiedCells[i][j] - 1).loseHp(attackDmg);
+                }
             }
         }
+        return false;
     }
     @Override
     public void levelUp(){

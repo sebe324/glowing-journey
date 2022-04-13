@@ -1,5 +1,6 @@
 package com.company.classes;
 
+import com.company.classes.characters.player.BasePlayer;
 import com.company.game.GameMap;
 import com.company.classes.particles.Particle;
 import com.company.enums.ClassType;
@@ -51,15 +52,21 @@ public abstract class GameObj {
             this.hp = this.maxHp;
         }
         else if(hp<=0){
-            gameMap.occupiedCells[this.x][this.y]=0;
-            this.isAlive=false;
-            gameMap.characterCount--;
-            gameMap.particles.add(new Particle(this.x, this.y, "images/particles/destroyed"+this.name+".png"));
-            int tmp= getIdThings();
-            gameMap.gameObjs.remove(getIdThings());
-            for(int i = tmp; i< gameMap.gameObjs.size(); i++){
-                gameMap.gameObjs.get(i).id-=1;
-                gameMap.occupiedCells[gameMap.gameObjs.get(i).getX()][gameMap.gameObjs.get(i).getY()]-=1;
+            if(this.type==ClassType.PLAYER){
+                BasePlayer player =(BasePlayer)this;
+                player.respawn();
+
+            }else {
+                gameMap.occupiedCells[this.x][this.y] = 0;
+                this.isAlive = false;
+                gameMap.characterCount--;
+                gameMap.particles.add(new Particle(this.x, this.y, "images/particles/destroyed" + this.name + ".png"));
+                int tmp = getIdThings();
+                gameMap.gameObjs.remove(getIdThings());
+                for (int i = tmp; i < gameMap.gameObjs.size(); i++) {
+                    gameMap.gameObjs.get(i).id -= 1;
+                    gameMap.occupiedCells[gameMap.gameObjs.get(i).getX()][gameMap.gameObjs.get(i).getY()] -= 1;
+                }
             }
         }
         else

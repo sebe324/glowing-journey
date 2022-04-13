@@ -19,20 +19,8 @@ public class MainMenu extends JLabel {
         buttonStart.setBounds(400, 100, 200, 60);
         buttonStart.addActionListener(new ActionListener(){
             public void actionPerformed(ActionEvent e){
-                try {
-                    gameMap.filePath = ("saves/"+JOptionPane.showInputDialog("Nazwa zapisu: ")+".txt");
-                    File file=new File(gameMap.filePath);
-                    if (file.createNewFile()) {
                        new SinglePlayerStartWindow(gameMap);
                         gameMap.menuWindow.dispose();
-                        System.out.println("File created: " + file.getName());
-                    } else {
-                        System.out.println("File already exists");
-                    }
-                } catch (IOException er) {
-                    System.out.println("An error occurred.");
-                    er.printStackTrace();
-                }
             }
         });
         JButton buttonArena = new JButton("1v1");
@@ -61,10 +49,17 @@ public class MainMenu extends JLabel {
         buttonExit.setBounds(400, 400, 200, 60);
         buttonExit.addActionListener(e -> {
                 gameMap.menuWindow.dispose();
+                System.exit(0);
         });
+        JTextArea description = new JTextArea("Get to 1000 points and win, every kill gives you 10 points.\n If you lose your 3 lives you lose the game. GL");
+        description.setBounds(400,500,350,60);
+        JTextArea descriptionPL = new JTextArea("Zdobadz 1000 punktow i wygraj, kazdy kill daje ci 10 punktow.\n Jezeli stracisz 3 zycia przegrywasz. Powodzenia");
+        descriptionPL.setBounds(400,600,350,60);
         add(buttonExit);
         add(buttonStart);
         add(buttonArena);
         add(buttonLoad);
+        add(description);
+        add(descriptionPL);
     }
 }

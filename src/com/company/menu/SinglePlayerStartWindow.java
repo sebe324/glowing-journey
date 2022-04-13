@@ -1,6 +1,6 @@
 package com.company.menu;
 
-import com.company.classes.characters.player.Archer;
+import com.company.classes.characters.player.Gunslinger;
 import com.company.classes.characters.player.Healer;
 import com.company.classes.characters.player.Warrior;
 import com.company.classes.characters.player.Wizard;
@@ -8,10 +8,12 @@ import com.company.game.GameLoop;
 import com.company.game.GameMap;
 
 import javax.swing.*;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 public class SinglePlayerStartWindow extends JFrame {
-    private String selectedClass;
+    private String selectedClass="";
     SinglePlayerStartWindow(GameMap gameMap){
         setLocationRelativeTo(null);
         Runnable r = new GameLoop(gameMap);
@@ -42,39 +44,47 @@ public class SinglePlayerStartWindow extends JFrame {
         JTextField characterName = new JTextField();
         characterName.setBounds(200,100,200,30);
         add(characterName);
+        JLabel label4 = new JLabel("Save name: ");
+        label4.setBounds(200, 150, 200,30);
+        add(label4);
+        JTextField saveName=new JTextField();
+        saveName.setBounds(200,200,200,30);
+        add(saveName);
         JButton start = new JButton("start");
         start.setBounds(0,0, 80,20);
         start.addActionListener(e -> {
-            switch(selectedClass){
-                case "Warrior":
-                    gameMap.gameObjs.add(new Warrior(10,10,characterName.getText(),120,1000,1000,200,200,10, 5, gameMap));
-                    gameMap.runWindow();
-                    new Thread(r).start();
-                    dispose();
-                    break;
-                case "Archer":
-                    gameMap.gameObjs.add(new Archer(10,10,characterName.getText(),120,1000,1000,200,200,10,5,gameMap));
-                    gameMap.runWindow();
-                    new Thread(r).start();
-                    dispose();
-                    break;
-                case "Wizard":
-                    gameMap.gameObjs.add(new Wizard(10,10,characterName.getText(),120,1000,1000,200,200,10,5,gameMap));
-                    gameMap.runWindow();
-                    new Thread(r).start();
-                    dispose();
-                    break;
-                case "Healer":
-                    gameMap.gameObjs.add(new Healer(10,10,characterName.getText(),120,1000,1000,200,200,10,5,gameMap));
-                    gameMap.runWindow();
-                    new Thread(r).start();
-                    dispose();
-                    break;
-                default:
-                    label.setText("Please pick a class!");
-                    break;
+            if(selectedClass!="") {
+                switch (selectedClass) {
+                    case "Warrior":
+                        gameMap.gameObjs.add(new Warrior(10, 10, characterName.getText(), 120, 1000, 1000, 200, 200, 10, 5, 0, 3, gameMap));
+                        break;
+                    case "Archer":
+                        gameMap.gameObjs.add(new Gunslinger(10, 10, characterName.getText(), 120, 1000, 1000, 200, 200, 10, 5, 0, 3, gameMap));
+                        break;
+                    case "Wizard":
+                        gameMap.gameObjs.add(new Wizard(10, 10, characterName.getText(), 120, 1000, 1000, 200, 200, 10, 5, 0, 3, gameMap));
+                        break;
+                    case "Healer":
+                        gameMap.gameObjs.add(new Healer(10, 10, characterName.getText(), 120, 1000, 1000, 200, 200, 10, 5, 0, 3, gameMap));
+                        break;
+                    default:
+                        label.setText("Please pick a class!");
+                        break;
+                }
+                try {
+                    File file = new File("saves/"+saveName.getText()+".txt");
+                    if (file.createNewFile()) {
+                        gameMap.runWindow();
+                        gameMap.filePath = "saves/"+saveName.getText()+".txt";
+                        gameMap.generate(10);
+                        gameMap.save(gameMap.filePath);
+                        new Thread(r).start();
+                        dispose();
+                    }
+                } catch (IOException er) {
+                    er.printStackTrace();
+                }
             }
-
         });
         JButton close = new JButton("close");
         close.setBounds(100,0,80,20);

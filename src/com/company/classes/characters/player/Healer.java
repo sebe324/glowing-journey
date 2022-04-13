@@ -7,7 +7,7 @@ import com.company.game.GameMap;
 import static com.company.enums.DamageType.MAGIC;
 
 public class Healer extends BasePlayer {
-    public Healer(int x, int y, java.lang.String name, int attackDmg, int maxHp, int hp, int maxMana, int mana, int hpRegen, int manaRegen, GameMap gameMap){
+    public Healer(int x, int y, java.lang.String name, int attackDmg, int maxHp, int hp, int maxMana, int mana, int hpRegen, int manaRegen, int points, int lives, GameMap gameMap){
         super(x,y,name, gameMap);
         this.setAttackDmg(attackDmg);
         this.setMaxHp(maxHp);
@@ -17,6 +17,8 @@ public class Healer extends BasePlayer {
         this.setHpRegen(hpRegen);
         this.setManaRegen(manaRegen);
         this.setDamageRange(1);
+        this.setPoints(points);
+        this.setLives(lives);
         this.setDamageType(MAGIC);
         this.uploadImage("images/healer/healer.png", "images/healer/healerLeftAttack.png", "images/healer/healerRightAttack.png");
     }
@@ -33,8 +35,8 @@ public class Healer extends BasePlayer {
                     for (int j = 0; j < 3; j++) {
                         if (getX() - 1 + j >= 0 && getX() - 1 + j < 36) {
                             if (gameMap.occupiedCells[getX() - 1 + j][getY() - 1 + i] != 0) {
-                                attack(getX() - 1 + j, getY() - 1 + i);
-                                setHp(getHp() + (getAttackDmg() / 5));
+                                attackPlayer(getX() - 1 + j, getY() - 1 + i);
+                                setHp(getHp() + (getAttackDmg() / 2));
                             }
                         }
                     }

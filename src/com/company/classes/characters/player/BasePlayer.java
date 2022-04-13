@@ -8,7 +8,9 @@ import java.awt.event.KeyEvent;
 
 public abstract class BasePlayer extends BaseCharacter {
     private int upKey,downKey,leftKey,rightKey, leftAttackKey, rightAttackKey, abilityOneKey, abilityTwoKey;
-
+    private int points;
+    private int lives;
+    private boolean invisible;
     protected BasePlayer(int x, int y, java.lang.String name, GameMap gameMap) {
         super(x, y, name, ClassType.PLAYER, gameMap);
         upKey = KeyEvent.VK_W;
@@ -22,6 +24,22 @@ public abstract class BasePlayer extends BaseCharacter {
     }
 
     protected BasePlayer() {
+    }
+
+    public int getPoints() {
+        return points;
+    }
+
+    public void setPoints(int points) {
+        this.points = points;
+    }
+
+    public int getLives() {
+        return lives;
+    }
+
+    public void setLives(int lives) {
+        this.lives = lives;
     }
 
     public int getUpKey() {
@@ -99,5 +117,22 @@ public abstract class BasePlayer extends BaseCharacter {
     }
     public void abilityTwo(){
 
+    }
+    public void attackPlayer(int directionX, int directionY){
+        if(attack(directionX,directionY)) points+=10;
+    }
+
+    public boolean isInvisible() {
+        return invisible;
+    }
+
+    public void setInvisible(boolean invisible) {
+        this.invisible = invisible;
+    }
+    public void respawn(){
+        setLives(getLives()-1);
+        tryChangePosition(0,0);
+        setHp(getMaxHp());
+        setMana(getMaxMana());
     }
 }

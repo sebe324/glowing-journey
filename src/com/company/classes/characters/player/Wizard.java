@@ -7,7 +7,7 @@ import java.util.Random;
 import static com.company.enums.DamageType.MAGIC;
 
 public class Wizard extends BasePlayer{
-    public Wizard(int x, int y, java.lang.String name, int attackDmg, int maxHp, int hp, int maxMana, int mana, int hpRegen, int manaRegen, GameMap gameMap){
+    public Wizard(int x, int y, java.lang.String name, int attackDmg, int maxHp, int hp, int maxMana, int mana, int hpRegen, int manaRegen, int points, int lives, GameMap gameMap){
         super(x,y,name, gameMap);
         this.setAttackDmg(attackDmg);
         this.setMaxHp(maxHp);
@@ -17,10 +17,11 @@ public class Wizard extends BasePlayer{
         this.setHpRegen(hpRegen);
         this.setManaRegen(manaRegen);
         this.setDamageRange(4);
+        this.setPoints(points);
+        this.setLives(lives);
         this.setDamageType(MAGIC);
         this.uploadImage("images/wizard/wizard.png", "images/wizard/wizardLeftAttack.png", "images/wizard/wizardRightAttack.png");
     }
-    public Wizard(){}
     public void abilityOne(){
         if(getMana()>=50) {
             Random randomX = new Random();
@@ -32,7 +33,7 @@ public class Wizard extends BasePlayer{
     public void abilityTwo() {
         if (getMana() >= 100) {
             Random randomX = new Random();
-            gameMap.gameObjs.get(randomX.nextInt(gameMap.gameObjs.size())).loseHp(getAttackDmg() * 3);
+            gameMap.getMonsters().get(randomX.nextInt(gameMap.getMonsters().size())).loseHp(getAttackDmg() * 10);
             loseMana(100);
         }
     }

@@ -1,5 +1,7 @@
 package com.company.game;
 
+import com.company.classes.structures.Bush;
+import com.company.classes.structures.Wall;
 import com.company.menu.MainWindow;
 import com.company.menu.MenuWindow;
 import com.company.classes.GameObj;
@@ -8,10 +10,13 @@ import com.company.classes.characters.player.BasePlayer;
 import com.company.classes.particles.Particle;
 import com.company.classes.structures.BaseStructure;
 import com.company.enums.ClassType;
+
+import java.awt.event.KeyEvent;
 import java.lang.reflect.*;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 
 public class GameMap {
@@ -21,7 +26,8 @@ public class GameMap {
     public List<Particle> particles = new ArrayList<>();
     public MainWindow mainWindow;
     public MenuWindow menuWindow;
-    public java.lang.String filePath;
+    public java.lang.String filePath="saves/save.txt";
+    public boolean running = true;
     public GameMap(GameObj... input){
        for(int i = 0; i <input.length; i++){
             gameObjs.add(input[i]);
@@ -68,7 +74,7 @@ public class GameMap {
                 FileWriter writer = new FileWriter(path);
                 ){
         for(BasePlayer player : getPlayers()){
-            java.lang.String line=(player.getType()+";"+player.getClass().getCanonicalName()+";"+ player.getX()+";"+player.getY()+";"+player.getName()+";"+player.getAttackDmg()+";"+player.getMaxHp()+";"+player.getHp()+";"+player.getMaxMana()+";"+player.getMana()+";"+player.getHpRegen()+";"+player.getManaRegen()+"\n");
+            java.lang.String line=(player.getType()+";"+player.getClass().getCanonicalName()+";"+ player.getX()+";"+player.getY()+";"+player.getName()+";"+player.getAttackDmg()+";"+player.getMaxHp()+";"+player.getHp()+";"+player.getMaxMana()+";"+player.getMana()+";"+player.getHpRegen()+";"+player.getManaRegen()+";"+player.getPoints()+";"+player.getLives()+"\n");
             writer.write(line);
         }
             for(BaseMonster monster: getMonsters()){
@@ -76,7 +82,7 @@ public class GameMap {
             writer.write(line);
             }
             for(BaseStructure structure : getStructures()){
-            java.lang.String line=(structure.getType()+";"+structure.getClass().getCanonicalName()+";"+structure.getX()+";"+structure.getY()+structure.getName()+"\n");
+            java.lang.String line=(structure.getType()+";"+structure.getClass().getCanonicalName()+";"+structure.getX()+";"+structure.getY()+";"+structure.getName()+"\n");
             writer.write(line);
             }
             writer.close();
@@ -102,9 +108,22 @@ public class GameMap {
                     int mana = Integer.parseInt(line[9]);
                     int hpRegen = Integer.parseInt(line[10]);
                     int manaRegen = Integer.parseInt(line[11]);
+                    int points = Integer.parseInt(line[12]);
+                    int lives=Integer.parseInt(line[13]);
                     Class player = Class.forName(line[1]);
-                    Constructor con = player.getConstructor(int.class, int.class, String.class, int.class, int.class, int.class, int.class, int.class, int.class, int.class, GameMap.class);
-                    this.gameObjs.add((GameObj) con.newInstance(x, y, name, attackDmg, maxHp, hp, maxMana, mana, hpRegen, manaRegen, this));
+                    Constructor con = player.getConstructor(int.class, int.class, String.class, int.class, int.class, int.class, int.class, int.class, int.class, int.class, int.class, int.class, GameMap.class);
+                    this.gameObjs.add((GameObj) con.newInstance(x, y, name, attackDmg, maxHp, hp, maxMana, mana, hpRegen, manaRegen, points, lives, this));
+                    if(this.getPlayers().size()==2){
+                        BasePlayer player2=this.getPlayers().get(1);
+                        player2.setUpKey(KeyEvent.VK_I);
+                        player2.setLeftKey(KeyEvent.VK_J);
+                        player2.setRightKey(KeyEvent.VK_L);
+                        player2.setDownKey(KeyEvent.VK_K);
+                        player2.setLeftAttackKey(KeyEvent.VK_U);
+                        player2.setRightAttackKey(KeyEvent.VK_O);
+                        player2.setAbilityOneKey(KeyEvent.VK_7);
+                        player2.setAbilityTwoKey(KeyEvent.VK_8);
+                    }
                 }
                     else if(line[0].equals("MONSTER")) {
 
@@ -121,7 +140,7 @@ public class GameMap {
                     int y=Integer.parseInt(line[3]);
                     String name=line[4];
                     Class structure = Class.forName(line[1]);
-                    Constructor con = structure.getConstructor(int.class,int.class,String.class,int.class,GameMap.class);
+                    Constructor con = structure.getConstructor(int.class,int.class,String.class,GameMap.class);
                     this.gameObjs.add((GameObj)con.newInstance(x,y,name,this));
                 }
                 }
@@ -129,6 +148,27 @@ public class GameMap {
             reader.close();
         }catch(Exception e){
             e.printStackTrace();
+        }
+    }
+    public void generate(int amount){
+        Random randomX = new Random();
+        Random randomY = new Random();
+        Random randomStructure = new Random();
+        for(int i=0; i<amount; i++) {
+            int strX=randomX.nextInt(36);
+            int strY=randomY.nextInt(20);
+
+            if (occupiedCells[strX][strY] == 0) {
+                switch (randomStructure.nextInt(2)) {
+                    case 0:
+                        gameObjs.add(new Bush(strX,strY,"bush",this));
+                        break;
+                    case 1:
+                        gameObjs.add(new Wall(strX,strY,"wall",this));
+                        break;
+                }
+                System.out.println("game objects "+gameObjs);
+            }
         }
     }
 }

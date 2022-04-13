@@ -5,8 +5,9 @@ import com.company.game.GameLoop;
 import com.company.game.GameMap;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,12 @@ ArenaStartWindow(GameMap gameMap){
     setLocationRelativeTo(null);
     Runnable r = new GameLoop(gameMap);
     setSize(600,400);
+    JLabel saveLabel = new JLabel("Save name");
+    saveLabel.setBounds(160,100,100,20);
+    add(saveLabel);
+    JTextField saveName = new JTextField();
+    saveName.setBounds(160,150,100,20);
+    add(saveName);
     for(int i=0; i<2; i++){
         selectedClasses.add("");
         characterNames.add(new JTextField());
@@ -25,7 +32,7 @@ ArenaStartWindow(GameMap gameMap){
         add(label);
         List<JButton> classSelect = new ArrayList<>();
         classSelect.add(new JButton("Warrior"));
-        classSelect.add(new JButton("Archer"));
+        classSelect.add(new JButton("Gunslinger"));
         classSelect.add(new JButton("Wizard"));
         classSelect.add(new JButton("Healer"));
         for(int j=0; j<classSelect.size(); j++){
@@ -51,16 +58,16 @@ ArenaStartWindow(GameMap gameMap){
             for (int i = 0; i < 2; i++) {
                 switch (selectedClasses.get(i)) {
                     case "Warrior":
-                        gameMap.gameObjs.add(new Warrior(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5, gameMap));
+                        gameMap.gameObjs.add(new Warrior(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5, 0,3,gameMap));
                         break;
-                    case "Archer":
-                        gameMap.gameObjs.add(new Archer(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5, gameMap));
+                    case "Gunslinger":
+                        gameMap.gameObjs.add(new Gunslinger(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5, 0,3,gameMap));
                         break;
                     case "Wizard":
-                        gameMap.gameObjs.add(new Wizard(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5,gameMap));
+                        gameMap.gameObjs.add(new Wizard(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5,0,3,gameMap));
                         break;
                     case "Healer":
-                        gameMap.gameObjs.add(new Healer(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5, gameMap));
+                        gameMap.gameObjs.add(new Healer(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5, 0,3,gameMap));
                         break;
                     default:
 
@@ -76,10 +83,19 @@ ArenaStartWindow(GameMap gameMap){
             player2.setRightAttackKey(KeyEvent.VK_O);
             player2.setAbilityOneKey(KeyEvent.VK_7);
             player2.setAbilityTwoKey(KeyEvent.VK_8);
-            gameMap.runWindow();
-            gameMap.mainWindow.getGame().setBackground(new Color(255, 234, 167));
-            new Thread(r).start();
-            dispose();
+            try {
+                File file = new File("saves/"+saveName.getText()+".txt");
+                if (file.createNewFile()) {
+                    gameMap.runWindow();
+                    gameMap.filePath = "saves/"+saveName.getText()+".txt";
+                    gameMap.generate(10);
+                    gameMap.save(gameMap.filePath);
+                    new Thread(r).start();
+                    dispose();
+                }
+            } catch (IOException er) {
+                er.printStackTrace();
+            }
         }
     });
     start.setBounds(160,0,80,20);

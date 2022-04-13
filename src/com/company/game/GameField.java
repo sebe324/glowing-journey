@@ -17,6 +17,7 @@ public class GameField extends JPanel {
         this.gameMap = gameMap;
         setFocusable(true);
         addKeyListener(new FieldKeyListener());
+        setBackground(new Color(255, 234, 167));
     }
     @Override
     protected void paintComponent(Graphics g){
@@ -26,12 +27,18 @@ public class GameField extends JPanel {
         }
         for(GameObj thing : gameMap.gameObjs){
             g.drawImage(thing.getImage(), thing.getXWindow(), thing.getYWindow(), this);
+            g.drawString("Health "+thing.getHp(), thing.getXWindow(), thing.getYWindow()-12);
+
         }
-        for(BasePlayer player: gameMap.getPlayers()){
-            g.drawImage(player.getImage(), player.getXWindow(), player.getYWindow(), this);
+        for(int i=0; i<gameMap.getPlayers().size(); i++){
+            BasePlayer player = gameMap.getPlayers().get(i);
             g.drawString(""+player.getName(), player.getXWindow(), player.getYWindow());
-            g.drawString("Health "+player.getHp(), player.getXWindow(), player.getYWindow()-12);
             g.drawString("Mana "+player.getMana(), player.getXWindow(), player.getYWindow()-24);
+            Font currentFont = g.getFont();
+            g.setFont(new Font ("Courier New", 1, 17));
+            g.drawString(player.getName()+" points: "+player.getPoints(),0,40*i+20);
+            g.drawString(player.getName()+" lives: "+player.getLives(),0,40*i+40);
+            g.setFont(currentFont);
         }
     }
     public class FieldKeyListener extends KeyAdapter{
@@ -47,7 +54,7 @@ public class GameField extends JPanel {
                     else if (key==player.getRightKey()) player.right();
                     else if (key==player.getLeftAttackKey()) {
                         player.setAttackLeftImage();
-                        player.attack(player.getX()-player.getDamageRange(), player.getY());
+                        player.attackPlayer(player.getX()-player.getDamageRange(), player.getY());
 
                         //timer
                         new Timer().schedule(
@@ -61,7 +68,7 @@ public class GameField extends JPanel {
                         );
                     }
                     else if(key==player.getRightAttackKey()) {
-                        player.attack(player.getX()+player.getDamageRange(),player.getY());
+                        player.attackPlayer(player.getX()+player.getDamageRange(),player.getY());
                         player.setAttackRightImage();
 
                         //timer

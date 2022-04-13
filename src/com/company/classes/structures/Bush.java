@@ -7,6 +7,6 @@ public class Bush extends BaseStructure {
     public Bush(int x, int y, java.lang.String name, GameMap gameMap) {
         super(x, y, name, gameMap);
         this.setDestructible(false);
-        this.uploadImage("Wall.png");
+        this.uploadImage("images/bush/bush.png");
     }
 }
