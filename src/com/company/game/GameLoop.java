@@ -4,8 +4,11 @@ import com.company.classes.characters.npcs.BaseMonster;
 import com.company.classes.characters.npcs.Necromancer;
 import com.company.classes.characters.npcs.Zombie;
 import com.company.classes.characters.player.BasePlayer;
+import com.company.classes.powerups.HpPotion;
+import com.company.classes.powerups.Sword;
 
 import javax.swing.*;
+import java.util.Random;
 
 public class GameLoop implements Runnable{
     GameMap gameMap;
@@ -21,13 +24,13 @@ public void run(){
                     player.setMana(player.getMana()+player.getManaRegen());
                     if(player.getPoints()>999){
                         JOptionPane.showMessageDialog(gameMap.menuWindow,"You win!");
-                        gameMap.menuWindow.dispose();
+                        gameMap.mainWindow.dispose();
                         gameMap.running=false;
                         System.exit(0);
                     }
                     if(player.getLives()<=0){
                         JOptionPane.showMessageDialog(gameMap.menuWindow,"End of the game!");
-                        gameMap.menuWindow.dispose();
+                        gameMap.mainWindow.dispose();
                         gameMap.running=false;
                         System.exit(0);
                     }
@@ -56,7 +59,22 @@ public void run(){
                         }
                     }
                 }
-
+                if(gameMap.getPowerUps().size()<3){
+                    Random randomX=new Random();
+                    Random randomY=new Random();
+                    Random randomPowerUp = new Random();
+                    int powerUpX=randomX.nextInt(36);
+                    int powerUpY=randomY.nextInt(20);
+                    if(gameMap.occupiedCells[powerUpX][powerUpY]==0) {
+                        switch (randomPowerUp.nextInt(2)) {
+                            case 0: gameMap.gameObjs.add(new Sword(powerUpX, powerUpY, "excalibur", gameMap));
+                            break;
+                            case 1:
+                                gameMap.gameObjs.add(new HpPotion(powerUpX, powerUpY, "amol",gameMap));
+                                break;
+                        }
+                    }
+                }
                 for(BaseMonster monster : gameMap.getMonsters()){
                     monster.pathFindToPlayer();
                 }
@@ -64,7 +82,7 @@ public void run(){
                 gameMap.mainWindow.getGame().repaint();
                 Thread.sleep(500);
             }catch(InterruptedException ex){
-                //do stuff
+                Thread.currentThread().interrupt();
             }
         }
 }

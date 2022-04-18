@@ -57,23 +57,25 @@ public abstract class GameObj {
                 player.respawn();
 
             }else {
-                gameMap.occupiedCells[this.x][this.y] = 0;
-                this.isAlive = false;
-                gameMap.characterCount--;
-                gameMap.particles.add(new Particle(this.x, this.y, "images/particles/destroyed" + this.name + ".png"));
-                int tmp = getIdThings();
-                gameMap.gameObjs.remove(getIdThings());
-                for (int i = tmp; i < gameMap.gameObjs.size(); i++) {
-                    gameMap.gameObjs.get(i).id -= 1;
-                    gameMap.occupiedCells[gameMap.gameObjs.get(i).getX()][gameMap.gameObjs.get(i).getY()] -= 1;
-                }
+            removeObj();
             }
         }
         else
             this.hp=hp;
 
     }
-
+    public void removeObj() {
+        gameMap.occupiedCells[this.x][this.y] = 0;
+        this.isAlive = false;
+        gameMap.characterCount--;
+        gameMap.particles.add(new Particle(this.x, this.y, "images/particles/destroyed" + this.name + ".png"));
+        int tmp = getIdThings();
+        gameMap.gameObjs.remove(getIdThings());
+        for (int i = tmp; i < gameMap.gameObjs.size(); i++) {
+            gameMap.gameObjs.get(i).id -= 1;
+            gameMap.occupiedCells[gameMap.gameObjs.get(i).getX()][gameMap.gameObjs.get(i).getY()] -= 1;
+        }
+    }
     public int getMaxHp() {
         return maxHp;
     }

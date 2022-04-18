@@ -1,5 +1,6 @@
 package com.company.game;
 
+import com.company.classes.powerups.BasePowerUp;
 import com.company.classes.structures.Bush;
 import com.company.classes.structures.Wall;
 import com.company.menu.MainWindow;
@@ -61,6 +62,15 @@ public class GameMap {
         for(int i = 0; i< gameObjs.size(); i++){
             if(gameObjs.get(i).getType()==ClassType.STRUCTURE){
                 result.add((BaseStructure) gameObjs.get(i));
+            }
+        }
+        return result;
+    }
+    public ArrayList<BasePowerUp> getPowerUps(){
+        ArrayList<BasePowerUp> result = new ArrayList<>();
+        for(int i = 0; i< gameObjs.size(); i++){
+            if(gameObjs.get(i).getType()==ClassType.POWERUP){
+                result.add((BasePowerUp) gameObjs.get(i));
             }
         }
         return result;

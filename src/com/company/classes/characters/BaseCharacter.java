@@ -1,6 +1,6 @@
 package com.company.classes.characters;
 
-import com.company.classes.particles.Particle;
+import com.company.classes.powerups.BasePowerUp;
 import com.company.game.GameMap;
 import com.company.classes.GameObj;
 import com.company.enums.ClassType;
@@ -122,18 +122,19 @@ public abstract class BaseCharacter extends GameObj implements BaseCharacterInte
     public boolean attack(int directionX, int directionY){
     int i=getX();
     int j=getY();
-        while((i!=directionX || j!=directionY) &&(i>0&&i<35&&j>0&&j<20)){ //check if attack is in map
+        while((i!=directionX || j!=directionY)){ //check if attack is in map
             if(i>directionX) i--;
             else if(i<directionX) i++;
             if(j>directionY)j--;
             else if(j<directionY)j++;
-            if (gameMap.occupiedCells[i][j] != 0) {
-                if(gameMap.gameObjs.get(gameMap.occupiedCells[i][j] - 1).getHp()-attackDmg<=0){
-               gameMap.gameObjs.get(gameMap.occupiedCells[i][j] - 1).loseHp(attackDmg);
-                    return true;
-                }
-                else{
-                    gameMap.gameObjs.get(gameMap.occupiedCells[i][j] - 1).loseHp(attackDmg);
+            if((i>=0&&i<36&&j>=0&&j<20)) {
+                if (gameMap.occupiedCells[i][j] != 0) {
+                    if (gameMap.gameObjs.get(gameMap.occupiedCells[i][j] - 1).getHp() - attackDmg <= 0) {
+                        gameMap.gameObjs.get(gameMap.occupiedCells[i][j] - 1).loseHp(attackDmg);
+                        return true;
+                    } else {
+                        gameMap.gameObjs.get(gameMap.occupiedCells[i][j] - 1).loseHp(attackDmg);
+                    }
                 }
             }
         }
@@ -161,8 +162,10 @@ public abstract class BaseCharacter extends GameObj implements BaseCharacterInte
                 setY(newPosY);
                 setX(newPosX);
 
-            } else {
-                loseHp(30);
+            } else  if(gameMap.gameObjs.get(gameMap.occupiedCells[newPosX][newPosY]-1).getType()==ClassType.POWERUP){
+                    BasePowerUp powerup=(BasePowerUp)gameMap.gameObjs.get(gameMap.occupiedCells[newPosX][newPosY]-1);
+                    powerup.addStats(this);
+                    powerup.removeObj();
             }
         }
     }
