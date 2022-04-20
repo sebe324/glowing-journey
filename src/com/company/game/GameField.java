@@ -3,6 +3,7 @@ package com.company.game;
 import com.company.classes.GameObj;
 import com.company.classes.characters.player.BasePlayer;
 import com.company.classes.particles.Particle;
+import com.company.enums.ClassType;
 
 import javax.swing.*;
 import java.awt.*;
@@ -27,6 +28,7 @@ public class GameField extends JPanel {
         }
         for(GameObj thing : gameMap.gameObjs){
             g.drawImage(thing.getImage(), thing.getXWindow(), thing.getYWindow(), this);
+            if(thing.getType()== ClassType.PLAYER || thing.getType()==ClassType.MONSTER)
             g.drawString("Health "+thing.getHp(), thing.getXWindow(), thing.getYWindow()-12);
 
         }

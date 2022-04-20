@@ -23,7 +23,7 @@ public class SinglePlayerStartWindow extends JFrame {
         label.setBounds(10,10,120,20);
         List<JButton> classSelect = new ArrayList<>();
         classSelect.add(new JButton("Warrior"));
-        classSelect.add(new JButton("Archer"));
+        classSelect.add(new JButton("Gunslinger"));
         classSelect.add(new JButton("Wizard"));
         classSelect.add(new JButton("Healer"));
         JLabel label2 = new JLabel();
@@ -58,7 +58,7 @@ public class SinglePlayerStartWindow extends JFrame {
                     case "Warrior":
                         gameMap.gameObjs.add(new Warrior(10, 10, characterName.getText(), 120, 1000, 1000, 200, 200, 10, 5, 0, 3, gameMap));
                         break;
-                    case "Archer":
+                    case "Gunslinger":
                         gameMap.gameObjs.add(new Gunslinger(10, 10, characterName.getText(), 120, 1000, 1000, 200, 200, 10, 5, 0, 3, gameMap));
                         break;
                     case "Wizard":

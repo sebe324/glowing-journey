@@ -23,16 +23,20 @@ public void run(){
                     player.setHp(player.getHp()+player.getHpRegen());
                     player.setMana(player.getMana()+player.getManaRegen());
                     if(player.getPoints()>999){
-                        JOptionPane.showMessageDialog(gameMap.menuWindow,"You win!");
+                        JOptionPane.showMessageDialog(gameMap.menuWindow,player.getName()+" wins!");
                         gameMap.mainWindow.dispose();
                         gameMap.running=false;
-                        System.exit(0);
+                        gameMap=null;
+                        gameMap=new GameMap();
+                        gameMap.runMenu();
                     }
                     if(player.getLives()<=0){
-                        JOptionPane.showMessageDialog(gameMap.menuWindow,"End of the game!");
+                        JOptionPane.showMessageDialog(gameMap.menuWindow,player.getName()+" lost!");
                         gameMap.mainWindow.dispose();
                         gameMap.running=false;
-                        System.exit(0);
+                        gameMap=null;
+                        gameMap=new GameMap();
+                        gameMap.runMenu();
                     }
                     if(player.isInvisible()){
                         player.loseMana(15);
