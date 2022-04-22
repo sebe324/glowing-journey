@@ -23,6 +23,8 @@ public class Gunslinger extends BasePlayer {
         this.uploadImage("images/gunslinger/gunslinger.png", "images/gunslinger/gunslingerLeftAttack.png", "images/gunslinger/gunslingerRightAttack.png");
 
     }
+
+    @Override
     public void abilityOne(){
     if(getMana()>=50){
         if(!isInvisible()) {
@@ -38,6 +40,8 @@ public class Gunslinger extends BasePlayer {
         loseMana(50);
     }
     }
+
+    @Override
     public void abilityTwo(){
     if(getMana()>=100){
         attackPlayer(getX()+8,getY()+1);

@@ -7,6 +7,7 @@ import java.util.Random;
 import static com.company.enums.DamageType.MAGIC;
 
 public class Wizard extends BasePlayer{
+    Random rand=new Random();
     public Wizard(int x, int y, java.lang.String name, int attackDmg, int maxHp, int hp, int maxMana, int mana, int hpRegen, int manaRegen, int points, int lives, GameMap gameMap){
         super(x,y,name, gameMap);
         this.setAttackDmg(attackDmg);
@@ -22,18 +23,19 @@ public class Wizard extends BasePlayer{
         this.setDamageType(MAGIC);
         this.uploadImage("images/wizard/wizard.png", "images/wizard/wizardLeftAttack.png", "images/wizard/wizardRightAttack.png");
     }
+
+    @Override
     public void abilityOne(){
         if(getMana()>=50) {
-            Random randomX = new Random();
-            Random randomY = new Random();
-            tryChangePosition(randomX.nextInt(35 + 1) + 1, randomY.nextInt(19 + 1) + 1);
+            tryChangePosition(rand.nextInt(35 + 1) + 1, rand.nextInt(19 + 1) + 1);
             loseMana(50);
         }
     }
+
+    @Override
     public void abilityTwo() {
         if (getMana() >= 100) {
-            Random randomX = new Random();
-            gameMap.getMonsters().get(randomX.nextInt(gameMap.getMonsters().size())).loseHp(getAttackDmg() * 10);
+            gameMap.getMonsters().get(rand.nextInt(gameMap.getMonsters().size())).loseHp(getAttackDmg() * 10);
             loseMana(100);
         }
     }

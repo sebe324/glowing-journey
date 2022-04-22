@@ -22,6 +22,7 @@ public class Warrior extends BasePlayer {
         this.uploadImage("images/warrior/warrior.png", "images/warrior/warriorLeftAttack.png", "images/warrior/warriorRightAttack.png");
     }
 
+    @Override
     public void abilityOne() {
         if (getMana() >= 50) {
             attackPlayer(getX(), getY() + 2);
@@ -31,6 +32,8 @@ public class Warrior extends BasePlayer {
             loseMana(50);
         }
     }
+
+    @Override
     public void abilityTwo(){
         if(getMana()>=100) {
             setAttackDmg(getAttackDmg() + 10);

@@ -3,40 +3,54 @@ package com.company.menu;
 import com.company.classes.characters.player.*;
 import com.company.game.GameLoop;
 import com.company.game.GameMap;
+import com.company.styles.MenuButton;
+import com.company.styles.MenuButton2;
 
 import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ArenaStartWindow extends JFrame {
+public class ArenaStartWindow extends JPanel {
 private List<String> selectedClasses = new ArrayList<>();
 private List<JTextField> characterNames = new ArrayList<>();
 ArenaStartWindow(GameMap gameMap){
-    setLocationRelativeTo(null);
     Runnable r = new GameLoop(gameMap);
-    setSize(600,400);
+    setBackground(new Color(253, 203, 110));
+    setLayout(null);
     JLabel saveLabel = new JLabel("Save name");
-    saveLabel.setBounds(160,100,100,20);
+    saveLabel.setBounds(425,400,100,20);
     add(saveLabel);
     JTextField saveName = new JTextField();
-    saveName.setBounds(160,150,100,20);
+    saveName.setBounds(425,450,200,30);
     add(saveName);
     for(int i=0; i<2; i++){
         selectedClasses.add("");
         characterNames.add(new JTextField());
         JLabel label = new JLabel("Player "+(i+1)+" class");
-        label.setBounds(i*350+10, 10, 120, 20);
+        JLabel label3= new JLabel("Player "+(i+1)+" nickname: ");
+        if(i==0) {
+            label.setBounds(200, 50, 120, 20);
+            label3.setBounds(200, 400, 200, 20);
+            characterNames.get(i).setBounds(200, 450, 200, 30);
+        }
+        else if(i==1){ label.setBounds(650,50,120,20);
+            label3.setBounds(650, 400, 200, 20);
+            characterNames.get(i).setBounds(650, 450, 200, 30);
+        }
         add(label);
         List<JButton> classSelect = new ArrayList<>();
-        classSelect.add(new JButton("Warrior"));
-        classSelect.add(new JButton("Gunslinger"));
-        classSelect.add(new JButton("Wizard"));
-        classSelect.add(new JButton("Healer"));
+        classSelect.add(new MenuButton2("Warrior"));
+        classSelect.add(new MenuButton2("Gunslinger"));
+        classSelect.add(new MenuButton2("Wizard"));
+        classSelect.add(new MenuButton2("Healer"));
         for(int j=0; j<classSelect.size(); j++){
-            classSelect.get(j).setBounds(i*350+10, 25*(j+1)+10, 120, 20);
+            if(i==0)
+                classSelect.get(j).setLocation(200, 70*(j+1)+10);
+            else if(i==1) classSelect.get(j).setLocation(650, 70*(j+1)+10);
             int tmp2 = i;
             int tmp= j;
             classSelect.get(j).addActionListener(e->{
@@ -46,13 +60,10 @@ ArenaStartWindow(GameMap gameMap){
             });
             add(classSelect.get(j));
         }
-        JLabel label3= new JLabel("Player "+(i+1)+" nickname: ");
-        label3.setBounds(i*350+10, 250, 200, 20);
        add(label3);
-        characterNames.get(i).setBounds(i*350+10, 300, 200, 30);
         add(characterNames.get(i));
     }
-    JButton start = new JButton("start");
+    JButton start = new MenuButton("start");
     start.addActionListener(e->{
         if(!selectedClasses.get(0).equals("") && !selectedClasses.get(1).equals("")) {
             for (int i = 0; i < 2; i++) {
@@ -91,23 +102,26 @@ ArenaStartWindow(GameMap gameMap){
                     gameMap.generate(10);
                     gameMap.save(gameMap.filePath);
                     new Thread(r).start();
-                    dispose();
+                    gameMap.menuWindow.dispose();
+                    gameMap.runWindow();
                 }
             } catch (IOException er) {
                 er.printStackTrace();
             }
         }
     });
-    start.setBounds(160,0,80,20);
-    JButton close = new JButton("close");
-    close.setBounds(260,0,80,20);
-    close.addActionListener(e -> dispose());
-    JPanel panel = new JPanel();
-    panel.setLayout(null);
-    panel.add(start);
-    panel.add(close);
-    add(panel);
+    start.setLocation(500,880);
+    JButton close = new MenuButton("close");
+    close.setLocation(750,880);
+    close.addActionListener(e -> {
+        gameMap.menuWindow.remove(this);
+        gameMap.menuWindow.add(gameMap.menuWindow.getMainMenu());
+        gameMap.menuWindow.revalidate();
+        gameMap.menuWindow.repaint();
+
+    });
+    add(start);
+    add(close);
     setVisible(true);
-    setDefaultCloseOperation(EXIT_ON_CLOSE);
 }
 }

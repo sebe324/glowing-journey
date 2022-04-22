@@ -9,13 +9,7 @@ import com.company.classes.powerups.HpPotion;
 import com.company.classes.powerups.Sword;
 
 import javax.swing.*;
-import java.awt.event.KeyAdapter;
-import java.awt.event.KeyEvent;
 import java.util.Random;
-import java.util.Timer;
-import java.util.TimerTask;
-
-import static com.sun.java.accessibility.util.AWTEventMonitor.addKeyListener;
 
 public class GameLoop implements Runnable{
     GameMap gameMap;
@@ -93,7 +87,6 @@ private void checkEndGame(BasePlayer player, GameMap gameMap){
         JOptionPane.showMessageDialog(gameMap.menuWindow,player.getName()+" wins!");
         gameMap.mainWindow.dispose();
         gameMap.running=false;
-        gameMap=null;
         gameMap=new GameMap();
         gameMap.runMenu();
     }
@@ -101,7 +94,6 @@ private void checkEndGame(BasePlayer player, GameMap gameMap){
         JOptionPane.showMessageDialog(gameMap.menuWindow,player.getName()+" lost!");
         gameMap.mainWindow.dispose();
         gameMap.running=false;
-        gameMap=null;
         gameMap=new GameMap();
         gameMap.runMenu();
     }

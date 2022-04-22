@@ -81,7 +81,7 @@ public class GameMap {
     }
     public void save(java.lang.String path){
         try(
-                FileWriter writer = new FileWriter(path);
+                FileWriter writer = new FileWriter(path)
                 ){
         for(BasePlayer player : getPlayers()){
             java.lang.String line=(player.getType()+";"+player.getClass().getCanonicalName()+";"+ player.getX()+";"+player.getY()+";"+player.getName()+";"+player.getAttackDmg()+";"+player.getMaxHp()+";"+player.getHp()+";"+player.getMaxMana()+";"+player.getMana()+";"+player.getHpRegen()+";"+player.getManaRegen()+";"+player.getPoints()+";"+player.getLives()+"\n");
@@ -95,13 +95,12 @@ public class GameMap {
             java.lang.String line=(structure.getType()+";"+structure.getClass().getCanonicalName()+";"+structure.getX()+";"+structure.getY()+";"+structure.getName()+"\n");
             writer.write(line);
             }
-            writer.close();
         }catch(IOException e){
             //something idk
         }
     }
     public void load(File file){
-        try(Scanner reader = new Scanner(file);){
+        try(Scanner reader = new Scanner(file)){
             filePath=file.getPath();
             gameObjs.clear();
             while(reader.hasNextLine()){

@@ -4,7 +4,6 @@ import com.company.game.GameField;
 import com.company.game.GameMap;
 
 import javax.swing.*;
-import java.awt.*;
 
 public class MainWindow extends JFrame {
     private GameField game;

@@ -7,7 +7,14 @@ import com.company.enums.ClassType;
 import java.awt.event.KeyEvent;
 
 public abstract class BasePlayer extends BaseCharacter {
-    private int upKey,downKey,leftKey,rightKey, leftAttackKey, rightAttackKey, abilityOneKey, abilityTwoKey;
+    private int upKey;
+    private int downKey;
+    private int leftKey;
+    private int rightKey;
+    private int leftAttackKey;
+    private int rightAttackKey;
+    private int abilityOneKey;
+    private int abilityTwoKey;
     private int points;
     private int lives;
     private boolean invisible;

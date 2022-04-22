@@ -11,10 +11,12 @@ import java.awt.*;
 public abstract class GameObj {
     private int x;
     private int y;
-    private int maxHp, hp;
+    private int maxHp;
+    private int hp;
     private String name;
     private ClassType type;
-    private Image image, baseImage;
+    private Image image;
+    private Image baseImage;
     private int id;
     private boolean isAlive;
     protected GameMap gameMap;
@@ -27,7 +29,6 @@ public abstract class GameObj {
         this.id = ++gameMap.characterCount;
         this.isAlive=true;
         gameMap.occupiedCells[this.x][this.y]=this.id;
-        System.out.println(this.name+gameMap.occupiedCells[this.x][this.y]);
     }
 
     public boolean isAlive() {
@@ -36,10 +37,6 @@ public abstract class GameObj {
 
     public ClassType getType() {
         return type;
-    }
-
-    public void setType(ClassType type) {
-        this.type = type;
     }
 
     protected GameObj() {
@@ -126,10 +123,6 @@ public abstract class GameObj {
 
     public void setImage(Image image) {
         this.image = image;
-    }
-
-    public Image getBaseImage() {
-        return baseImage;
     }
 
     public void setBaseImageToImage() {

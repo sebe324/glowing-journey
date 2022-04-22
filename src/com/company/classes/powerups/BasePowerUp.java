@@ -5,8 +5,8 @@ import com.company.classes.characters.BaseCharacter;
 import com.company.enums.ClassType;
 import com.company.game.GameMap;
 
-public class BasePowerUp extends GameObj {
-    public BasePowerUp(int x, int y, String name, GameMap gameMap){
+public abstract class BasePowerUp extends GameObj {
+    protected BasePowerUp(int x, int y, String name, GameMap gameMap){
         super(x,y,name, ClassType.POWERUP, gameMap);
 
     }

@@ -6,29 +6,32 @@ import com.company.classes.characters.player.Warrior;
 import com.company.classes.characters.player.Wizard;
 import com.company.game.GameLoop;
 import com.company.game.GameMap;
+import com.company.styles.MenuButton;
+import com.company.styles.MenuButton2;
 
 import javax.swing.*;
+import java.awt.*;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-public class SinglePlayerStartWindow extends JFrame {
+public class SinglePlayerStartWindow extends JPanel {
     private String selectedClass="";
     SinglePlayerStartWindow(GameMap gameMap){
-        setLocationRelativeTo(null);
+        setLayout(null);
+        setBackground(new Color(253, 203, 110));
         Runnable r = new GameLoop(gameMap);
-        setSize(600,400);
         JLabel label = new JLabel("Select your class");
         add(label);
         label.setBounds(10,10,120,20);
         List<JButton> classSelect = new ArrayList<>();
-        classSelect.add(new JButton("Warrior"));
-        classSelect.add(new JButton("Gunslinger"));
-        classSelect.add(new JButton("Wizard"));
-        classSelect.add(new JButton("Healer"));
+        classSelect.add(new MenuButton2("Warrior"));
+        classSelect.add(new MenuButton2("Gunslinger"));
+        classSelect.add(new MenuButton2("Wizard"));
+        classSelect.add(new MenuButton2("Healer"));
         JLabel label2 = new JLabel();
         for(int i=0; i<classSelect.size(); i++){
-            classSelect.get(i).setBounds(10,25*(i+1)+10, 120, 20);
+            classSelect.get(i).setLocation(10,60*(i+1)+10);
             int tmp = i;
             classSelect.get(i).addActionListener(e -> {
             selectedClass=classSelect.get(tmp).getText();
@@ -50,10 +53,10 @@ public class SinglePlayerStartWindow extends JFrame {
         JTextField saveName=new JTextField();
         saveName.setBounds(200,200,200,30);
         add(saveName);
-        JButton start = new JButton("start");
-        start.setBounds(0,0, 80,20);
+        JButton start = new MenuButton("start");
+        start.setLocation(500,880);
         start.addActionListener(e -> {
-            if(selectedClass!="") {
+            if(!selectedClass.equals("")) {
                 switch (selectedClass) {
                     case "Warrior":
                         gameMap.gameObjs.add(new Warrior(10, 10, characterName.getText(), 120, 1000, 1000, 200, 200, 10, 5, 0, 3, gameMap));
@@ -74,27 +77,28 @@ public class SinglePlayerStartWindow extends JFrame {
                 try {
                     File file = new File("saves/"+saveName.getText()+".txt");
                     if (file.createNewFile()) {
-                        gameMap.runWindow();
                         gameMap.filePath = "saves/"+saveName.getText()+".txt";
                         gameMap.generate(10);
                         gameMap.save(gameMap.filePath);
                         new Thread(r).start();
-                        dispose();
+                        gameMap.menuWindow.dispose();
+                        gameMap.runWindow();
                     }
                 } catch (IOException er) {
                     er.printStackTrace();
                 }
             }
         });
-        JButton close = new JButton("close");
-        close.setBounds(100,0,80,20);
-        close.addActionListener(e -> dispose());
-        JPanel panel = new JPanel();
-        panel.setBounds(200,300,200,20);
-        panel.add(start);
-        panel.add(close);
-        add(panel);
+        JButton close = new MenuButton("close");
+        close.setLocation(750,880);
+        close.addActionListener(e -> {
+            gameMap.menuWindow.remove(this);
+            gameMap.menuWindow.add(gameMap.menuWindow.getMainMenu());
+            gameMap.menuWindow.revalidate();
+            gameMap.menuWindow.repaint();
+        });
+        add(start);
+        add(close);
         setVisible(true);
-        setDefaultCloseOperation(EXIT_ON_CLOSE);
-    }
+}
 }

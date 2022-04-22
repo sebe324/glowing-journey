@@ -16,4 +16,8 @@ add(mainMenu);
     setVisible(true);
     setDefaultCloseOperation(EXIT_ON_CLOSE);
 }
+
+    public MainMenu getMainMenu() {
+        return mainMenu;
+    }
 }

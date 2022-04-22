@@ -11,11 +11,16 @@ import java.awt.*;
 
 public abstract class BaseCharacter extends GameObj implements BaseCharacterInterface{
 
-    private int mana, maxMana, level, attackDmg;
-    private int hpRegen, manaRegen;
+    private int mana;
+    private int maxMana;
+    private int level;
+    private int attackDmg;
+    private int hpRegen;
+    private int manaRegen;
     private DamageType damageType;
     private int damageRange;
-    private Image attackLeftImage, attackRightImage;
+    private Image attackLeftImage;
+    private Image attackRightImage;
     protected BaseCharacter(int x, int y, java.lang.String name, ClassType type, GameMap gameMap){
         super(x,y,name, type, gameMap);
         this.gameMap=gameMap;
@@ -163,9 +168,9 @@ public abstract class BaseCharacter extends GameObj implements BaseCharacterInte
                 setX(newPosX);
 
             } else  if(gameMap.gameObjs.get(gameMap.occupiedCells[newPosX][newPosY]-1).getType()==ClassType.POWERUP){
-                    BasePowerUp powerup=(BasePowerUp)gameMap.gameObjs.get(gameMap.occupiedCells[newPosX][newPosY]-1);
-                    powerup.addStats(this);
-                    powerup.removeObj();
+                    BasePowerUp powerUp=(BasePowerUp)gameMap.gameObjs.get(gameMap.occupiedCells[newPosX][newPosY]-1);
+                    powerUp.addStats(this);
+                    powerUp.removeObj();
             }
         }
     }
