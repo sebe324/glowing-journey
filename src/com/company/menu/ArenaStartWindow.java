@@ -9,37 +9,39 @@ import com.company.styles.MenuButton2;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyEvent;
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Locale;
 
 public class ArenaStartWindow extends JPanel {
-private List<String> selectedClasses = new ArrayList<>();
+private List<String> selectedClasses = Arrays.asList("Warrior","Warrior");
 private List<JTextField> characterNames = new ArrayList<>();
 ArenaStartWindow(GameMap gameMap){
     Runnable r = new GameLoop(gameMap);
     setBackground(new Color(253, 203, 110));
     setLayout(null);
     JLabel saveLabel = new JLabel("Save name");
-    saveLabel.setBounds(425,400,100,20);
+    saveLabel.setBounds(500,800,100,20);
     add(saveLabel);
     JTextField saveName = new JTextField();
-    saveName.setBounds(425,450,200,30);
+    saveName.setBounds(500,830,200,30);
     add(saveName);
     for(int i=0; i<2; i++){
-        selectedClasses.add("");
         characterNames.add(new JTextField());
-        JLabel label = new JLabel("Player "+(i+1)+" class");
+        JLabel label = new JLabel(selectedClasses.get(i));
         JLabel label3= new JLabel("Player "+(i+1)+" nickname: ");
         if(i==0) {
-            label.setBounds(200, 50, 120, 20);
-            label3.setBounds(200, 400, 200, 20);
-            characterNames.get(i).setBounds(200, 450, 200, 30);
+            label.setBounds(300, 50, 120, 20);
+            label3.setBounds(300, 400, 200, 20);
+            characterNames.get(i).setBounds(300, 450, 150, 30);
         }
-        else if(i==1){ label.setBounds(650,50,120,20);
-            label3.setBounds(650, 400, 200, 20);
-            characterNames.get(i).setBounds(650, 450, 200, 30);
+        else { label.setBounds(550,50,120,20);
+            label3.setBounds(550, 400, 200, 20);
+            characterNames.get(i).setBounds(550, 450, 150, 30);
         }
         add(label);
         List<JButton> classSelect = new ArrayList<>();
@@ -49,14 +51,14 @@ ArenaStartWindow(GameMap gameMap){
         classSelect.add(new MenuButton2("Healer"));
         for(int j=0; j<classSelect.size(); j++){
             if(i==0)
-                classSelect.get(j).setLocation(200, 70*(j+1)+10);
-            else if(i==1) classSelect.get(j).setLocation(650, 70*(j+1)+10);
+                classSelect.get(j).setLocation(300, 70*(j+1)+10);
+            else classSelect.get(j).setLocation(550, 70*(j+1)+10);
             int tmp2 = i;
             int tmp= j;
             classSelect.get(j).addActionListener(e->{
                 selectedClasses.set(tmp2,classSelect.get(tmp).getText());
                 label.setText(selectedClasses.get(tmp2));
-
+                repaint();
             });
             add(classSelect.get(j));
         }
@@ -124,4 +126,19 @@ ArenaStartWindow(GameMap gameMap){
     add(close);
     setVisible(true);
 }
+    @Override
+    protected void paintComponent(Graphics g){
+    super.paintComponent(g);
+        for (int i = 0; i < 2; i++) {
+                    String tmp= selectedClasses.get(i).toLowerCase();
+                    Image classImage=new ImageIcon("images/"+tmp+"/"+tmp+".png").getImage();
+                    if(i==0) {
+                        g.drawImage(classImage, 100, 80, 150, 250, this);
+                    }
+                    else{
+                        g.drawImage(classImage,750,80,150,250,this);
+                    }
+
+        }
+    }
 }

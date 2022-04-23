@@ -22,6 +22,7 @@ for(int i=0; i<saves.size(); i++){
     saveButton.setLocation(10, i*70+10);
     saveButton.addActionListener(e->{
        gameMap.load(file);
+       gameMap.menuWindow.dispose();
        gameMap.runWindow();
        System.out.println(gameMap.occupiedCells[gameMap.gameObjs.get(1).getX()][gameMap.gameObjs.get(1).getY()]);
         Runnable r = new GameLoop(gameMap);

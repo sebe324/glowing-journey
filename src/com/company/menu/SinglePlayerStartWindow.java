@@ -16,7 +16,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 public class SinglePlayerStartWindow extends JPanel {
-    private String selectedClass="";
+    private String selectedClass="Warrior";
     SinglePlayerStartWindow(GameMap gameMap){
         setLayout(null);
         setBackground(new Color(253, 203, 110));
@@ -29,17 +29,18 @@ public class SinglePlayerStartWindow extends JPanel {
         classSelect.add(new MenuButton2("Gunslinger"));
         classSelect.add(new MenuButton2("Wizard"));
         classSelect.add(new MenuButton2("Healer"));
-        JLabel label2 = new JLabel();
+        JLabel label2 = new JLabel(selectedClass);
         for(int i=0; i<classSelect.size(); i++){
             classSelect.get(i).setLocation(10,60*(i+1)+10);
             int tmp = i;
             classSelect.get(i).addActionListener(e -> {
             selectedClass=classSelect.get(tmp).getText();
             label2.setText(selectedClass);
+            repaint();
             });
             add(classSelect.get(i));
         }
-        label2.setBounds(10, 300, 100,20);
+        label2.setBounds(500, 50, 100,20);
         add(label2);
         JLabel label3 = new JLabel("Your nickname: ");
         label3.setBounds(200, 50, 200,30);
@@ -80,9 +81,9 @@ public class SinglePlayerStartWindow extends JPanel {
                         gameMap.filePath = "saves/"+saveName.getText()+".txt";
                         gameMap.generate(10);
                         gameMap.save(gameMap.filePath);
-                        new Thread(r).start();
                         gameMap.menuWindow.dispose();
                         gameMap.runWindow();
+                        new Thread(r).start();
                     }
                 } catch (IOException er) {
                     er.printStackTrace();
@@ -101,4 +102,12 @@ public class SinglePlayerStartWindow extends JPanel {
         add(close);
         setVisible(true);
 }
+    @Override
+    protected void paintComponent(Graphics g){
+        super.paintComponent(g);
+            String tmp= selectedClass.toLowerCase();
+            Image classImage=new ImageIcon("images/"+tmp+"/"+tmp+".png").getImage();
+                g.drawImage(classImage, 500, 80, 150, 250, this);
+
+    }
 }

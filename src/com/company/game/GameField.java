@@ -26,7 +26,8 @@ public class GameField extends JPanel {
         for(Particle particle : gameMap.particles){
             g.drawImage(particle.getImage(), particle.getXWindow(), particle.getYWindow(), this);
         }
-        for(GameObj thing : gameMap.gameObjs){
+        for(int i=0; i<gameMap.gameObjs.size(); i++){
+            GameObj thing = gameMap.gameObjs.get(i);
             g.drawImage(thing.getImage(), thing.getXWindow(), thing.getYWindow(), this);
             if(thing.getType()== ClassType.PLAYER || thing.getType()==ClassType.MONSTER)
             g.drawString("Health "+thing.getHp(), thing.getXWindow(), thing.getYWindow()-12);
