@@ -1,9 +1,7 @@
 package com.company.menu;
 
-import com.company.classes.characters.player.Gunslinger;
-import com.company.classes.characters.player.Healer;
-import com.company.classes.characters.player.Warrior;
-import com.company.classes.characters.player.Wizard;
+import com.company.classes.characters.BaseCharacter;
+import com.company.classes.characters.player.*;
 import com.company.game.GameLoop;
 import com.company.game.GameMap;
 import com.company.styles.MenuButton;
@@ -13,29 +11,38 @@ import javax.swing.*;
 import java.awt.*;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
 import java.util.ArrayList;
 import java.util.List;
 public class SinglePlayerStartWindow extends JPanel {
-    private String selectedClass="Warrior";
+    private BasePlayer selectedClass;
     SinglePlayerStartWindow(GameMap gameMap){
         setLayout(null);
+        selectedClass=new Warrior(10,10,"player0",gameMap);
         setBackground(new Color(253, 203, 110));
         Runnable r = new GameLoop(gameMap);
-        JLabel label = new JLabel("Select your class");
-        add(label);
-        label.setBounds(10,10,120,20);
+        JTextField characterName = new JTextField();
+        characterName.setBounds(200,100,200,30);
+        add(characterName);
         List<JButton> classSelect = new ArrayList<>();
         classSelect.add(new MenuButton2("Warrior"));
         classSelect.add(new MenuButton2("Gunslinger"));
         classSelect.add(new MenuButton2("Wizard"));
         classSelect.add(new MenuButton2("Healer"));
-        JLabel label2 = new JLabel(selectedClass);
+        JLabel label2 = new JLabel(selectedClass.getName());
         for(int i=0; i<classSelect.size(); i++){
             classSelect.get(i).setLocation(10,60*(i+1)+10);
             int tmp = i;
             classSelect.get(i).addActionListener(e -> {
-            selectedClass=classSelect.get(tmp).getText();
-            label2.setText(selectedClass);
+                try {
+                    Class player=Class.forName("com.company.classes.characters.player."+classSelect.get(tmp).getText());
+                    Constructor con =player.getConstructor(int.class, int.class, String.class, GameMap.class);
+                    gameMap.characterCount=0;
+                    selectedClass=(BasePlayer)con.newInstance(tmp*10,10,characterName.getText(), gameMap);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            label2.setText(selectedClass.getName());
             repaint();
             });
             add(classSelect.get(i));
@@ -45,9 +52,6 @@ public class SinglePlayerStartWindow extends JPanel {
         JLabel label3 = new JLabel("Your nickname: ");
         label3.setBounds(200, 50, 200,30);
         add(label3);
-        JTextField characterName = new JTextField();
-        characterName.setBounds(200,100,200,30);
-        add(characterName);
         JLabel label4 = new JLabel("Save name: ");
         label4.setBounds(200, 150, 200,30);
         add(label4);
@@ -57,38 +61,21 @@ public class SinglePlayerStartWindow extends JPanel {
         JButton start = new MenuButton("start");
         start.setLocation(500,880);
         start.addActionListener(e -> {
-            if(!selectedClass.equals("")) {
-                switch (selectedClass) {
-                    case "Warrior":
-                        gameMap.gameObjs.add(new Warrior(10, 10, characterName.getText(), 120, 1000, 1000, 200, 200, 10, 5, 0, 3, gameMap));
-                        break;
-                    case "Gunslinger":
-                        gameMap.gameObjs.add(new Gunslinger(10, 10, characterName.getText(), 120, 1000, 1000, 200, 200, 10, 5, 0, 3, gameMap));
-                        break;
-                    case "Wizard":
-                        gameMap.gameObjs.add(new Wizard(10, 10, characterName.getText(), 120, 1000, 1000, 200, 200, 10, 5, 0, 3, gameMap));
-                        break;
-                    case "Healer":
-                        gameMap.gameObjs.add(new Healer(10, 10, characterName.getText(), 120, 1000, 1000, 200, 200, 10, 5, 0, 3, gameMap));
-                        break;
-                    default:
-                        label.setText("Please pick a class!");
-                        break;
-                }
                 try {
                     File file = new File("saves/"+saveName.getText()+".txt");
                     if (file.createNewFile()) {
                         gameMap.filePath = "saves/"+saveName.getText()+".txt";
+                        gameMap.gameObjs.add(selectedClass);
                         gameMap.generate(10);
                         gameMap.save(gameMap.filePath);
                         gameMap.menuWindow.dispose();
                         gameMap.runWindow();
+                        System.out.println("start");
                         new Thread(r).start();
                     }
                 } catch (IOException er) {
                     er.printStackTrace();
                 }
-            }
         });
         JButton close = new MenuButton("close");
         close.setLocation(750,880);
@@ -105,9 +92,14 @@ public class SinglePlayerStartWindow extends JPanel {
     @Override
     protected void paintComponent(Graphics g){
         super.paintComponent(g);
-            String tmp= selectedClass.toLowerCase();
-            Image classImage=new ImageIcon("images/"+tmp+"/"+tmp+".png").getImage();
-                g.drawImage(classImage, 500, 80, 150, 250, this);
-
+                String[] desc1=selectedClass.getAbilityOneDescription().split(":");
+                String[] desc2=selectedClass.getAbilityTwoDescription().split(":");
+                g.drawImage(selectedClass.getImage(), 500, 80, 150, 250, this);
+                g.drawImage(selectedClass.getAbilityOneImage(), 500,350,this);
+                g.drawImage(selectedClass.getAbilityTwoImage(), 500,450,this);
+                g.drawString(desc1[0],580,405);
+                g.drawString(desc1[1],580,420);
+                g.drawString(desc2[0],580,505);
+                g.drawString(desc2[1],580,520);
     }
 }

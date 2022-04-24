@@ -12,15 +12,20 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
 public class ArenaStartWindow extends JPanel {
-private List<String> selectedClasses = Arrays.asList("Warrior","Warrior");
+private List<BasePlayer> selectedClasses;
 private List<JTextField> characterNames = new ArrayList<>();
 ArenaStartWindow(GameMap gameMap){
+    selectedClasses = new ArrayList<>(2);
+    selectedClasses.add(new Warrior(0,10,"player0",gameMap));
+    selectedClasses.add(new Warrior(10,10,"player1",gameMap));
     Runnable r = new GameLoop(gameMap);
     setBackground(new Color(253, 203, 110));
     setLayout(null);
@@ -31,9 +36,9 @@ ArenaStartWindow(GameMap gameMap){
     saveName.setBounds(500,830,200,30);
     add(saveName);
     for(int i=0; i<2; i++){
-        characterNames.add(new JTextField());
-        JLabel label = new JLabel(selectedClasses.get(i));
-        JLabel label3= new JLabel("Player "+(i+1)+" nickname: ");
+        characterNames.add(new JTextField("player"+i));
+        JLabel label = new JLabel(selectedClasses.get(i).getName());
+        JLabel label3= new JLabel("Player "+i+" nickname: ");
         if(i==0) {
             label.setBounds(300, 50, 120, 20);
             label3.setBounds(300, 400, 200, 20);
@@ -56,8 +61,15 @@ ArenaStartWindow(GameMap gameMap){
             int tmp2 = i;
             int tmp= j;
             classSelect.get(j).addActionListener(e->{
-                selectedClasses.set(tmp2,classSelect.get(tmp).getText());
-                label.setText(selectedClasses.get(tmp2));
+                try {
+                    Class player=Class.forName("com.company.classes.characters.player."+classSelect.get(tmp).getText());
+                    Constructor con =player.getConstructor(int.class, int.class, String.class, GameMap.class);
+                    gameMap.characterCount=tmp2;
+                    selectedClasses.set(tmp2,(BasePlayer)con.newInstance(tmp*10,10,characterNames.get(tmp2).getText(), gameMap));
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+                label.setText(selectedClasses.get(tmp2).getName());
                 repaint();
             });
             add(classSelect.get(j));
@@ -67,25 +79,11 @@ ArenaStartWindow(GameMap gameMap){
     }
     JButton start = new MenuButton("start");
     start.addActionListener(e->{
-        if(!selectedClasses.get(0).equals("") && !selectedClasses.get(1).equals("")) {
+        if(selectedClasses.get(0)!=null && selectedClasses.get(1)!=null) {
             for (int i = 0; i < 2; i++) {
-                switch (selectedClasses.get(i)) {
-                    case "Warrior":
-                        gameMap.gameObjs.add(new Warrior(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5, 0,3,gameMap));
-                        break;
-                    case "Gunslinger":
-                        gameMap.gameObjs.add(new Gunslinger(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5, 0,3,gameMap));
-                        break;
-                    case "Wizard":
-                        gameMap.gameObjs.add(new Wizard(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5,0,3,gameMap));
-                        break;
-                    case "Healer":
-                        gameMap.gameObjs.add(new Healer(10*i, 10, characterNames.get(i).getText(), 120, 1000, 1000, 200, 200, 10, 5, 0,3,gameMap));
-                        break;
-                    default:
 
-                        break;
-                }
+               selectedClasses.get(i).setName(characterNames.get(i).getText());
+               gameMap.gameObjs.add(selectedClasses.get(i));
             }
             BasePlayer player2=gameMap.getPlayers().get(1);
             player2.setUpKey(KeyEvent.VK_I);
@@ -105,7 +103,6 @@ ArenaStartWindow(GameMap gameMap){
                     gameMap.save(gameMap.filePath);
                     new Thread(r).start();
                     gameMap.menuWindow.dispose();
-                    gameMap.runWindow();
                 }
             } catch (IOException er) {
                 er.printStackTrace();
@@ -130,13 +127,27 @@ ArenaStartWindow(GameMap gameMap){
     protected void paintComponent(Graphics g){
     super.paintComponent(g);
         for (int i = 0; i < 2; i++) {
-                    String tmp= selectedClasses.get(i).toLowerCase();
-                    Image classImage=new ImageIcon("images/"+tmp+"/"+tmp+".png").getImage();
+                    BasePlayer player = selectedClasses.get(i);
+                    Image classImage=player.getImage();
+                    String[] desc1=selectedClasses.get(i).getAbilityOneDescription().split(":");
+                    String[] desc2=selectedClasses.get(i).getAbilityTwoDescription().split(":");
                     if(i==0) {
                         g.drawImage(classImage, 100, 80, 150, 250, this);
+                        g.drawImage(player.getAbilityOneImage(), 20,485,this);
+                        g.drawImage(player.getAbilityTwoImage(), 20,585,this);
+                        g.drawString(desc1[0],100,540);
+                        g.drawString(desc1[1],100,555);
+                        g.drawString(desc2[0],100,640);
+                        g.drawString(desc2[1],100,655);
                     }
                     else{
                         g.drawImage(classImage,750,80,150,250,this);
+                        g.drawImage(player.getAbilityOneImage(), 550,485,this);
+                        g.drawImage(player.getAbilityTwoImage(), 550,585,this);
+                        g.drawString(desc1[0],630,540);
+                        g.drawString(desc1[1],630,555);
+                        g.drawString(desc2[0],630,640);
+                        g.drawString(desc2[1],630,655);
                     }
 
         }

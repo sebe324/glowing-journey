@@ -21,9 +21,30 @@ public class Gunslinger extends BasePlayer {
         this.setLives(lives);
         this.setDamageType(PHYSICAL);
         this.uploadImage("images/gunslinger/gunslinger.png", "images/gunslinger/gunslingerLeftAttack.png", "images/gunslinger/gunslingerRightAttack.png");
-
+        this.setDescription("Some poeple say that guns are a weapon that doesn't require skill. They couldn't be more wrong. Gunslinger is a master of his craft and he never misses a shot.");
+        this.setAbilityOneDescription("Camoflague: Gunslinger becomes invisible to his enemies.");
+        this.setAbilityTwoDescription("Far Shot: Gunslinger shoots 3 far shots to the right side.");
     }
-
+    public Gunslinger(int x, int y, String name, GameMap gameMap){
+        super(x,y, name, gameMap);
+        this.setAttackDmg(80);
+        this.setMaxHp(1000);
+        this.setHp(1000);
+        this.setMaxMana(300);
+        this.setMana(300);
+        this.setHpRegen(10);
+        this.setManaRegen(5);
+        this.setPoints(0);
+        this.setLives(3);
+        this.setDamageRange(5);
+        this.setDamageType(PHYSICAL);
+        this.uploadImage("images/gunslinger/gunslinger.png", "images/gunslinger/gunslingerLeftAttack.png", "images/gunslinger/gunslingerRightAttack.png");
+        this.setDescription("Some poeple say that guns are a weapon that doesn't require skill. They couldn't be more wrong. Gunslinger is a master of his craft and he never misses a shot.");
+        this.setAbilityOneDescription("Camoflague: Gunslinger becomes invisible to his enemies.");
+        this.setAbilityTwoDescription("Far Shot: Gunslinger shoots 3 far shots to the right side.");
+        this.setAbilityOneImage("images/gunslinger/abilityOne.png");
+        this.setAbilityTwoImage("images/gunslinger/abilityTwo.png");
+    }
     @Override
     public void abilityOne(){
     if(getMana()>=50){

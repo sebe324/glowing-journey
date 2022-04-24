@@ -4,6 +4,8 @@ import com.company.game.GameMap;
 import com.company.classes.characters.BaseCharacter;
 import com.company.enums.ClassType;
 
+import javax.swing.*;
+import java.awt.*;
 import java.awt.event.KeyEvent;
 
 public abstract class BasePlayer extends BaseCharacter {
@@ -18,6 +20,11 @@ public abstract class BasePlayer extends BaseCharacter {
     private int points;
     private int lives;
     private boolean invisible;
+    private String description;
+    private String abilityOneDescription;
+    private String abilityTwoDescription;
+    private Image abilityOneImage;
+    private Image abilityTwoImage;
     protected BasePlayer(int x, int y, java.lang.String name, GameMap gameMap) {
         super(x, y, name, ClassType.PLAYER, gameMap);
         upKey = KeyEvent.VK_W;
@@ -30,7 +37,47 @@ public abstract class BasePlayer extends BaseCharacter {
         abilityTwoKey = KeyEvent.VK_2;
     }
 
+    public Image getAbilityOneImage() {
+        return abilityOneImage;
+    }
+
+    public void setAbilityOneImage(String abilityOneImage) {
+        this.abilityOneImage = new ImageIcon(abilityOneImage).getImage();
+    }
+
+    public Image getAbilityTwoImage() {
+        return abilityTwoImage;
+    }
+
+    public void setAbilityTwoImage(String abilityTwoImage) {
+        this.abilityTwoImage = new ImageIcon(abilityTwoImage).getImage();
+    }
+
     protected BasePlayer() {
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String getAbilityOneDescription() {
+        return abilityOneDescription;
+    }
+
+    public void setAbilityOneDescription(String abilityOneDescription) {
+        this.abilityOneDescription = abilityOneDescription;
+    }
+
+    public String getAbilityTwoDescription() {
+        return abilityTwoDescription;
+    }
+
+    public void setAbilityTwoDescription(String abilityTwoDescription) {
+        this.abilityTwoDescription = abilityTwoDescription;
     }
 
     public int getPoints() {

@@ -22,8 +22,32 @@ public class Wizard extends BasePlayer{
         this.setLives(lives);
         this.setDamageType(MAGIC);
         this.uploadImage("images/wizard/wizard.png", "images/wizard/wizardLeftAttack.png", "images/wizard/wizardRightAttack.png");
+        this.setDescription("Almost 150 years old, but looks like he's 60 thanks to magic rituals. He knows all the secrets of magic and isn't afraid to use them in fight.");
+        this.setAbilityOneDescription("Teleportation: Wizard teleports to a random location on the map.");
+        this.setAbilityTwoDescription("Desintegration: Wizard deals massive damage to a random monster.");
+        this.setAbilityOneImage("images/wizard/abilityOne.png");
+        this.setAbilityTwoImage("images/wizard/abilityTwo.png");
     }
-
+    public Wizard(int x, int y, String name, GameMap gameMap){
+        super(x,y,name, gameMap);
+        this.setAttackDmg(100);
+        this.setMaxHp(750);
+        this.setHp(750);
+        this.setMaxMana(300);
+        this.setMana(300);
+        this.setDamageRange(4);
+        this.setHpRegen(10);
+        this.setManaRegen(5);
+        this.setPoints(0);
+        this.setLives(3);
+        this.setDamageType(MAGIC);
+        this.uploadImage("images/wizard/wizard.png", "images/wizard/wizardLeftAttack.png", "images/wizard/wizardRightAttack.png");
+        this.setDescription("Almost 150 years old, but looks like he's 60 thanks to magic rituals. He knows all the secrets of magic and isn't afraid to use them in fight.");
+        this.setAbilityOneDescription("Teleportation: Wizard teleports to a random location on the map.");
+        this.setAbilityTwoDescription("Desintegration: Wizard deals massive damage to a random monster.");
+        this.setAbilityOneImage("images/wizard/abilityOne.png");
+        this.setAbilityTwoImage("images/wizard/abilityTwo.png");
+    }
     @Override
     public void abilityOne(){
         if(getMana()>=50) {
@@ -35,7 +59,7 @@ public class Wizard extends BasePlayer{
     @Override
     public void abilityTwo() {
         if (getMana() >= 100) {
-            gameMap.getMonsters().get(rand.nextInt(gameMap.getMonsters().size())).loseHp(getAttackDmg() * 10);
+            gameMap.getMonsters().get(rand.nextInt(gameMap.getMonsters().size())).loseHp(getAttackDmg() * 8);
             loseMana(100);
         }
     }
