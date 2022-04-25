@@ -65,7 +65,8 @@ ArenaStartWindow(GameMap gameMap){
                     Class player=Class.forName("com.company.classes.characters.player."+classSelect.get(tmp).getText());
                     Constructor con =player.getConstructor(int.class, int.class, String.class, GameMap.class);
                     gameMap.characterCount=tmp2;
-                    selectedClasses.set(tmp2,(BasePlayer)con.newInstance(tmp*10,10,characterNames.get(tmp2).getText(), gameMap));
+                    selectedClasses.set(tmp2,(BasePlayer)con.newInstance(tmp2*10,10,characterNames.get(tmp2).getText(), gameMap));
+                    if(gameMap.characterCount==1) gameMap.characterCount++;
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
