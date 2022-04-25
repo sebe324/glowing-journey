@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -17,7 +20,7 @@ public class GameField extends JPanel {
     public GameField(GameMap gameMap){
         this.gameMap = gameMap;
         setFocusable(true);
-        addKeyListener(new FieldKeyListener());
+        addKeyListener(new multiKeyPressListener());
         setBackground(new Color(255, 234, 167));
     }
     @Override
@@ -44,6 +47,70 @@ public class GameField extends JPanel {
             g.setFont(currentFont);
         }
     }
+    private class multiKeyPressListener implements KeyListener{
+    private ArrayList<Integer> pressedKeys = new ArrayList<>();
+        @Override
+        public synchronized void keyPressed(KeyEvent e) {
+            if(!pressedKeys.contains(e.getKeyCode()))pressedKeys.add(e.getKeyCode());
+            System.out.println(pressedKeys);
+            for(int key : pressedKeys) for(int i=0; i < gameMap.getPlayers().size(); i++) {
+                BasePlayer player=gameMap.getPlayers().get(i);
+                if(key==player.getUpKey())  player.up();
+                else if(key==player.getDownKey()) player.down();
+                else if(key==player.getLeftKey()) player.left();
+                else if (key==player.getRightKey()) player.right();
+                else if (key==player.getLeftAttackKey()) {
+                    player.setAttackLeftImage();
+                    player.attackPlayer(player.getX()-player.getDamageRange(), player.getY());
+
+                    //timer
+                    new Timer().schedule(
+                            new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setBaseImageToImage();
+                                    repaint();
+                                }
+                            }, 200
+                    );
+                }
+                else if(key==player.getRightAttackKey()) {
+                    player.attackPlayer(player.getX()+player.getDamageRange(),player.getY());
+                    player.setAttackRightImage();
+
+                    //timer
+                    new Timer().schedule(
+                            new TimerTask() {
+                                @Override
+                                public void run() {
+                                    player.setBaseImageToImage();
+                                    repaint();
+                                }
+                            }, 200
+                    );
+                }
+                else if(key==player.getAbilityOneKey()) player.abilityOne();
+                else if(key==player.getAbilityTwoKey()) player.abilityTwo();
+                else if(key==KeyEvent.VK_ESCAPE){
+                    System.out.print(gameMap.filePath);
+                    gameMap.save(gameMap.filePath);
+                }
+
+            }
+            validate();
+            repaint();
+        }
+
+        @Override
+        public synchronized void keyReleased(KeyEvent e) {
+        pressedKeys.removeAll(Arrays.asList(e.getKeyCode()));
+        }
+        @Override
+        public void keyTyped(KeyEvent e) {
+        /*not used*/
+        }
+    }
+    /*
     public class FieldKeyListener extends KeyAdapter{
         @Override
         public void keyPressed(KeyEvent e){
@@ -95,5 +162,5 @@ public class GameField extends JPanel {
             validate();
             repaint();
         }
-    }
+    }*/
 }
